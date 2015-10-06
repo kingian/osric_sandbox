@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../OrbitalMechanics/Assets/Celestial Mechanics/Scripts/CelestialRotation.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/OSRICS_Scripts/OSRICconstants.cs">
     <Files>
-      <File FileName="../OrbitalMechanics/Assets/Celestial Mechanics/Scripts/ISimulation.cs" Line="1" Column="1" />
-      <File FileName="../OrbitalMechanics/Assets/Celestial Mechanics/Scripts/Kepler.cs" Line="1" Column="1" />
-      <File FileName="../OrbitalMechanics/Assets/Celestial Mechanics/Scripts/CelestialRotation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICAttributeModel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/RPGCharacterModel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICconstants.cs" Line="15" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

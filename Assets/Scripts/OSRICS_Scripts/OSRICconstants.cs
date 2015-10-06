@@ -6,9 +6,12 @@ public class OSRICconstants
 {
 	enum OSRICrace
 	{
-		human,
+		dwarf,
 		elf,
-
+		halfelf,
+		halfling,
+		halforc,
+		human
 	}
 
 }
