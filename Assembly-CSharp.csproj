@@ -57,7 +57,8 @@
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICwisdom.cs" />
      <Compile Include="Assets\Scripts\RPGAttributeModel.cs" />
      <Compile Include="Assets\Scripts\RPGCharacterModel.cs" />
-     <Compile Include="Assets\Scripts\RPGTableReader.cs" />
+     <Compile Include="Assets\Scripts\Services\RPGTableReader.cs" />
+     <Compile Include="Assets\Scripts\fileReaderTest.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

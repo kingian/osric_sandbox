@@ -86,5 +86,7 @@
 'Assets/Scripts/OSRICS_Scripts/OSRICwisdom.cs'
 'Assets/Scripts/RPGAttributeModel.cs'
 'Assets/Scripts/RPGCharacterModel.cs'
+'Assets/Scripts/Services/RPGTableReader.cs'
+'Assets/Scripts/fileReaderTest.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Xml.Linq.dll'
