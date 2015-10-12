@@ -12,9 +12,7 @@ public class RPGTableReader
 	void RGBTableReader()
 	{
 	}
-
-
-
+	
 	static public string[] Load(string fileName)
 	{
 		var io = Resources.Load(fileName);
