@@ -15,7 +15,18 @@ public class fileReaderTest : MonoBehaviour {
 
 		lines = RPGTableReader.LoadResourceFile("OSRIC_attribute_table");
 
+
 		blah = RPGTableReader.CreateIntBaseTable("blah",lines);
+
+		Debug.Log (blah);
+
+		Debug.Log(blah.tableName);
+
+
+
+		Debug.Log(blah.GetColName(0));
+//
+//		blah.DebugLog();
 
 //		int height = lines.Length;
 //		int width = lines[0].Split(',').Length;

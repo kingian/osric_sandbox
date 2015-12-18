@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 enum TableType { NUMERIC, TEXT }
 
-public class RPGBaseTable<T>
+public class RPGBaseTable<T> : MonoBehaviour
 {
 	public string tableName;
 	public ColumnWithLabel<T>[] rows;
@@ -60,7 +60,7 @@ public class RPGBaseTable<T>
 		return rows.Length;
 	}
 
-	private ColumnWithLabel<T> matchColumn(string labelName)
+	public ColumnWithLabel<T> matchColumn(string labelName)
 	{
 		foreach(ColumnWithLabel<T> cwl in rows)
 		{
@@ -68,6 +68,24 @@ public class RPGBaseTable<T>
 				return cwl;
 		}
 		return null;
+	}
+
+	public void DebugLog()
+	{
+
+		for(int i=0; i<rows.Length; i++)
+		{
+			Debug.Log (i);
+			Debug.Log(rows[i].label);
+		}
+		for(int j=0;j<xIndex.Length();j++)
+		{
+			Debug.Log(xIndex.ValueAtIndex(j));
+			for(int k=0;k<rows.Length;k++)
+			{
+				Debug.Log(rows[k].ValueAtIndex(j));
+			}
+		}
 	}
 
 }
@@ -104,6 +122,11 @@ public class ColumnWithLabel<T>
 		return column[index];
 	}
 
+	public int Length()
+	{
+		return column.Length;
+	}
+
 	public int GetIndexValueOf(T val)
 	{
 		for(int i=0;i<column.Length;i++)
@@ -114,7 +137,7 @@ public class ColumnWithLabel<T>
 		return -1;
 	}
 
-	public string ToString()
+	public override string ToString()
 	{
 		StringBuilder retStr = new StringBuilder(label);
 		for(int i=0;i<column.Length;i++)
