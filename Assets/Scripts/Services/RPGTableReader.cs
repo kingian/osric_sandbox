@@ -36,12 +36,12 @@ public class RPGTableReader
 		
 		tab = new RPGBaseTable<int>(tableName,width);
 		tab.InitCols(width-1);
-		Debug.Log(tab.rows.Length);
-		for(int i=1; i<width-1; i++)
+		Debug.Log("Table Lenght: " + tab.rows.Length);
+		for(int i=1; i<width; i++)
 		{
 
-			tab.AddCol(i,new ColumnWithLabel<int>(strArr[0,i]));
-			Debug.Log(tab.GetColName(i));
+			tab.AddCol(i-1,new ColumnWithLabel<int>(strArr[0,i]));
+//			Debug.Log(tab.GetColName(i));
 		}
 
 
@@ -59,15 +59,15 @@ public class RPGTableReader
 		for(int i=1;i<width-1;i++)
 		{
 			int[] tempIntArr = new int[height-1];			
-			for(int j=1;j<height-1;j++)
+			for(int j=1;j<height;j++)
 			{
 				var y = strArr[j,i];
 				int n;
 				int.TryParse(y,out n);
 				tempIntArr[j-1] = n;
 			}
-			tab.rows[i].AddColumn(tempIntArr);
-			Debug.Log (tab.rows[i].ToString());
+			tab.rows[i-1].AddColumn(tempIntArr);
+			Debug.Log (tab.rows[i-1].ToString());
 		}
 //		tab.DebugLog();
 		return tab;
@@ -90,9 +90,9 @@ public class RPGTableReader
 		}
 		
 		tab = new RPGBaseTable<bool>(tableName,width);
-		for(int i=0; i<width; i++)
+		for(int i=1; i<width; i++)
 		{
-			tab.AddCol(i,new ColumnWithLabel<bool>(strArr[0,i]));
+			tab.AddCol(i-1,new ColumnWithLabel<bool>(strArr[0,i]));
 			Debug.Log(tab.GetColName(i));
 		}
 
@@ -108,7 +108,7 @@ public class RPGTableReader
 		
 		tab.AddXIndex(xAxis);
 
-		for(int i=1;i<width;i++)
+		for(int i=1;i<width-1;i++)
 		{
 			bool[] tempBoolArr = new bool[height-1];	
 			for(int j=1;j<height;j++)
@@ -118,7 +118,7 @@ public class RPGTableReader
 				Boolean.TryParse(y,out m);
 				tempBoolArr[j-1] = m;
 			}
-			tab.rows[i].AddColumn(tempBoolArr);
+			tab.rows[i-1].AddColumn(tempBoolArr);
 		}
 		return tab;
 	}

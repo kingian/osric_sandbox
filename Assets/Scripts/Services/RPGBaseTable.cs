@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 enum TableType { NUMERIC, TEXT }
 
-public class RPGBaseTable<T> : MonoBehaviour
+public class RPGBaseTable<T>
 {
 	public string tableName;
 	public ColumnWithLabel<T>[] rows;

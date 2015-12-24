@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICAttributeModel.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICCoreAttribute.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICCoreRace.cs" />
+     <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICTables.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICcharisma.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICconstants.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICconstitution.cs" />
@@ -60,17 +61,11 @@
      <Compile Include="Assets\Scripts\Services\RPGBaseTable.cs" />
      <Compile Include="Assets\Scripts\Services\RPGTableReader.cs" />
      <Compile Include="Assets\Scripts\fileReaderTest.cs" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
