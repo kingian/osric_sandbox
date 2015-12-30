@@ -10,7 +10,9 @@ public class RPGCharacterModel : MonoBehaviour {
 
 	void Awake (){
 		Debug.Log("Blah");
-		attributes = gameObject.AddComponent<OSRICAttributeModel>();
+		attributes = gameObject.GetComponent<OSRICAttributeModel> ();
+		if(attributes == null)
+			attributes = gameObject.AddComponent<OSRICAttributeModel>();
 	}
 
 	// Use this for initialization
