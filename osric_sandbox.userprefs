@@ -1,20 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/OSRICS_Scripts/OSRICAttributeModel.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/OSRICS_Scripts/OSRICConstants.cs">
     <Files>
       <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICAttributeModel.cs" Line="21" Column="1" />
-=======
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RPGCharacterModel.cs">
-    <Files>
-      <File FileName="Assets/Scripts/Services/RPGTableReader.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Services/RPGBaseTable.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICEngine.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/fileReaderTest.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICAttributeModel.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/OSRIC_attribute_table.csv" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/RPGAttributeModel.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/RPGCharacterModel.cs" Line="1" Column="1" />
->>>>>>> e0f8ce93563d52cbdcc46f1d2c3b0d7a704eaf1a
+      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICConstants.cs" Line="40" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

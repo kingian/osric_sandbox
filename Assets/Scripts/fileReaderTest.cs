@@ -11,6 +11,11 @@ public class fileReaderTest : MonoBehaviour {
 
 	void Start () 
 	{
+		int n = int.MinValue;
+
+		Debug.Log("Int min value: " + n);
+
+
 		RPGBaseTable<int> blah;
 
 		lines = RPGTableReader.LoadResourceFile("OSRIC_attribute_table");
