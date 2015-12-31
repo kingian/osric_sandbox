@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OSRICConstants 
-{
+
 	enum OSRIC_RACE 
 	{
 		[Description("Human")] Human,
@@ -24,7 +23,8 @@ public class OSRICConstants
 		[Description("Paladin")] Paladin,
 		[Description("Ranger")] Ranger,
 		[Description("Magic-User")] MagicUser,
-		[Description("Illusionist")] Illusionist
+		[Description("Illusionist")] Illusionist,
+		[Description("Multi-Class")] MultiClass
 	}
 
 	enum OSRIC_MULTICLASS
@@ -41,22 +41,24 @@ public class OSRICConstants
 		[Description("Cleric/Fighter/Magic-User")]Cleric_Fighter_MagicUser,
 		[Description("Cleric/Thief")]Cleric_Thief,
 		[Description("Cleric/Assassin")]Cleric_Assassin,
-		[Description("Fighter/Assassin")]Fighter_Assassin
+		[Description("Fighter/Assassin")]Fighter_Assassin,
+		[Description("Single Class")]SingleClass
 
 	}
 
 	enum OSRIC_ALIGNMENT
 	{
-		LawfulGood,
-		ChaoticGood,
-		NeutralGood,
-		ChaoticNeutral,
-		Neutral,
-		LawfulNeutral,
-		NeutralEvil,
-		ChaoticEvil,
-		LawfulEvil
+		[Description("Lawful Good")] LawfulGood,
+		[Description("Chaotic Good")] ChaoticGood,
+		[Description("Neutral Good")] NeutralGood,
+		[Description("Chaotic Neutral")] ChaoticNeutral,
+		[Description("Neutral")] Neutral,
+		[Description("Lawful Neutral")] LawfulNeutral,
+		[Description("Neutral Evil")] NeutralEvil,
+		[Description("Chaotic Evil")] ChaoticEvil,
+		[Description("Lawful Evil")] LawfulEvil
 	}
-
+public class OSRICConstants 
+{
 
 }

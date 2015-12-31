@@ -18,6 +18,10 @@ public class OSRICAttributeModel : RPGAttributeModel {
 	public int armorClass;
 	public int level;
 	public int experiencePoints;
+	public OSRIC_RACE characterRace;
+	public OSRIC_CLASS characterClass;
+	public OSRIC_MULTICLASS characterMultiClass;
+	public OSRIC_ALIGNMENT characterAlignment;
 
 
 
