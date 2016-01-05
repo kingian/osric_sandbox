@@ -11,30 +11,27 @@ public class fileReaderTest : MonoBehaviour {
 
 	void Start () 
 	{
-		int n = int.MinValue;
-
-		Debug.Log("Int min value: " + n);
 
 
-		RPGBaseTable<int> blah;
-
-		lines = RPGTableReader.LoadResourceFile("OSRIC_attribute_table");
-
-
-		blah = RPGTableReader.CreateIntBaseTable("New Table",lines);
-
-		Debug.Log (blah);
-
-		Debug.Log(blah.tableName);
-
-		Debug.Log(blah.xIndex.label);
+//		RPGBaseTable<int> blah;
+//
+//		lines = RPGTableReader.LoadResourceFile("OSRIC_attribute_table");
+//
+//
+//		blah = RPGTableReader.CreateIntBaseTable("New Table",lines);
+//
+//		Debug.Log (blah);
+//
+//		Debug.Log(blah.tableName);
+//
+//		Debug.Log(blah.xIndex.label);
 
 //		for(int n=0; n < blah.xIndex.Length();n++)
 //		{
 //			Debug.Log("xindex val: " + blah.xIndex.ValueAtIndex(n));
 //		}
 //
-		Debug.Log(blah.GetColName(0));
+//		Debug.Log(blah.GetColName(0));
 //
 //		blah.DebugLog();
 

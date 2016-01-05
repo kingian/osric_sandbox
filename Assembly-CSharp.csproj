@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICEngine.cs" />
      <Compile Include="Assets\Scripts\RPGAttributeModel.cs" />
      <Compile Include="Assets\Scripts\RPGCharacterModel.cs" />
+     <Compile Include="Assets\Scripts\Services\Diagnostic.cs" />
      <Compile Include="Assets\Scripts\Services\RPGBaseTable.cs" />
      <Compile Include="Assets\Scripts\Services\RPGTableReader.cs" />
      <Compile Include="Assets\Scripts\fileReaderTest.cs" />

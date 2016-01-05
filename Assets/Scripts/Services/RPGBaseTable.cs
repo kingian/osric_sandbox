@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,10 +10,12 @@ enum TableType { NUMERIC, TEXT }
 public class RPGBaseTable<T>
 {
 	public string tableName;
+	public YINDEX_TYPE yIndexType;
 	public ColumnWithLabel<T>[] rows;
-	public ColumnWithLabel<int> xIndex;
+	public ColumnWithLabel<int> IntYIndex;
+	public ColumnWithLabel<string> StrYIndex;
 
-	public RPGBaseTable(string tn)
+	public RPGBaseTable(string tn, YINDEX_TYPE indexType)
 	{
 		tableName = tn;
 	}
@@ -33,11 +36,19 @@ public class RPGBaseTable<T>
 		return rows[colIndex].label;
 	}
 
-	public void AddXIndex(ColumnWithLabel<int> cwl)
+	public void AddIntYIndex(ColumnWithLabel<int> cwl)
 	{
-		xIndex = cwl;
+		IntYIndex = cwl;
+		yIndexType = YINDEX_TYPE.IntIndex;
 	}
-	
+
+	public void AddStrYIndex(ColumnWithLabel<string> cwl)
+	{
+		StrYIndex = cwl;
+		yIndexType = YINDEX_TYPE.StringIndex;
+	}
+
+
 	public void AddCol(int index, ColumnWithLabel<T> cwl)
 	{
 		rows[index] = cwl;
@@ -72,19 +83,39 @@ public class RPGBaseTable<T>
 
 	public void DebugLog()
 	{
+		Debug.Log("==== TABLE NAME: " + tableName + "====");
 
-		for(int i=0; i<rows.Length; i++)
+		string tmpStr = "";
+		int i;
+
+
+
+		if(yIndexType==YINDEX_TYPE.IntIndex)
 		{
-			Debug.Log (i);
-			Debug.Log(rows[i].label);
+			tmpStr += IntYIndex.label + " len(" + IntYIndex.Length() + ")";
+			for(i=0;i<IntYIndex.Length();i++)
+				tmpStr += IntYIndex.ValueAtIndex(i).ToString() + " ";
 		}
-		for(int j=0;j<xIndex.Length();j++)
+		else
 		{
-			Debug.Log(xIndex.ValueAtIndex(j));
-			for(int k=0;k<rows.Length;k++)
+			tmpStr += StrYIndex.label+ " len(" + StrYIndex.Length() + ")";;
+			for(i=0;i<StrYIndex.Length();i++)
+				tmpStr += StrYIndex.ValueAtIndex(i) + " ";
+		}
+
+		Debug.Log(tmpStr);
+
+		for(i=0; i<rows.Length; i++)
+		{
+			tmpStr = "";
+			tmpStr += i.ToString();
+			tmpStr += " " + rows[i].label + " : ";
+
+			for(int j=0; j<rows[i].Length();j++)
 			{
-				Debug.Log(rows[k].ValueAtIndex(j));
+				tmpStr += " " + j.ToString() + ":" + rows[i].ValueAtIndex(j);
 			}
+			Debug.Log(tmpStr);
 		}
 	}
 
@@ -119,7 +150,7 @@ public class ColumnWithLabel<T>
 
 	public T ValueAtIndex(int index)
 	{
-		return column[index];
+ 		return column[index];
 	}
 
 	public int Length()
@@ -136,6 +167,18 @@ public class ColumnWithLabel<T>
 		}
 		return -1;
 	}
+
+	public List<int> GetAllIndexVaulesOf(T val)
+	{
+		List<int> retList = new List<int>();
+		for(int i=0;i<column.Length;i++)
+		{
+			if(EqualityComparer<T>.Default.Equals(column[i],val))
+				retList.Add(i);
+		}
+		return retList;
+	}
+
 
 	public override string ToString()
 	{
