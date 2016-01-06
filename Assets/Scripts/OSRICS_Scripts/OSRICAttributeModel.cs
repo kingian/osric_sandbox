@@ -16,7 +16,7 @@ public class OSRICAttributeModel : RPGAttributeModel {
 
 	public int hitPoints;
 	public int armorClass;
-	public int level;
+	public int[] level;
 	public int experiencePoints;
 	public OSRIC_GENDER characterGender;
 	public OSRIC_RACE characterRace;

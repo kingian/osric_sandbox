@@ -166,9 +166,4 @@ public class RPGTableReader
 		//		tab.DebugLog();
 		return tab;
 	}
-
-//				var y = strArr[j,i];
-//				bool m;
-//				Boolean.TryParse(y,out m);
-//				tempBoolArr[j-1] = m;
 }
