@@ -53,7 +53,7 @@
      <Compile Include="Assets\Scripts\Services\Diagnostic.cs" />
      <Compile Include="Assets\Scripts\Services\RPGBaseTable.cs" />
      <Compile Include="Assets\Scripts\Services\RPGTableReader.cs" />
-     <Compile Include="Assets\Scripts\fileReaderTest.cs" />
+     <Compile Include="Assets\Scripts\generalTests.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

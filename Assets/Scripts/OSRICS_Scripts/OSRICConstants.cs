@@ -108,6 +108,18 @@ public enum OSRIC_GENDER
 	Female,
 }
 
+public struct AttributeAdjustment
+{
+	public string title;
+	public int adjustment;
+
+	public AttributeAdjustment(string _title, int _adjustment)
+	{
+		title = _title;
+		adjustment = _adjustment;
+	}
+}
+
 public static class OSRICConstants
 {
 

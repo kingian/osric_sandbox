@@ -66,6 +66,17 @@ public class RPGBaseTable<T>
 		return matchColumn(labelName).GetIndexValueOf(val);
 	}
 
+	public int GetYIndexOf(int val)
+	{
+		return IntYIndex.GetIndexValueOf(val);
+	}
+
+	public int GetYIndexOf(string val)
+	{
+		return StrYIndex.GetIndexValueOf(val);
+	}
+
+
 	public int NumberOfColumns()
 	{
 		return rows.Length;
@@ -119,6 +130,7 @@ public class RPGBaseTable<T>
 		}
 	}
 
+	public void init(){}
 }
 
 public class ColumnWithLabel<T>

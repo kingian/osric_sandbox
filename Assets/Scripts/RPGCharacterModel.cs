@@ -5,11 +5,11 @@ using System.Collections;
 public class RPGCharacterModel : MonoBehaviour {
 
 
-	public RPGAttributeModel attributes;
+	public OSRICAttributeModel attributes;
 
 
 	void Awake (){
-		Debug.Log("Blah");
+//			Debug.Log("Blah");
 		attributes = gameObject.GetComponent<OSRICAttributeModel> ();
 		if(attributes == null)
 			attributes = gameObject.AddComponent<OSRICAttributeModel>();
