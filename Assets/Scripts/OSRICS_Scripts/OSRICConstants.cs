@@ -1,6 +1,27 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.ComponentModel;
+
+
+public enum OSRIC_ATTRIBUTES
+{
+	[Description("str")]
+	Strength,
+	[Description("dex")]
+	Dexterity,
+	[Description("con")]
+	Constitution,
+	[Description("int")]
+	Intellegence,
+	[Description("wis")]
+	Wisdom,
+	[Description("cha")]
+	Charisma
+}
+;
+
+
 
 public enum OSRIC_RACE
 {
@@ -41,12 +62,6 @@ public enum OSRIC_CLASS
 	MagicUser,
 	[Description("Illusionist")]
 	Illusionist,
-	[Description("Multi-Class")]
-	MultiClass
-}
-
-public enum OSRIC_MULTICLASS
-{
 	[Description("Fighter/Thief")]
 	Fighter_Thief,
 	[Description("Fighter/Magic-User")]
@@ -72,11 +87,9 @@ public enum OSRIC_MULTICLASS
 	[Description("Cleric/Assassin")]
 	Cleric_Assassin,
 	[Description("Fighter/Assassin")]
-	Fighter_Assassin,
-	[Description("Single Class")]
-	SingleClass
-
+	Fighter_Assassin
 }
+
 
 public enum OSRIC_ALIGNMENT
 {
@@ -120,8 +133,34 @@ public struct AttributeAdjustment
 	}
 }
 
+public struct EnumAttributePair
+{
+	public OSRIC_ATTRIBUTES stat;
+	public int value;
+	public EnumAttributePair(OSRIC_ATTRIBUTES _stat, int _value)
+	{
+		stat = _stat;
+		value = _value;
+	}
+}
+
 public static class OSRICConstants
 {
 
+	public static T GetAttributeOfType<T>(this Enum enumVal) where T:System.Attribute
+	{
+		var type = enumVal.GetType();
+		var memInfo = type.GetMember(enumVal.ToString());
+		var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
+		return (attributes.Length > 0) ? (T)attributes[0] : null;
+	}
+
+
+	public static string GetDesc(this Enum enumValue)
+	{
+		var attribute = enumValue.GetAttributeOfType<DescriptionAttribute>();
+		
+		return attribute == null ? String.Empty : attribute.Description;
+	} 
 
 }

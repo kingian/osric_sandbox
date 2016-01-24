@@ -21,7 +21,6 @@ public class OSRICAttributeModel : RPGAttributeModel {
 	public OSRIC_GENDER characterGender;
 	public OSRIC_RACE characterRace;
 	public OSRIC_CLASS characterClass;
-	public OSRIC_MULTICLASS characterMultiClass;
 	public OSRIC_ALIGNMENT characterAlignment;
 
 
@@ -40,5 +39,26 @@ public class OSRICAttributeModel : RPGAttributeModel {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public int GetAttribute(OSRIC_ATTRIBUTES oa)
+	{
+		switch(oa)
+		{
+		case OSRIC_ATTRIBUTES.Strength:
+			return Str;
+		case OSRIC_ATTRIBUTES.Dexterity:
+			return Dex;
+		case OSRIC_ATTRIBUTES.Constitution:
+			return Con;
+		case OSRIC_ATTRIBUTES.Intellegence:
+			return Int;
+		case OSRIC_ATTRIBUTES.Wisdom:
+			return Wis;
+		case OSRIC_ATTRIBUTES.Charisma:
+			return Cha;
+		default:
+			return -1;
+		}
 	}
 }

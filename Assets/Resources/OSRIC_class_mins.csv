@@ -8,3 +8,16 @@ Magic-User,3,6,6,9,6,6
 Paladin,12,6,9,9,13,17
 Ranger,13,6,14,13,14,6
 Thief,6,9,6,6,3,6
+Fighter/Thief,9,9,7,6,6,6
+Fighter/Magic-User,9,6,7,9,6,6
+Magic-User/Thief,6,9,6,9,6,6
+Fighter/Magic-User/Thief,9,9,7,9,6,6
+Fighter/Illusionist,9,16,15,6,6,6
+Illusionist/Thief,6,16,15,6,6,6
+Cleric/Fighter,9,6,7,6,9,6
+Cleric/Ranger,13,6,14,13,14,6
+Cleric/Magic-User,6,6,6,9,9,6
+Cleric/Fighter/Magic-User,9,6,7,9,9,6
+Cleric/Thief,6,9,6,6,9,6
+Cleric/Assassin,12,12,6,11,9,6
+Fighter/Assassin,12,12,7,11,6,6

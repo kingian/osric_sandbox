@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class OSRICEngine : MonoBehaviour {
 
@@ -109,6 +111,8 @@ public class OSRICEngine : MonoBehaviour {
 	{
 		AttributeAdjustment[] retArr = new AttributeAdjustment[5];
 
+		_str = attributeTable.GetYIndexOf(_str);
+
 		retArr[0] = new AttributeAdjustment("Bonus to Hit",attributeTable.GetValue("str_bonus_to_hit",_str));
 		retArr[1] = new AttributeAdjustment("Bonus to Damage",attributeTable.GetValue("str_bonus_to_damage",_str));
 		retArr[2] = new AttributeAdjustment("Encumberance Adjustment",attributeTable.GetValue("str_encumberance_adjustment",_str));
@@ -122,6 +126,8 @@ public class OSRICEngine : MonoBehaviour {
 	{
 		AttributeAdjustment[] retArr = new AttributeAdjustment[3];
 
+		_dex = attributeTable.GetYIndexOf(_dex);
+
 		retArr[0] = new AttributeAdjustment("Surprise Bonus",attributeTable.GetValue("dex_surprise_bonus",_dex));
 		retArr[1] = new AttributeAdjustment("Missile Bonus",attributeTable.GetValue("dex_missile_bonus",_dex));
 		retArr[2] = new AttributeAdjustment("AC Adjustment",attributeTable.GetValue("dex_AC_adjustment",_dex));
@@ -132,6 +138,8 @@ public class OSRICEngine : MonoBehaviour {
 	public AttributeAdjustment[] GetIntelligenceAdjustments(int _int)
 	{
 		AttributeAdjustment[] retArr = new AttributeAdjustment[1];
+
+		_int = attributeTable.GetYIndexOf(_int);
 		
 		retArr[0] = new AttributeAdjustment("Max Additional Languages",attributeTable.GetValue("int_max_additional_languages",_int));
 		
@@ -141,7 +149,9 @@ public class OSRICEngine : MonoBehaviour {
 	public AttributeAdjustment[] GetWisdomAdjustments(int _wis)
 	{
 		AttributeAdjustment[] retArr = new AttributeAdjustment[1];
-		
+
+		_wis = attributeTable.GetYIndexOf(_wis);
+
 		retArr[0] = new AttributeAdjustment("Mental Saving Throw Bonus",attributeTable.GetValue("wis_mental_saving_throw_bonus",_wis));
 		
 		return retArr;
@@ -150,6 +160,8 @@ public class OSRICEngine : MonoBehaviour {
 	public AttributeAdjustment[] GetConstitutionAdjustments(int _con)
 	{
 		AttributeAdjustment[] retArr = new AttributeAdjustment[3];
+
+		_con = attributeTable.GetYIndexOf(_con);
 		
 		retArr[0] = new AttributeAdjustment("HP per die",attributeTable.GetValue("con_HP_per_die",_con));
 		retArr[1] = new AttributeAdjustment("Survive Resurrection & Raise Dead",attributeTable.GetValue("con_survive_resurrection_raise_dead",_con));
@@ -161,11 +173,83 @@ public class OSRICEngine : MonoBehaviour {
 	public AttributeAdjustment[] GetCharismaAdjustments(int _cha)
 	{
 		AttributeAdjustment[] retArr = new AttributeAdjustment[3];
-		
+
+		_cha = attributeTable.GetYIndexOf(_cha);
+
 		retArr[0] = new AttributeAdjustment("Max Henchman",attributeTable.GetValue("cha_max_henchmen",_cha));
 		retArr[1] = new AttributeAdjustment("Loyalty Bonus",attributeTable.GetValue("cha_loyalty_bonus",_cha));
 		retArr[2] = new AttributeAdjustment("Reaction Bonus",attributeTable.GetValue("cha_reaction_bonus",_cha));
 		
 		return retArr;
+	}
+
+	public HashSet<OSRIC_RACE> AvailableRaces(OSRICAttributeModel _atm)
+	{
+		HashSet<OSRIC_RACE> retSet = new HashSet<OSRIC_RACE>();
+
+		int val;
+
+		foreach (OSRIC_RACE race in Enum.GetValues(typeof(OSRIC_RACE)))
+		{
+			if(race==OSRIC_RACE.Human)
+			{
+				retSet.Add(race);
+				continue;
+			}
+			val = raceMinMax.GetYIndexOf(race.GetDesc());
+			if (_atm.Str < raceMinMax.GetValue("str_min", val))
+				continue;
+			if(_atm.Dex < raceMinMax.GetValue("dex_min", val))
+				continue;
+			if(_atm.Int < raceMinMax.GetValue("int_min", val))
+				continue;
+			if(_atm.Wis < raceMinMax.GetValue("wis_min", val))
+				continue;
+			if(_atm.Con < raceMinMax.GetValue("con_min", val))
+				continue;
+			if(_atm.Cha < raceMinMax.GetValue("cha_min", val))
+				continue;
+			retSet.Add(race);
+		}
+		return retSet;
+	}
+
+	public HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
+	{
+		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
+		int val;
+		bool addClass;
+
+		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
+		{
+			int classIndex = classMinimums.GetYIndexOf(oc.GetDesc());
+			addClass = true;
+			foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
+			{
+				if(_atm.GetAttribute(oa)<classMinimums.GetValue(oa.GetDesc(),classIndex))
+					addClass = false;
+			}
+			if(addClass)
+				retSet.Add(oc);
+		}
+		return retSet;
+	}
+
+	public HashSet<OSRIC_CLASS> AvailableClassesByRace(OSRICAttributeModel _atm)
+	{
+		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
+		bool available;
+//		string outstr = "";
+
+		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
+		{
+			available = raceClassMatrix.GetValue(_atm.characterRace.GetDesc(),raceClassMatrix.GetYIndexOf(oc.GetDesc()));
+			if(available)
+				retSet.Add(oc);
+		}
+
+//		Debug.Log(outstr);
+
+		return retSet;
 	}
 }

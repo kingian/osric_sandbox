@@ -76,6 +76,13 @@ public class RPGBaseTable<T>
 		return StrYIndex.GetIndexValueOf(val);
 	}
 
+	public int LenOfYIndex()
+	{
+		if(yIndexType==YINDEX_TYPE.IntIndex)
+			return IntYIndex.Length();
+		else
+			return StrYIndex.Length();
+	}
 
 	public int NumberOfColumns()
 	{
@@ -137,7 +144,7 @@ public class ColumnWithLabel<T>
 {
 	public string label;
 	TableType tabtyp;
-	T[] column;
+	public T[] column;
 
 	public ColumnWithLabel(string name)
 	{

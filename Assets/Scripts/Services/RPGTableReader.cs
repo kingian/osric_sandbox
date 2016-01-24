@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;  
 
 
@@ -26,6 +27,11 @@ public class RPGTableReader
 	{
 		var io = Resources.Load(fileName);
 		tableArray = io.ToString().Split('\n');
+		for(int i=0;i<tableArray.Length; i++)
+		{
+			string s = tableArray[i];
+			tableArray[i] = Regex.Replace(s, @"\t|\n|\r", "");
+		}
 		return tableArray;
 	}
 
