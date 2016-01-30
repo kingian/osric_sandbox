@@ -97,7 +97,7 @@ public class generalTests : MonoBehaviour {
 			outStr += oc.GetDesc() + " : ";
 
 		Debug.Log(outStr);
-		outStr = "union: ";
+		outStr = "intersection: ";
 
 		HashSet<OSRIC_CLASS> atts = engine.AvailableClassesByAttributes(testChar.attributes);
 		HashSet<OSRIC_CLASS> race = engine.AvailableClassesByRace(testChar.attributes);

@@ -32,13 +32,12 @@ public class AttributeUIController : MonoBehaviour {
 	{
 		attributeLabel.text = attributeEnum.GetDesc() + ":";
 	}
-
-	void SetAttributeValue(int val)
+	public void SetAttributeValue(int val)
 	{
 		attributeValue.text = val.ToString();
 	}
 
-	void SetAttributeSubtext(string subt)
+	public void SetAttributeSubtext(string subt)
 	{
 		attributeSubtext.text = subt;
 	}

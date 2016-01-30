@@ -5,8 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AttributeUIGroup : MonoBehaviour {
-
-	RPGCharacterModel cmodel;
+	
 	public AttributeUIController[] attributeContollerArray;
 
 	// Use this for initialization
@@ -47,11 +46,14 @@ public class AttributeUIGroup : MonoBehaviour {
 		return null;
 	}
 
-	void SetAttributes()
+	public void SetAttribute(OSRIC_ATTRIBUTES oa, int value)
 	{
-		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
+		if(attributeContollerArray.Length<1)
+			return;
+		foreach(AttributeUIController ac in attributeContollerArray)
 		{
-
+			if(ac.attributeEnum==oa)
+				ac.SetAttributeValue(value);
 		}
 	}
 }
