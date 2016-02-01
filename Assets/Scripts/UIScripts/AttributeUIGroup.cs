@@ -8,10 +8,17 @@ public class AttributeUIGroup : MonoBehaviour {
 	
 	public AttributeUIController[] attributeContollerArray;
 
-	// Use this for initialization
-	void Start () {
+	void Awake()
+	{
 		attributeContollerArray = gameObject.GetComponentsInChildren<AttributeUIController>();
 		OrderAttributeElements();
+
+	}
+
+	// Use this for initialization
+	void Start () {
+//		attributeContollerArray = gameObject.GetComponentsInChildren<AttributeUIController>();
+//		OrderAttributeElements();
 	}
 	
 	// Update is called once per frame
@@ -49,7 +56,10 @@ public class AttributeUIGroup : MonoBehaviour {
 	public void SetAttribute(OSRIC_ATTRIBUTES oa, int value)
 	{
 		if(attributeContollerArray.Length<1)
+		{
+			Debug.Log("GAH!!!");
 			return;
+		}
 		foreach(AttributeUIController ac in attributeContollerArray)
 		{
 			if(ac.attributeEnum==oa)

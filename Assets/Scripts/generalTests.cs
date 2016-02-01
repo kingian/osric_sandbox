@@ -119,12 +119,10 @@ public class generalTests : MonoBehaviour {
 
 	void RandomizeCharactersAttributes(RPGCharacterModel charmod)
 	{
-		charmod.attributes.Str = randomizeAttribute();
-		charmod.attributes.Int = randomizeAttribute();
-		charmod.attributes.Dex = randomizeAttribute();
-		charmod.attributes.Con = randomizeAttribute();
-		charmod.attributes.Wis = randomizeAttribute();
-		charmod.attributes.Cha = randomizeAttribute();
+		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
+		{
+			charmod.attributes.SetAttribute(oa,randomizeAttribute());
+		}
 	}
 
 	int randomizeAttribute()

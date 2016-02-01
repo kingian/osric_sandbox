@@ -121,6 +121,16 @@ public enum OSRIC_GENDER
 	Female,
 }
 
+
+public struct CharacterOptionCollection
+{
+	public OSRIC_GENDER charGender;
+	public OSRIC_RACE charRace;
+	public OSRIC_CLASS charClass;
+	public OSRIC_ALIGNMENT charAlignment;
+	public string charName;
+}
+
 public struct AttributeAdjustment
 {
 	public string title;

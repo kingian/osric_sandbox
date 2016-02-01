@@ -2,9 +2,14 @@
 using System.Collections;
 
 [ExecuteInEditMode]
-public class OSRICAttributeModel : RPGAttributeModel {
-
+public class OSRICAttributeModel : RPGAttributeModel 
+{
+	public delegate void attributeUpdate();
+	public static event attributeUpdate attributeUpdateEvent;
 	public RPGCharacterModel cm;
+
+
+	public string characterName;
 
 	//Attributes
 	public int Str;
@@ -23,14 +28,20 @@ public class OSRICAttributeModel : RPGAttributeModel {
 	public OSRIC_CLASS characterClass;
 	public OSRIC_ALIGNMENT characterAlignment;
 
-
-
-
+	void attUpdate()
+	{
+		if(attributeUpdateEvent!=null)
+		{
+			attributeUpdateEvent();
+		}
+	}
+	
 	void Awake ()
 	{
 
 		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
 	}
+	
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +49,18 @@ public class OSRICAttributeModel : RPGAttributeModel {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+	}
+
+
+	void UpdateCharacterOptions(CharacterOptionCollection coc)
+	{
+		characterRace = coc.charRace;
+		characterClass = coc.charClass;
+		characterAlignment = coc.charAlignment;
+		characterGender = coc.charGender;
+
+		attUpdate();
 	}
 
 	public int GetAttribute(OSRIC_ATTRIBUTES oa)
@@ -59,6 +81,50 @@ public class OSRICAttributeModel : RPGAttributeModel {
 			return Cha;
 		default:
 			return -1;
+		}
+	}
+
+	public void SetAttribute(OSRIC_ATTRIBUTES oa, int val)
+	{
+		switch(oa)
+		{
+		case OSRIC_ATTRIBUTES.Strength:
+		{
+			Str = val;
+			attUpdate();
+			break;
+		}
+		case OSRIC_ATTRIBUTES.Dexterity:
+		{
+			Dex = val;
+			attUpdate();
+			break;
+		}
+		case OSRIC_ATTRIBUTES.Constitution:
+		{
+			Con = val;
+			attUpdate();
+			break;
+		}
+		case OSRIC_ATTRIBUTES.Intellegence:
+		{
+			Int = val;
+			attUpdate();
+			break;
+		}
+		case OSRIC_ATTRIBUTES.Wisdom:
+		{
+			Wis = val;
+			break;
+		}
+		case OSRIC_ATTRIBUTES.Charisma:
+		{
+			Cha = val;
+			attUpdate();
+			break;
+		}
+		default:
+			return;
 		}
 	}
 }

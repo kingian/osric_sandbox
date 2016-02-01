@@ -1,10 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UIScripts/AttributeUIGroup.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UIScripts/CharacterSheetUIController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Services/RPGTableReader.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UIScripts/AttributeUIGroup.cs" Line="54" Column="4" />
+      <File FileName="Assets/Scripts/UIScripts/AttributeUIGroup.cs" Line="11" Column="7" />
       <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICEngine.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UIScripts/CharacterSheetUIController.cs" Line="55" Column="67" />
+      <File FileName="Assets/Scripts/UIScripts/AttributeUIController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/generalTests.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICAttributeModel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICConstants.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
