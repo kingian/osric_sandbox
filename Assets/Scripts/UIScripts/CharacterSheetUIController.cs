@@ -6,9 +6,7 @@ using System.Collections.Generic;
 
 
 public class CharacterSheetUIController : MonoBehaviour {
-
-	public delegate void characterOptionsUIAction();
-	public static event characterOptionsUIAction CharacterOptionsUpdatedEvent;
+	
 
 	public AttributeUIGroup attributeGroup;
 	public RPGCharacterModel charModel;
@@ -19,36 +17,39 @@ public class CharacterSheetUIController : MonoBehaviour {
 	public Dropdown alignmentDrop;
 
 	
+	
 
-
-	void charOptUpdate()
+	public void UpdateAttributeModelOptions()
 	{
-		if(CharacterOptionsUpdatedEvent!=null)
-		{
-			CharacterOptionsUpdatedEvent();
-		}
-		GetCurrentCharacterOptionsState();
-	}
 
-	public CharacterOptionCollection GetCurrentCharacterOptionsState()
-	{
-		CharacterOptionCollection retCol = new CharacterOptionCollection();
 		string gen = genderDrop.options[genderDrop.value].text;
 		string race = raceDrop.options[raceDrop.value].text;
 		string clas = classDrop.options[classDrop.value].text;
 		string alignment = alignmentDrop.options[alignmentDrop.value].text;
 		Debug.Log("State Change: " + " " + gen + " " + race + " " + clas + " " + alignment);
+
+		charModel.attributes.UpdateCharacterOptions(GetCharacterOptionsFromDrops());
+
+	}
+
+	public CharacterOptionCollection GetCharacterOptionsFromDrops()
+	{
+		CharacterOptionCollection retCol = new CharacterOptionCollection();
+		retCol.charGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
+		retCol.charRace = OSRICConstants.GetEnum<OSRIC_RACE>(raceDrop.options[raceDrop.value].text);
+		retCol.charClass = OSRICConstants.GetEnum<OSRIC_CLASS>(classDrop.options[classDrop.value].text);
+		retCol.charAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);
 		return retCol;
 	}
-	
+
 
 	void OnEnable()
 	{
 		OSRICAttributeModel.attributeUpdateEvent += UpdateCharacterViewInformation;
-		genderDrop.onValueChanged.AddListener(delegate {charOptUpdate();});
-		raceDrop.onValueChanged.AddListener(delegate {charOptUpdate();});
-		classDrop.onValueChanged.AddListener(delegate {charOptUpdate();});
-		alignmentDrop.onValueChanged.AddListener(delegate {charOptUpdate();});
+		genderDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
+		raceDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
+		classDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
+		alignmentDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
 	}
 
 	void OnDisable()
@@ -76,11 +77,6 @@ public class CharacterSheetUIController : MonoBehaviour {
 	void Start () 
 	{
 		UpdateCharacterViewInformation();
-		ClearAllDropdowns();
-		SetRaceOptions();
-		SetGenderOptions();
-		SetAlignmentOptions();
-		SetClassOptions();
 	}
 	
 	// Update is called once per frame
@@ -90,6 +86,11 @@ public class CharacterSheetUIController : MonoBehaviour {
 	void UpdateCharacterViewInformation()
 	{
 		UpdateAttributeViewInformation(charModel.attributes);
+		ClearAllDropdowns();
+		SetRaceOptions();
+		SetGenderOptions();
+		SetAlignmentOptions();
+		SetClassOptions();
 	}
 
 
@@ -112,12 +113,23 @@ public class CharacterSheetUIController : MonoBehaviour {
 		alignmentDrop.options.Clear();
 	}
 
+	int GetOptionPosition(Dropdown drop, string searchTerm)
+	{
+		foreach(Dropdown.OptionData opt in drop.options)
+		{
+			if(opt.text==searchTerm)
+				return drop.options.IndexOf(opt);
+		}
+		return -1;
+	}
+
 	void SetRaceOptions()
 	{
 		foreach(OSRIC_RACE or in engine.AvailableRaces(charModel.attributes))
 		{
 			raceDrop.options.Add(new Dropdown.OptionData(or.GetDesc()));
 		}
+		raceDrop.value = GetOptionPosition(raceDrop,charModel.attributes.characterRace.GetDesc());
 	}
 
 	void SetGenderOptions()
@@ -126,6 +138,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 		{
 			genderDrop.options.Add(new Dropdown.OptionData(og.GetDesc()));
 		}
+		genderDrop.value = GetOptionPosition(genderDrop,charModel.attributes.characterGender.GetDesc());
 	}
 
 	void SetAlignmentOptions()
@@ -134,6 +147,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 		{
 			alignmentDrop.options.Add(new Dropdown.OptionData(oa.GetDesc()));
 		}
+		alignmentDrop.value = GetOptionPosition(alignmentDrop,charModel.attributes.characterAlignment.GetDesc());
 	}
 
 	void SetClassOptions()
@@ -146,7 +160,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 		{
 			classDrop.options.Add(new Dropdown.OptionData(oc.GetDesc()));
 		}
-
+		classDrop.value = GetOptionPosition(classDrop,charModel.attributes.characterClass.GetDesc());
 	}
 
 }

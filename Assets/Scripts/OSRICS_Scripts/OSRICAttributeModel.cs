@@ -53,7 +53,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	}
 
 
-	void UpdateCharacterOptions(CharacterOptionCollection coc)
+	public void UpdateCharacterOptions(CharacterOptionCollection coc)
 	{
 		characterRace = coc.charRace;
 		characterClass = coc.charClass;

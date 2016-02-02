@@ -154,9 +154,11 @@ public struct EnumAttributePair
 	}
 }
 
+
+
 public static class OSRICConstants
 {
-
+	
 	public static T GetAttributeOfType<T>(this Enum enumVal) where T:System.Attribute
 	{
 		var type = enumVal.GetType();
@@ -171,6 +173,30 @@ public static class OSRICConstants
 		var attribute = enumValue.GetAttributeOfType<DescriptionAttribute>();
 		
 		return attribute == null ? String.Empty : attribute.Description;
-	} 
+	}
+
+
+	public static T GetEnum<T>(string description)
+	{
+		var type = typeof(T);
+		if(!type.IsEnum) throw new InvalidOperationException();
+		foreach(var field in type.GetFields())
+		{
+			var attribute = Attribute.GetCustomAttribute(field,
+			                                             typeof(DescriptionAttribute)) as DescriptionAttribute;
+			if(attribute != null)
+			{
+				if(attribute.Description == description)
+					return (T)field.GetValue(null);
+			}
+			else
+			{
+				if(field.Name == description)
+					return (T)field.GetValue(null);
+			}
+		}
+		throw new ArgumentException("Not found.", "description");
+		// or return default(T);
+	}
 
 }
