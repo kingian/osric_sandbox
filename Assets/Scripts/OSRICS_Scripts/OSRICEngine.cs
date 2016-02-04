@@ -217,7 +217,6 @@ public class OSRICEngine : MonoBehaviour {
 	public HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
-		int val;
 		bool addClass;
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))

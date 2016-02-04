@@ -98,9 +98,49 @@ public class CharacterSheetUIController : MonoBehaviour {
 	{
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
-			Debug.Log( oa.GetDesc() + oam.GetAttribute(oa));
-			attributeGroup.SetAttribute(oa,oam.GetAttribute(oa));
+//			Debug.Log( oa.GetDesc() + oam.GetAttribute(oa));
+			int currentAtt = oam.GetAttribute(oa);
+			string subtext = GetAttributeAdjustments(oa,currentAtt);
+			attributeGroup.SetAttribute(oa,currentAtt,subtext);
 		}
+	}
+
+	string GetAttributeAdjustments(OSRIC_ATTRIBUTES oa, int val)
+	{
+		string retStr="";
+		AttributeAdjustment[] attCollector;
+		switch(oa)
+		{
+		case OSRIC_ATTRIBUTES.Strength:
+			attCollector = engine.GetStrengthAdjustments(val);
+			break;
+		case OSRIC_ATTRIBUTES.Dexterity:
+			attCollector = engine.GetDexterityAdjustments(val);
+			break;
+		case OSRIC_ATTRIBUTES.Constitution:
+			attCollector = engine.GetConstitutionAdjustments(val);
+			break;
+		case OSRIC_ATTRIBUTES.Intellegence:
+			attCollector = engine.GetIntelligenceAdjustments(val);
+			break;
+		case OSRIC_ATTRIBUTES.Wisdom:
+			attCollector = engine.GetWisdomAdjustments(val);
+			break;
+		case OSRIC_ATTRIBUTES.Charisma:
+			attCollector = engine.GetCharismaAdjustments(val);
+			break;
+		default:
+			attCollector = new AttributeAdjustment[0];
+			break;
+		}
+		if(attCollector.Length>0)
+		{
+			retStr = attCollector[0].title + ": " + attCollector[0].adjustment;
+			for(int i=1;i<attCollector.Length;i++)
+				retStr += " " + attCollector[i].title + ": " + attCollector[i].adjustment;
+
+		}
+		return retStr;
 	}
 
 	// DROP DOWN SECTION

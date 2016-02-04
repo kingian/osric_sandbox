@@ -11,14 +11,14 @@ public class AttributeUIGroup : MonoBehaviour {
 	void Awake()
 	{
 		attributeContollerArray = gameObject.GetComponentsInChildren<AttributeUIController>();
-		OrderAttributeElements();
+// 		OrderAttributeElements();
 
 	}
 
 	// Use this for initialization
 	void Start () {
 //		attributeContollerArray = gameObject.GetComponentsInChildren<AttributeUIController>();
-//		OrderAttributeElements();
+		OrderAttributeElements();
 	}
 	
 	// Update is called once per frame
@@ -28,6 +28,8 @@ public class AttributeUIGroup : MonoBehaviour {
 
 	void OrderAttributeElements()
 	{
+		Vector3 groupPos = new Vector3(-250f,145f);
+		gameObject.transform.localPosition = groupPos;
 		float yOffset = 0f;
 		Vector3 currentPos;
 		GameObject currentGO;
@@ -37,7 +39,7 @@ public class AttributeUIGroup : MonoBehaviour {
 			currentPos =  currentGO.transform.position;
 			currentPos.y += yOffset;
 			currentGO.transform.position = currentPos;
-			yOffset -= 25f;
+			yOffset -= 50f;
 		}
 	}
 
@@ -53,17 +55,20 @@ public class AttributeUIGroup : MonoBehaviour {
 		return null;
 	}
 
-	public void SetAttribute(OSRIC_ATTRIBUTES oa, int value)
+	public void SetAttribute(OSRIC_ATTRIBUTES oa, int value, string subtext)
 	{
 		if(attributeContollerArray.Length<1)
 		{
-			Debug.Log("GAH!!!");
 			return;
 		}
 		foreach(AttributeUIController ac in attributeContollerArray)
 		{
 			if(ac.attributeEnum==oa)
+			{
 				ac.SetAttributeValue(value);
+				ac.SetAttributeSubtext(subtext);
+			}
 		}
 	}
+		
 }

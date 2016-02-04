@@ -117,7 +117,7 @@ public class generalTests : MonoBehaviour {
 	
 	}
 
-	void RandomizeCharactersAttributes(RPGCharacterModel charmod)
+	public void RandomizeCharactersAttributes(RPGCharacterModel charmod)
 	{
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
@@ -132,8 +132,9 @@ public class generalTests : MonoBehaviour {
 		rolls.Add(UnityEngine.Random.Range(1,6));
 		rolls.Add(UnityEngine.Random.Range(1,6));
 		rolls.Add(UnityEngine.Random.Range(1,6));
+		rolls.Add(UnityEngine.Random.Range(1,6));
 		rolls.Sort();
-		rolls.RemoveAt(0);
+		rolls.RemoveRange(0,2);
 
 		int valout = 0;
 
@@ -142,7 +143,8 @@ public class generalTests : MonoBehaviour {
 
 		
 
-		return valout;
+//		return valout;
+		return UnityEngine.Random.Range(3,18);
 	}
 
 
