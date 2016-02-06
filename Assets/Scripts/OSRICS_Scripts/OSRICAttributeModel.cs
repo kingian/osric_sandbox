@@ -23,10 +23,10 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int armorClass;
 	public int[] level;
 	public int experiencePoints;
-	public OSRIC_GENDER characterGender;
-	public OSRIC_RACE characterRace;
-	public OSRIC_CLASS characterClass;
-	public OSRIC_ALIGNMENT characterAlignment;
+	public OSRIC_GENDER characterGender = OSRIC_GENDER.Male;
+	public OSRIC_RACE characterRace = OSRIC_RACE.Human;
+	public OSRIC_CLASS characterClass = OSRIC_CLASS.None;
+	public OSRIC_ALIGNMENT characterAlignment = OSRIC_ALIGNMENT.Neutral;
 
 	void attUpdate()
 	{
@@ -55,10 +55,12 @@ public class OSRICAttributeModel : RPGAttributeModel
 
 	public void UpdateCharacterOptions(CharacterOptionCollection coc)
 	{
+		OSRICEngine.RemoveRaceAdjustments(this);
 		characterRace = coc.charRace;
-		characterClass = coc.charClass;
+		OSRICEngine.AddRaceAdjustments(this,characterRace);
 		characterAlignment = coc.charAlignment;
 		characterGender = coc.charGender;
+		characterClass = coc.charClass;
 
 		attUpdate();
 	}
@@ -115,6 +117,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 		case OSRIC_ATTRIBUTES.Wisdom:
 		{
 			Wis = val;
+			attUpdate();
 			break;
 		}
 		case OSRIC_ATTRIBUTES.Charisma:

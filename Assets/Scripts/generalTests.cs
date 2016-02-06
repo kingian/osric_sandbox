@@ -29,7 +29,7 @@ public class generalTests : MonoBehaviour {
 	{
 		engine.init();
 		testChar = FindObjectOfType<RPGCharacterModel>();
-		RandomizeCharactersAttributes(testChar);
+		engine.RandomizeCharactersAttributes(testChar);
 		int i;
 		AttributeAdjustment temp;
 		string outStr = "Str:" + testChar.attributes.Str.ToString();
@@ -38,11 +38,11 @@ public class generalTests : MonoBehaviour {
 			temp = engine.GetStrengthAdjustments(testChar.attributes.Str)[i];
 			outStr += " " + temp.title + ":" + temp.adjustment.ToString();
 		}
-		Debug.Log(outStr);
+//		Debug.Log(outStr);
 		outStr = "";
 
 		temp = engine.GetIntelligenceAdjustments(testChar.attributes.Int)[0];
-		Debug.Log( "Int: " + testChar.attributes.Int + " " + temp.title + ":" + temp.adjustment);
+//		Debug.Log( "Int: " + testChar.attributes.Int + " " + temp.title + ":" + temp.adjustment);
 
 
 		outStr = "Dex:" + testChar.attributes.Dex.ToString();
@@ -51,7 +51,7 @@ public class generalTests : MonoBehaviour {
 			temp = engine.GetDexterityAdjustments(testChar.attributes.Dex)[i];
 			outStr += " " + temp.title + ":" + temp.adjustment.ToString();
 		}
-		Debug.Log(outStr);
+//		Debug.Log(outStr);
 		outStr = "";
 
 		outStr = "Wis:" + testChar.attributes.Wis.ToString();
@@ -60,7 +60,7 @@ public class generalTests : MonoBehaviour {
 			temp = engine.GetWisdomAdjustments(testChar.attributes.Wis)[i];
 			outStr += " " + temp.title + ":" + temp.adjustment.ToString();
 		}
-		Debug.Log(outStr);
+//		Debug.Log(outStr);
 		outStr = "";
 
 		outStr = "Con:" + testChar.attributes.Con.ToString();
@@ -69,7 +69,7 @@ public class generalTests : MonoBehaviour {
 			temp = engine.GetConstitutionAdjustments(testChar.attributes.Con)[i];
 			outStr += " " + temp.title + ":" + temp.adjustment.ToString();
 		}
-		Debug.Log(outStr);
+//		Debug.Log(outStr);
 		outStr = "";
 
 		outStr = "Cha:" + testChar.attributes.Cha.ToString();
@@ -78,13 +78,13 @@ public class generalTests : MonoBehaviour {
 			temp = engine.GetCharismaAdjustments(testChar.attributes.Cha)[i];
 			outStr += " " + temp.title + ":" + temp.adjustment.ToString();
 		}
-		Debug.Log(outStr);
+//		Debug.Log(outStr);
 		outStr = "";
 
 		foreach(OSRIC_RACE or in engine.AvailableRaces(testChar.attributes))
 			outStr += or.GetDesc() + " : ";
 
-		Debug.Log(outStr);
+//		Debug.Log(outStr);
 		outStr = "by attributes: ";
 
 		foreach(OSRIC_CLASS oc in engine.AvailableClassesByAttributes(testChar.attributes))
@@ -117,35 +117,6 @@ public class generalTests : MonoBehaviour {
 	
 	}
 
-	public void RandomizeCharactersAttributes(RPGCharacterModel charmod)
-	{
-		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
-		{
-			charmod.attributes.SetAttribute(oa,randomizeAttribute());
-		}
-	}
-
-	int randomizeAttribute()
-	{
-		List<int> rolls = new List<int>();
-		rolls.Add(UnityEngine.Random.Range(1,6));
-		rolls.Add(UnityEngine.Random.Range(1,6));
-		rolls.Add(UnityEngine.Random.Range(1,6));
-		rolls.Add(UnityEngine.Random.Range(1,6));
-		rolls.Add(UnityEngine.Random.Range(1,6));
-		rolls.Sort();
-		rolls.RemoveRange(0,2);
-
-		int valout = 0;
-
-		foreach(int i in rolls)
-			valout += i;
-
-		
-
-//		return valout;
-		return UnityEngine.Random.Range(3,18);
-	}
 
 
 

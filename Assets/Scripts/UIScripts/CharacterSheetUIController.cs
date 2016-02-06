@@ -21,14 +21,8 @@ public class CharacterSheetUIController : MonoBehaviour {
 
 	public void UpdateAttributeModelOptions()
 	{
-
-		string gen = genderDrop.options[genderDrop.value].text;
-		string race = raceDrop.options[raceDrop.value].text;
-		string clas = classDrop.options[classDrop.value].text;
-		string alignment = alignmentDrop.options[alignmentDrop.value].text;
-		Debug.Log("State Change: " + " " + gen + " " + race + " " + clas + " " + alignment);
-
-		charModel.attributes.UpdateCharacterOptions(GetCharacterOptionsFromDrops());
+		CharacterOptionCollection attCol = GetCharacterOptionsFromDrops();
+		charModel.attributes.UpdateCharacterOptions(attCol);
 
 	}
 
@@ -87,9 +81,9 @@ public class CharacterSheetUIController : MonoBehaviour {
 	{
 		UpdateAttributeViewInformation(charModel.attributes);
 		ClearAllDropdowns();
-		SetRaceOptions();
 		SetGenderOptions();
 		SetAlignmentOptions();
+		SetRaceOptions();
 		SetClassOptions();
 	}
 
@@ -200,6 +194,10 @@ public class CharacterSheetUIController : MonoBehaviour {
 		{
 			classDrop.options.Add(new Dropdown.OptionData(oc.GetDesc()));
 		}
+
+		if(!race.Contains(charModel.attributes.characterClass))
+			charModel.attributes.characterClass = OSRIC_CLASS.None;
+
 		classDrop.value = GetOptionPosition(classDrop,charModel.attributes.characterClass.GetDesc());
 	}
 

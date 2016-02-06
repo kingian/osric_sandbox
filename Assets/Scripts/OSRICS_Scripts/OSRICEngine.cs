@@ -214,13 +214,18 @@ public class OSRICEngine : MonoBehaviour {
 		return retSet;
 	}
 
-	public HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
+	public  HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
 		bool addClass;
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
 		{
+			if(oc == OSRIC_CLASS.None)
+			{
+				retSet.Add(oc);
+				continue;
+			}
 			int classIndex = classMinimums.GetYIndexOf(oc.GetDesc());
 			addClass = true;
 			foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
@@ -234,7 +239,7 @@ public class OSRICEngine : MonoBehaviour {
 		return retSet;
 	}
 
-	public HashSet<OSRIC_CLASS> AvailableClassesByRace(OSRICAttributeModel _atm)
+	public  HashSet<OSRIC_CLASS> AvailableClassesByRace(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
 		bool available;
@@ -242,6 +247,11 @@ public class OSRICEngine : MonoBehaviour {
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
 		{
+			if(oc==OSRIC_CLASS.None)
+			{
+				retSet.Add(oc);
+				continue;
+			}
 			available = raceClassMatrix.GetValue(_atm.characterRace.GetDesc(),raceClassMatrix.GetYIndexOf(oc.GetDesc()));
 			if(available)
 				retSet.Add(oc);
@@ -251,4 +261,92 @@ public class OSRICEngine : MonoBehaviour {
 
 		return retSet;
 	}
+
+	public void RandomizeCharactersAttributes(RPGCharacterModel charmod)
+	{
+		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
+		{
+			charmod.attributes.SetAttribute(oa,randomizeAttribute());
+		}
+
+		if(!AreAttributesViable(charmod.attributes))
+			RandomizeCharactersAttributes(charmod);
+	}
+
+
+	public bool AreAttributesViable(OSRICAttributeModel oam)
+	{
+		if(AvailableClassesByAttributes(oam).Count>1)
+			return true;	
+		return false;
+	}
+
+	public int randomizeAttribute()
+	{
+		return UnityEngine.Random.Range(3,18);
+	}
+
+
+	public static void RemoveRaceAdjustments(OSRICAttributeModel oam)
+	{
+		OSRIC_RACE or = oam.characterRace;
+		switch(or)
+		{
+		case OSRIC_RACE.Dwarf:
+			oam.Con -= 1;
+			oam.Cha += 1;
+			break;
+		case OSRIC_RACE.Elf:
+			oam.Dex -= 1;
+			oam.Con += 1;
+			break;
+		case OSRIC_RACE.Gnome:
+			break;
+		case OSRIC_RACE.HalfElf:
+			break;
+		case OSRIC_RACE.Halfling:
+			oam.Dex -= 1;
+			oam.Str += 1;
+			break;
+		case OSRIC_RACE.HalfOrc:
+			oam.Str -= 1;
+			oam.Con -= 1;
+			oam.Cha += 2;
+			break;
+		case OSRIC_RACE.Human:
+			break;
+		}
+	}
+
+	public static void AddRaceAdjustments(OSRICAttributeModel oam, OSRIC_RACE newOR)
+	{
+		int modVal;
+		switch(newOR)
+		{
+		case OSRIC_RACE.Dwarf:
+			oam.Con += 1;
+			oam.Cha -= 1;
+			break;
+		case OSRIC_RACE.Elf:
+			oam.Dex += 1;
+			oam.Con -= 1;
+			break;
+		case OSRIC_RACE.Gnome:
+			break;
+		case OSRIC_RACE.HalfElf:
+			break;
+		case OSRIC_RACE.Halfling:
+			oam.Dex += 1;
+			oam.Str -= 1;
+			break;
+		case OSRIC_RACE.HalfOrc:
+			oam.Str += 1;
+			oam.Con += 1;
+			oam.Cha -= 2;
+			break;
+		case OSRIC_RACE.Human:
+			break;
+		}
+	}
+
 }

@@ -44,6 +44,8 @@ public enum OSRIC_RACE
 
 public enum OSRIC_CLASS
 {
+	[Description("None")]
+	None,
 	[Description("Thief")]
 	Thief,
 	[Description("Assassin")]
