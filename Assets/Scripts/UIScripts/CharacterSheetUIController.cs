@@ -22,6 +22,8 @@ public class CharacterSheetUIController : MonoBehaviour {
 	public void UpdateAttributeModelOptions()
 	{
 		CharacterOptionCollection attCol = GetCharacterOptionsFromDrops();
+		if(!engine.VerifyOptionCollection(attCol))
+			attCol.charClass = OSRIC_CLASS.None;
 		charModel.attributes.UpdateCharacterOptions(attCol);
 
 	}
@@ -30,6 +32,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 	{
 		CharacterOptionCollection retCol = new CharacterOptionCollection();
 		retCol.charGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
+		Debug.Log("options from drop: " + raceDrop.value);
 		retCol.charRace = OSRICConstants.GetEnum<OSRIC_RACE>(raceDrop.options[raceDrop.value].text);
 		retCol.charClass = OSRICConstants.GetEnum<OSRIC_CLASS>(classDrop.options[classDrop.value].text);
 		retCol.charAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);

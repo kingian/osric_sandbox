@@ -264,6 +264,7 @@ public class OSRICEngine : MonoBehaviour {
 
 	public void RandomizeCharactersAttributes(RPGCharacterModel charmod)
 	{
+
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
 			charmod.attributes.SetAttribute(oa,randomizeAttribute());
@@ -349,4 +350,23 @@ public class OSRICEngine : MonoBehaviour {
 		}
 	}
 
+	public bool VerifyOptionCollection (CharacterOptionCollection coc)
+	{
+		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS> ();
+		bool available;
+		foreach (OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS))) {
+			if (oc == OSRIC_CLASS.None) 
+			{
+				retSet.Add (oc);
+				continue;
+			}
+			available = raceClassMatrix.GetValue (coc.charRace.GetDesc(), raceClassMatrix.GetYIndexOf (oc.GetDesc ()));
+			if (available)
+				retSet.Add (oc);
+		}
+
+		if (retSet.Contains (coc.charClass))
+			return true;
+		return false;
+	}
 }
