@@ -42,7 +42,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 
 	void OnEnable()
 	{
-		OSRICAttributeModel.attributeUpdateEvent += UpdateCharacterViewInformation;
+		OSRICAttributeModel.BaseAttributeDidChange += UpdateCharacterViewInformation;
 		genderDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
 		raceDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
 		classDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
@@ -51,7 +51,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 
 	void OnDisable()
 	{
-		OSRICAttributeModel.attributeUpdateEvent -= UpdateCharacterViewInformation;
+		OSRICAttributeModel.BaseAttributeDidChange -= UpdateCharacterViewInformation;
 		genderDrop.onValueChanged.RemoveAllListeners();
 		raceDrop.onValueChanged.RemoveAllListeners();
 		classDrop.onValueChanged.RemoveAllListeners();
@@ -96,7 +96,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
 //			Debug.Log( oa.GetDesc() + oam.GetAttribute(oa));
-			int currentAtt = oam.GetAttribute(oa);
+			int currentAtt = oam.GetAttributeTotal(oa);
 			string subtext = GetAttributeAdjustments(oa,currentAtt);
 			attributeGroup.SetAttribute(oa,currentAtt,subtext);
 		}

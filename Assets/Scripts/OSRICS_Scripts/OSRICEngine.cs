@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+//using OSRICConstants;
+
 public class OSRICEngine : MonoBehaviour {
 
 	private RPGBaseTable<int> _attributeTable;
@@ -230,7 +232,7 @@ public class OSRICEngine : MonoBehaviour {
 			addClass = true;
 			foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 			{
-				if(_atm.GetAttribute(oa)<classMinimums.GetValue(oa.GetDesc(),classIndex))
+				if(_atm.GetBaseAttribute(oa)<classMinimums.GetValue(oa.GetDesc(),classIndex))
 					addClass = false;
 			}
 			if(addClass)
@@ -267,7 +269,7 @@ public class OSRICEngine : MonoBehaviour {
 
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
-			charmod.attributes.SetAttribute(oa,randomizeAttribute());
+			charmod.attributes.SetBaseAttribute(oa,randomizeAttribute());
 		}
 
 		if(!AreAttributesViable(charmod.attributes))
@@ -289,65 +291,97 @@ public class OSRICEngine : MonoBehaviour {
 
 
 	public static void RemoveRaceAdjustments(OSRICAttributeModel oam)
-	{
-		OSRIC_RACE or = oam.characterRace;
-		switch(or)
-		{
-		case OSRIC_RACE.Dwarf:
-			oam.Con -= 1;
-			oam.Cha += 1;
-			break;
-		case OSRIC_RACE.Elf:
-			oam.Dex -= 1;
-			oam.Con += 1;
-			break;
-		case OSRIC_RACE.Gnome:
-			break;
-		case OSRIC_RACE.HalfElf:
-			break;
-		case OSRIC_RACE.Halfling:
-			oam.Dex -= 1;
-			oam.Str += 1;
-			break;
-		case OSRIC_RACE.HalfOrc:
-			oam.Str -= 1;
-			oam.Con -= 1;
-			oam.Cha += 2;
-			break;
-		case OSRIC_RACE.Human:
-			break;
-		}
+	{	
+		oam.ClearRacialModifiers ();
+
+//		OSRIC_RACE or = oam.characterRace;
+//		switch(or)
+//		{
+//		case OSRIC_RACE.Dwarf:
+//			oam.Con -= 1;
+//			oam.Cha += 1;
+//			break;
+//		case OSRIC_RACE.Elf:
+//			oam.Dex -= 1;
+//			oam.Con += 1;
+//			break;
+//		case OSRIC_RACE.Gnome:
+//			break;
+//		case OSRIC_RACE.HalfElf:
+//			break;
+//		case OSRIC_RACE.Halfling:
+//			oam.Dex -= 1;
+//			oam.Str += 1;
+//			break;
+//		case OSRIC_RACE.HalfOrc:
+//			oam.Str -= 1;
+//			oam.Con -= 1;
+//			oam.Cha += 2;
+//			break;
+//		case OSRIC_RACE.Human:
+//			break;
+//		}
 	}
 
 	public static void AddRaceAdjustments(OSRICAttributeModel oam, OSRIC_RACE newOR)
-	{
-		int modVal;
+	{	
+		OSRICAttributeModifier first_modifier = new OSRICAttributeModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
+		OSRICAttributeModifier second_modifier = new OSRICAttributeModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
+		OSRICAttributeModifier third_modifier = new OSRICAttributeModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
+
+//		int modVal;
 		switch(newOR)
 		{
 		case OSRIC_RACE.Dwarf:
-			oam.Con += 1;
-			oam.Cha -= 1;
+			first_modifier.attribute = OSRIC_ATTRIBUTES.Constitution;
+			first_modifier.value = 1;
+			second_modifier.attribute = OSRIC_ATTRIBUTES.Charisma;
+			second_modifier.value = -1;
+//			oam.Con += 1;
+//			oam.Cha -= 1;
 			break;
 		case OSRIC_RACE.Elf:
-			oam.Dex += 1;
-			oam.Con -= 1;
+			first_modifier.attribute = OSRIC_ATTRIBUTES.Dexterity;
+			first_modifier.value = 1;
+			second_modifier.attribute = OSRIC_ATTRIBUTES.Constitution;
+			second_modifier.value = -1;
+//			oam.Dex += 1;
+//			oam.Con -= 1;
 			break;
 		case OSRIC_RACE.Gnome:
 			break;
 		case OSRIC_RACE.HalfElf:
 			break;
 		case OSRIC_RACE.Halfling:
-			oam.Dex += 1;
-			oam.Str -= 1;
+			first_modifier.attribute = OSRIC_ATTRIBUTES.Dexterity;
+			first_modifier.value = 1;
+			second_modifier.attribute = OSRIC_ATTRIBUTES.Strength;
+			second_modifier.value = -1;
+//			oam.Dex += 1;
+//			oam.Str -= 1;
 			break;
 		case OSRIC_RACE.HalfOrc:
-			oam.Str += 1;
-			oam.Con += 1;
-			oam.Cha -= 2;
+			first_modifier.attribute = OSRIC_ATTRIBUTES.Strength;
+			first_modifier.value = 1;
+			second_modifier.attribute = OSRIC_ATTRIBUTES.Constitution;
+			second_modifier.value = 1;
+			third_modifier.attribute = OSRIC_ATTRIBUTES.Charisma;
+			third_modifier.value = -2;
+//			oam.Str += 1;
+//			oam.Con += 1;
+//			oam.Cha -= 2;
 			break;
 		case OSRIC_RACE.Human:
 			break;
 		}
+
+		if (first_modifier.value != 0)
+			oam.AddRacialModifier (first_modifier);
+		if (second_modifier.value != 0)
+			oam.AddRacialModifier (second_modifier);
+		if (third_modifier.value != 0)
+			oam.AddRacialModifier (third_modifier);
+		
 	}
 
 	public bool VerifyOptionCollection (CharacterOptionCollection coc)

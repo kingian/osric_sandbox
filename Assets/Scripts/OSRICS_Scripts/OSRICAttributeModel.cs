@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+//using OSRICAttributeModifier;
 
-[ExecuteInEditMode]
+[ExecuteInEditMode]//you only need execute in edit mod if you need to continously call the update/lateupdate type events. it'll run if called regardless
 public class OSRICAttributeModel : RPGAttributeModel 
-{
-	public delegate void attributeUpdate();
-	public static event attributeUpdate attributeUpdateEvent;
+{	
+	//for when a reroll, or manual attribute change happens
+	public delegate void baseAttributeDidChange();
+	public static event baseAttributeDidChange BaseAttributeDidChange;
+	//for when someone chooses a new race, or maybe magic changes it for them
+	public delegate void racialModifierDidChange();
+	public static event racialModifierDidChange RacialModifierDidChange;
+	//your global hook for any attribute change, use sparingly
+	public delegate void attributeModelDidChange();
+	public static event attributeModelDidChange AttributeModelDidChange;
 	public RPGCharacterModel cm;
 
 
@@ -28,17 +37,28 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public OSRIC_CLASS characterClass = OSRIC_CLASS.None;
 	public OSRIC_ALIGNMENT characterAlignment = OSRIC_ALIGNMENT.Neutral;
 
-	void attUpdate()
+	public List<OSRICAttributeModifier> racial_modifiers;
+
+	void BroadcastBaseAttributeDidChange()
 	{
-		if(attributeUpdateEvent!=null)
-		{
-			attributeUpdateEvent();
-		}
+		if(BaseAttributeDidChange!=null)
+			BaseAttributeDidChange();
+	}
+	void BroadcastRacialAttributeDidChange()
+	{
+		if(RacialModifierDidChange!=null)
+			RacialModifierDidChange();
+	}
+	//in the past, as a cleanup step, i might call the global event from the specific events, but that can cause spaghett so i usually wait
+	void BroadcastAttributeModelDidChange()
+	{
+		if(AttributeModelDidChange!=null)
+			AttributeModelDidChange();
 	}
 	
 	void Awake ()
 	{
-
+		racial_modifiers = new List<OSRICAttributeModifier> ();
 		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
 	}
 	
@@ -53,19 +73,103 @@ public class OSRICAttributeModel : RPGAttributeModel
 	}
 
 
+	//we should be able to take this boilerplate and slim it down,but it's whatevs
+	public int StrTotal(){
+		//racial bonuses
+		int racial_bonus = 0;
+		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+			if (mod.attribute == OSRIC_ATTRIBUTES.Strength)
+				racial_bonus += mod.value;
+		}
+		return this.Str + racial_bonus;
+	}
+
+	public int DexTotal(){
+		//racial bonuses
+		int racial_bonus = 0;
+		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+			if (mod.attribute == OSRIC_ATTRIBUTES.Dexterity)
+				racial_bonus += mod.value;
+		}
+		return this.Dex + racial_bonus;
+	}
+
+	public int ConTotal(){
+		//racial bonuses
+		int racial_bonus = 0;
+		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+			if (mod.attribute == OSRIC_ATTRIBUTES.Constitution)
+				racial_bonus += mod.value;
+		}
+		return this.Con + racial_bonus;
+	}
+
+	public int IntTotal(){
+		//racial bonuses
+		int racial_bonus = 0;
+		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+			if (mod.attribute == OSRIC_ATTRIBUTES.Intellegence)
+				racial_bonus += mod.value;
+		}
+		return this.Int + racial_bonus;
+	}
+
+	public int WisTotal(){
+		//racial bonuses
+		int racial_bonus = 0;
+		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+			if (mod.attribute == OSRIC_ATTRIBUTES.Wisdom)
+				racial_bonus += mod.value;
+		}
+		return this.Wis + racial_bonus;
+	}
+
+	public int ChaTotal(){
+		//racial bonuses
+		int racial_bonus = 0;
+		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+			if (mod.attribute == OSRIC_ATTRIBUTES.Charisma)
+				racial_bonus += mod.value;
+		}
+		return this.Cha + racial_bonus;
+	}
+
+
 	public void UpdateCharacterOptions(CharacterOptionCollection coc)
 	{
-		OSRICEngine.RemoveRaceAdjustments(this);
+		OSRICEngine.RemoveRaceAdjustments(this);//if we really need to call function on the engine from here we're probably in trouble and need to rethink a few things
 		characterRace = coc.charRace;
 		OSRICEngine.AddRaceAdjustments(this,characterRace);
 		characterAlignment = coc.charAlignment;
 		characterGender = coc.charGender;
 		characterClass = coc.charClass;
 
-		attUpdate();
+		BroadcastRacialAttributeDidChange();
+		BroadcastAttributeModelDidChange ();
 	}
 
-	public int GetAttribute(OSRIC_ATTRIBUTES oa)
+	public int GetAttributeTotal(OSRIC_ATTRIBUTES oa)
+	{
+		switch(oa)
+		{
+		case OSRIC_ATTRIBUTES.Strength:
+			return this.StrTotal();
+		case OSRIC_ATTRIBUTES.Dexterity:
+			return this.DexTotal();
+		case OSRIC_ATTRIBUTES.Constitution:
+			return this.ConTotal();
+		case OSRIC_ATTRIBUTES.Intellegence:
+			return this.IntTotal();
+		case OSRIC_ATTRIBUTES.Wisdom:
+			return this.WisTotal();
+		case OSRIC_ATTRIBUTES.Charisma:
+			return this.ChaTotal();
+		default:
+			return -1;
+		}
+	}
+
+	public int GetBaseAttribute(OSRIC_ATTRIBUTES oa)
 	{
 		switch(oa)
 		{
@@ -86,48 +190,59 @@ public class OSRICAttributeModel : RPGAttributeModel
 		}
 	}
 
-	public void SetAttribute(OSRIC_ATTRIBUTES oa, int val)
+	public void SetBaseAttribute(OSRIC_ATTRIBUTES oa, int val)
 	{
 		switch(oa)
 		{
 		case OSRIC_ATTRIBUTES.Strength:
 		{
 			Str = val;
-			attUpdate();
 			break;
 		}
 		case OSRIC_ATTRIBUTES.Dexterity:
 		{
 			Dex = val;
-			attUpdate();
 			break;
 		}
 		case OSRIC_ATTRIBUTES.Constitution:
 		{
 			Con = val;
-			attUpdate();
 			break;
 		}
 		case OSRIC_ATTRIBUTES.Intellegence:
 		{
 			Int = val;
-			attUpdate();
 			break;
 		}
 		case OSRIC_ATTRIBUTES.Wisdom:
 		{
 			Wis = val;
-			attUpdate();
 			break;
 		}
 		case OSRIC_ATTRIBUTES.Charisma:
 		{
 			Cha = val;
-			attUpdate();
 			break;
 		}
 		default:
 			return;
 		}
+
+		BroadcastBaseAttributeDidChange ();
+		BroadcastAttributeModelDidChange ();
+	}
+
+	//we could make this more generic and call it AddBaseAttributeModifier and store it all one list
+	public void AddRacialModifier(OSRICAttributeModifier modifier){
+		racial_modifiers.Add (modifier);
+		BroadcastRacialAttributeDidChange ();
+		BroadcastAttributeModelDidChange ();
+	}
+	//in this particular use case the only time we need to remove a racial modifier we can just remove all of them cause someone changed their race
+	//we dont want direct access to anything in the model, even its redundant, because enevitably we'll want to broadast events, or do cleanup, etc.
+	public void ClearRacialModifiers(){
+		racial_modifiers.Clear ();
+		BroadcastRacialAttributeDidChange();
+		BroadcastAttributeModelDidChange ();
 	}
 }
