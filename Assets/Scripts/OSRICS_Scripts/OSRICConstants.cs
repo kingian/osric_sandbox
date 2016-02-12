@@ -123,6 +123,42 @@ public enum OSRIC_GENDER
 	Female,
 }
 
+public enum OSRIC_ATTRIBUTE_MODIFIER_TYPE
+{
+	[Description("Unkown")]
+	Unkown,
+	[Description("Racial")]
+	Racial,
+	[Description("Item")]
+	Item,
+	[Description("Magical")]
+	Magical,
+	[Description("Divine")]
+	Divine,
+	[Description("Misc")]
+	Miscellenous
+}
+
+public enum OSRIC_CHARACTER_VARIABLES
+{
+	[Description("none")]
+	none,
+	[Description("attribute")]
+	attribute,
+	[Description("hit points")]
+	hitpoints,
+	[Description("armor class")]
+	armorclass,
+	[Description("melee THAC0")]
+	meleethac0,
+	[Description("missile THAC0")]
+	missilethac0,
+	[Description("saving throw")]
+	savingthrow,
+	[Description("vision")]
+	vision
+}
+
 
 public struct CharacterOptionCollection
 {

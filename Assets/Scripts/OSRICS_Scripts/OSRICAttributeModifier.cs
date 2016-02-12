@@ -7,23 +7,7 @@ using System.ComponentModel;
 //using OSRICConstants;
 
 
-public enum OSRIC_ATTRIBUTE_MODIFIER_TYPE
-{
 
-	[Description("Unkown")]
-	Unkown,
-	[Description("Racial")]
-	Racial,
-	[Description("Item")]
-	Item,
-	[Description("Magical")]
-	Magical,
-	[Description("Divine")]
-	Divine,
-	[Description("Misc")]
-	Miscellenous
-
-}
 
 
 public class OSRICAttributeModifier {
