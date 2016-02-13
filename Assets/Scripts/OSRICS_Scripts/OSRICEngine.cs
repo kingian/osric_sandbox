@@ -325,9 +325,9 @@ public class OSRICEngine : MonoBehaviour {
 
 	public static void AddRaceAdjustments(OSRICAttributeModel oam, OSRIC_RACE newOR)
 	{	
-		OSRICAttributeModifier first_modifier = new OSRICAttributeModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
-		OSRICAttributeModifier second_modifier = new OSRICAttributeModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
-		OSRICAttributeModifier third_modifier = new OSRICAttributeModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
+		OSRICCharacterModifier first_modifier = new OSRICCharacterModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
+		OSRICCharacterModifier second_modifier = new OSRICCharacterModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
+		OSRICCharacterModifier third_modifier = new OSRICCharacterModifier (OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 0);
 
 //		int modVal;
 		switch(newOR)

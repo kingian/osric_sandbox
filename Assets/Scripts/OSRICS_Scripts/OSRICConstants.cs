@@ -4,6 +4,17 @@ using System.Collections;
 using System.ComponentModel;
 
 
+public enum OSRIC_CHARACTER_STATE
+{
+	[Description("Editing")]
+	Editing,
+	[Description("Completed")]
+	Completed,
+	[Description("In Play")]
+	InPlay
+}
+;
+
 public enum OSRIC_ATTRIBUTES
 {
 	[Description("str")]
@@ -141,23 +152,39 @@ public enum OSRIC_ATTRIBUTE_MODIFIER_TYPE
 
 public enum OSRIC_CHARACTER_VARIABLES
 {
-	[Description("none")]
+	[Description("None")]
 	none,
-	[Description("attribute")]
+	[Description("Attribute")]
 	attribute,
-	[Description("hit points")]
+	[Description("Hit Points")]
 	hitpoints,
-	[Description("armor class")]
+	[Description("Armor Class")]
 	armorclass,
-	[Description("melee THAC0")]
+	[Description("Melee THAC0")]
 	meleethac0,
-	[Description("missile THAC0")]
+	[Description("Missile THAC0")]
 	missilethac0,
-	[Description("saving throw")]
+	[Description("Saving Throw")]
 	savingthrow,
-	[Description("vision")]
-	vision
+	[Description("Vision")]
+	vision,
+	[Description("Movement")]
+	movement
 }
+
+public enum OSRIC_SAVING_THROWS
+{
+	[Description("Save vs. Rod, Staff, Wand")]
+	saveRoSaWa,
+	[Description("Save vs. Breath Weapon")]
+	saveBreath,
+	[Description("Save vs. Petrification and Polymorph")]
+	savePetPoly,
+	[Description("Save vs. Spell")]
+	saveSpell
+}
+
+
 
 
 public struct CharacterOptionCollection

@@ -28,16 +28,21 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int Wis;
 	public int Cha;
 
+
 	public int hitPoints;
 	public int armorClass;
 	public int[] level;
 	public int experiencePoints;
+	public int vision;
+	public int move;
 	public OSRIC_GENDER characterGender = OSRIC_GENDER.Male;
 	public OSRIC_RACE characterRace = OSRIC_RACE.Human;
 	public OSRIC_CLASS characterClass = OSRIC_CLASS.None;
 	public OSRIC_ALIGNMENT characterAlignment = OSRIC_ALIGNMENT.Neutral;
+	public OSRIC_CHARACTER_STATE characterState;
 
-	public List<OSRICAttributeModifier> racial_modifiers;
+	public List<OSRICCharacterModifier> SomaticModifiers;  //Body related modifiers, e.g. race modifiers, spell effects
+	public List<OSRICCharacterModifier> EquipedModifiers;
 
 	void BroadcastBaseAttributeDidChange()
 	{
@@ -58,7 +63,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	
 	void Awake ()
 	{
-		racial_modifiers = new List<OSRICAttributeModifier> ();
+		SomaticModifiers = new List<OSRICCharacterModifier> ();
 		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
 	}
 	
@@ -77,7 +82,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int StrTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Strength)
 				racial_bonus += mod.value;
 		}
@@ -87,7 +92,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int DexTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Dexterity)
 				racial_bonus += mod.value;
 		}
@@ -97,7 +102,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int ConTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Constitution)
 				racial_bonus += mod.value;
 		}
@@ -107,7 +112,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int IntTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Intellegence)
 				racial_bonus += mod.value;
 		}
@@ -117,7 +122,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int WisTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Wisdom)
 				racial_bonus += mod.value;
 		}
@@ -127,7 +132,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int ChaTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICAttributeModifier mod in racial_modifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Charisma)
 				racial_bonus += mod.value;
 		}
@@ -233,15 +238,15 @@ public class OSRICAttributeModel : RPGAttributeModel
 	}
 
 	//we could make this more generic and call it AddBaseAttributeModifier and store it all one list
-	public void AddRacialModifier(OSRICAttributeModifier modifier){
-		racial_modifiers.Add (modifier);
+	public void AddRacialModifier(OSRICCharacterModifier modifier){
+		SomaticModifiers.Add (modifier);
 		BroadcastRacialAttributeDidChange ();
 		BroadcastAttributeModelDidChange ();
 	}
 	//in this particular use case the only time we need to remove a racial modifier we can just remove all of them cause someone changed their race
 	//we dont want direct access to anything in the model, even its redundant, because enevitably we'll want to broadast events, or do cleanup, etc.
 	public void ClearRacialModifiers(){
-		racial_modifiers.Clear ();
+		SomaticModifiers.Clear ();
 		BroadcastRacialAttributeDidChange();
 		BroadcastAttributeModelDidChange ();
 	}
