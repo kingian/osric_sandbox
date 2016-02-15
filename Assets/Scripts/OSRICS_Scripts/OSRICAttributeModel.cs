@@ -142,7 +142,8 @@ public class OSRICAttributeModel : RPGAttributeModel
 
 	public void UpdateCharacterOptions(CharacterOptionCollection coc)
 	{
-		OSRICEngine.RemoveRaceAdjustments(this);//if we really need to call function on the engine from here we're probably in trouble and need to rethink a few things
+		//OSRICEngine.RemoveRaceAdjustments(this);//if we really need to call function on the engine from here we're probably in trouble and need to rethink a few things
+		this.ClearRacialModifiers();//this works now without engine call like above
 		characterRace = coc.charRace;
 		OSRICEngine.AddRaceAdjustments(this,characterRace);
 		characterAlignment = coc.charAlignment;

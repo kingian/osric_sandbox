@@ -82,7 +82,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 
 	void UpdateCharacterViewInformation()
 	{
-		UpdateAttributeViewInformation(charModel.attributes);
+		UpdateAttributeViewInformation();
 		ClearAllDropdowns();
 		SetGenderOptions();
 		SetAlignmentOptions();
@@ -91,8 +91,9 @@ public class CharacterSheetUIController : MonoBehaviour {
 	}
 
 
-	void UpdateAttributeViewInformation(OSRICAttributeModel oam)
+	void UpdateAttributeViewInformation()
 	{
+		OSRICAttributeModel oam = charModel.attributes;
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
 //			Debug.Log( oa.GetDesc() + oam.GetAttribute(oa));

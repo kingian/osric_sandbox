@@ -188,56 +188,73 @@ public class OSRICEngine : MonoBehaviour {
 	public HashSet<OSRIC_RACE> AvailableRaces(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_RACE> retSet = new HashSet<OSRIC_RACE>();
+		retSet.Add (OSRIC_RACE.Human);
+		retSet.Add (OSRIC_RACE.HalfElf);
+		retSet.Add (OSRIC_RACE.Dwarf);
+		retSet.Add (OSRIC_RACE.Elf);
+		retSet.Add (OSRIC_RACE.Gnome);
+		retSet.Add (OSRIC_RACE.Halfling);
+		retSet.Add (OSRIC_RACE.HalfOrc);
 
-		int val;
-
-		foreach (OSRIC_RACE race in Enum.GetValues(typeof(OSRIC_RACE)))
-		{
-			if(race==OSRIC_RACE.Human)
-			{
-				retSet.Add(race);
-				continue;
-			}
-			val = raceMinMax.GetYIndexOf(race.GetDesc());
-			if (_atm.Str < raceMinMax.GetValue("str_min", val))
-				continue;
-			if(_atm.Dex < raceMinMax.GetValue("dex_min", val))
-				continue;
-			if(_atm.Int < raceMinMax.GetValue("int_min", val))
-				continue;
-			if(_atm.Wis < raceMinMax.GetValue("wis_min", val))
-				continue;
-			if(_atm.Con < raceMinMax.GetValue("con_min", val))
-				continue;
-			if(_atm.Cha < raceMinMax.GetValue("cha_min", val))
-				continue;
-			retSet.Add(race);
-		}
+//		int val;
+//
+//		foreach (OSRIC_RACE race in Enum.GetValues(typeof(OSRIC_RACE)))
+//		{
+//			if(race==OSRIC_RACE.Human)
+//			{
+//				retSet.Add(race);
+//				continue;
+//			}
+//			val = raceMinMax.GetYIndexOf(race.GetDesc());
+//			if (_atm.Str < raceMinMax.GetValue("str_min", val))
+//				continue;
+//			if(_atm.Dex < raceMinMax.GetValue("dex_min", val))
+//				continue;
+//			if(_atm.Int < raceMinMax.GetValue("int_min", val))
+//				continue;
+//			if(_atm.Wis < raceMinMax.GetValue("wis_min", val))
+//				continue;
+//			if(_atm.Con < raceMinMax.GetValue("con_min", val))
+//				continue;
+//			if(_atm.Cha < raceMinMax.GetValue("cha_min", val))
+//				continue;
+//			retSet.Add(race);
+//		}
 		return retSet;
 	}
 
 	public  HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
-		bool addClass;
-
-		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
-		{
-			if(oc == OSRIC_CLASS.None)
-			{
-				retSet.Add(oc);
-				continue;
-			}
-			int classIndex = classMinimums.GetYIndexOf(oc.GetDesc());
-			addClass = true;
-			foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
-			{
-				if(_atm.GetBaseAttribute(oa)<classMinimums.GetValue(oa.GetDesc(),classIndex))
-					addClass = false;
-			}
-			if(addClass)
-				retSet.Add(oc);
-		}
+		retSet.Add (OSRIC_CLASS.Paladin);
+		retSet.Add (OSRIC_CLASS.Ranger);
+		retSet.Add (OSRIC_CLASS.Assassin);
+		retSet.Add (OSRIC_CLASS.Cleric);
+		retSet.Add (OSRIC_CLASS.Druid);
+		retSet.Add (OSRIC_CLASS.Fighter);
+		retSet.Add (OSRIC_CLASS.Illusionist);
+		retSet.Add (OSRIC_CLASS.MagicUser);
+		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
+		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
+//		bool addClass;
+//
+//		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
+//		{
+//			if(oc == OSRIC_CLASS.None)
+//			{
+//				retSet.Add(oc);
+//				continue;
+//			}
+//			int classIndex = classMinimums.GetYIndexOf(oc.GetDesc());
+//			addClass = true;
+//			foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
+//			{
+//				if(_atm.GetBaseAttribute(oa)<classMinimums.GetValue(oa.GetDesc(),classIndex))
+//					addClass = false;
+//			}
+//			if(addClass)
+//				retSet.Add(oc);
+//		}
 		return retSet;
 	}
 
@@ -247,18 +264,30 @@ public class OSRICEngine : MonoBehaviour {
 		bool available;
 //		string outstr = "";
 
-		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
-		{
-			if(oc==OSRIC_CLASS.None)
-			{
-				retSet.Add(oc);
-				continue;
-			}
-			available = raceClassMatrix.GetValue(_atm.characterRace.GetDesc(),raceClassMatrix.GetYIndexOf(oc.GetDesc()));
-			if(available)
-				retSet.Add(oc);
-		}
 
+		retSet.Add (OSRIC_CLASS.Paladin);
+		retSet.Add (OSRIC_CLASS.Ranger);
+		retSet.Add (OSRIC_CLASS.Assassin);
+		retSet.Add (OSRIC_CLASS.Cleric);
+		retSet.Add (OSRIC_CLASS.Druid);
+		retSet.Add (OSRIC_CLASS.Fighter);
+		retSet.Add (OSRIC_CLASS.Illusionist);
+		retSet.Add (OSRIC_CLASS.MagicUser);
+		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
+		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
+
+//		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
+//		{
+//			if(oc==OSRIC_CLASS.None)
+//			{
+//				retSet.Add(oc);
+//				continue;
+//			}
+//			available = raceClassMatrix.GetValue(_atm.characterRace.GetDesc(),raceClassMatrix.GetYIndexOf(oc.GetDesc()));
+//			if(available)
+//				retSet.Add(oc);
+//		}
+//
 //		Debug.Log(outstr);
 
 		return retSet;
