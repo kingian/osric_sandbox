@@ -1,15 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class OSRICModifierCollection : MonoBehaviour {
+public class OSRICModifierCollection
+{
+	public List<OSRICCharacterModifier> ModifierList;
 
-	// Use this for initialization
-	void Start () {
-	
+
+	public List<OSRICCharacterModifier> GetModifierByAttribute(OSRIC_ATTRIBUTES oa)
+	{
+		List<OSRICCharacterModifier> retList = new List<OSRICCharacterModifier>();
+
+		foreach(OSRICCharacterModifier ocm in ModifierList)
+		{
+			if(ocm.characterVariable == OSRIC_CHARACTER_VARIABLES.attribute
+				&& ocm.attribute == oa)
+				retList.Add(ocm);	
+		}
+		return retList;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+
+	public List<OSRICCharacterModifier> GetModifierByCharacterVariable(OSRIC_CHARACTER_VARIABLES ocv)
+	{
+		List<OSRICCharacterModifier> retList = new List<OSRICCharacterModifier>();
+
+		foreach(OSRICCharacterModifier ocm in ModifierList)
+		{
+			if(ocm.characterVariable == OSRIC_CHARACTER_VARIABLES.attribute)
+				retList.Add(ocm);	
+		}
+		return retList;
+
+
+
 	}
+
 }
