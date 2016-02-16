@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICCharacterModifier.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICConstants.cs" />
      <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICEngine.cs" />
+     <Compile Include="Assets\Scripts\OSRICS_Scripts\OSRICModifierCollection.cs" />
      <Compile Include="Assets\Scripts\RPGAttributeModel.cs" />
      <Compile Include="Assets\Scripts\RPGCharacterModel.cs" />
      <Compile Include="Assets\Scripts\Services\Diagnostic.cs" />
