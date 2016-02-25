@@ -170,8 +170,11 @@ public class ColumnWithLabel<T>
 	public T ValueAtIndex(int index)
 	{
 		try{
+			
  		return column[index];
-		}catch{
+		}
+		catch
+		{
 			Debug.Log ("COLUMN FAIL : " + this.label + ":" + this.tabtyp);
 			return column[index];
 		}

@@ -31,9 +31,6 @@ public class OSRICModifierCollection
 				retList.Add(ocm);	
 		}
 		return retList;
-
-
-
 	}
 
 }

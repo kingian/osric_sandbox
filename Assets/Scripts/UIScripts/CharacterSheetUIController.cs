@@ -21,6 +21,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 
 	public void UpdateAttributeModelOptions()
 	{
+//		Debug.Log("UPDATE ATTRIBUTE MODEL OPTIONS CALLED");
 		CharacterOptionCollection attCol = GetCharacterOptionsFromDrops();
 		if(!engine.VerifyOptionCollection(attCol))
 			attCol.charClass = OSRIC_CLASS.None;
@@ -32,9 +33,27 @@ public class CharacterSheetUIController : MonoBehaviour {
 	{
 		CharacterOptionCollection retCol = new CharacterOptionCollection();
 		retCol.charGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
-		Debug.Log("options from drop: " + raceDrop.value);
-		retCol.charRace = OSRICConstants.GetEnum<OSRIC_RACE>(raceDrop.options[raceDrop.value].text);
-		retCol.charClass = OSRICConstants.GetEnum<OSRIC_CLASS>(classDrop.options[classDrop.value].text);
+//		Debug.Log("options from drop: " + raceDrop.value);
+		try
+		{
+			retCol.charRace = OSRICConstants.GetEnum<OSRIC_RACE>(raceDrop.options[raceDrop.value].text);
+		}
+		catch(Exception e)
+		{
+			Debug.Log(e.ToString());
+		}
+		Debug.Log("option from class drop: " + classDrop.value);
+		try
+		{
+		if(classDrop.options.Contains(classDrop.options[classDrop.value])) // THIS CALL IS THROWING AN EXCEPTION
+			retCol.charClass = OSRICConstants.GetEnum<OSRIC_CLASS>(classDrop.options[classDrop.value].text);
+		else
+			retCol.charClass = OSRIC_CLASS.None;
+		}
+		catch(Exception e)
+		{
+			Debug.Log(e.ToString());
+		}
 		retCol.charAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);
 		return retCol;
 	}
@@ -43,6 +62,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 	void OnEnable()
 	{
 		OSRICAttributeModel.BaseAttributeDidChange += UpdateCharacterViewInformation;
+		OSRICAttributeModel.RacialModifierDidChange += UpdateCharacterViewInformation;
 		genderDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
 		raceDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
 		classDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
@@ -52,6 +72,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 	void OnDisable()
 	{
 		OSRICAttributeModel.BaseAttributeDidChange -= UpdateCharacterViewInformation;
+		OSRICAttributeModel.RacialModifierDidChange -= UpdateCharacterViewInformation;
 		genderDrop.onValueChanged.RemoveAllListeners();
 		raceDrop.onValueChanged.RemoveAllListeners();
 		classDrop.onValueChanged.RemoveAllListeners();
@@ -190,13 +211,16 @@ public class CharacterSheetUIController : MonoBehaviour {
 
 	void SetClassOptions()
 	{
+//			Debug.Log("SET CLASS OPTION CALLED");
 		HashSet<OSRIC_CLASS> atts = engine.AvailableClassesByAttributes(charModel.attributes);
 		HashSet<OSRIC_CLASS> race = engine.AvailableClassesByRace(charModel.attributes);
 		
 		race.IntersectWith(atts);
 		foreach(OSRIC_CLASS oc in race)
 		{
-			classDrop.options.Add(new Dropdown.OptionData(oc.GetDesc()));
+			Dropdown.OptionData tempOpt = new Dropdown.OptionData(oc.GetDesc()); 
+			if(!classDrop.options.Contains(tempOpt))
+				classDrop.options.Add(tempOpt);
 		}
 
 		if(!race.Contains(charModel.attributes.characterClass))

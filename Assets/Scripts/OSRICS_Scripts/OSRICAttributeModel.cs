@@ -86,6 +86,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 			if (mod.attribute == OSRIC_ATTRIBUTES.Strength)
 				racial_bonus += mod.value;
 		}
+//		Debug.Log("Str Mod: "+racial_bonus);
 		return this.Str + racial_bonus;
 	}
 
@@ -96,6 +97,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 			if (mod.attribute == OSRIC_ATTRIBUTES.Dexterity)
 				racial_bonus += mod.value;
 		}
+//		Debug.Log("Dex Mod: "+racial_bonus);
 		return this.Dex + racial_bonus;
 	}
 
@@ -106,6 +108,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 			if (mod.attribute == OSRIC_ATTRIBUTES.Constitution)
 				racial_bonus += mod.value;
 		}
+//		Debug.Log("Con Mod: "+racial_bonus);
 		return this.Con + racial_bonus;
 	}
 
@@ -126,6 +129,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 			if (mod.attribute == OSRIC_ATTRIBUTES.Wisdom)
 				racial_bonus += mod.value;
 		}
+//		Debug.Log("Wis Mod: "+racial_bonus);
 		return this.Wis + racial_bonus;
 	}
 
@@ -136,6 +140,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 			if (mod.attribute == OSRIC_ATTRIBUTES.Charisma)
 				racial_bonus += mod.value;
 		}
+//		Debug.Log("Cha Mod: "+racial_bonus);
 		return this.Cha + racial_bonus;
 	}
 
@@ -149,6 +154,13 @@ public class OSRICAttributeModel : RPGAttributeModel
 		characterAlignment = coc.charAlignment;
 		characterGender = coc.charGender;
 		characterClass = coc.charClass;
+
+		string strout = "Current Modifiers: ";
+		foreach(OSRICCharacterModifier ocm in SomaticModifiers)
+		{
+			strout += ocm.attribute.GetDesc() + " | ";
+		}
+		Debug.Log(strout);
 
 		BroadcastRacialAttributeDidChange();
 		BroadcastAttributeModelDidChange ();
@@ -239,8 +251,11 @@ public class OSRICAttributeModel : RPGAttributeModel
 	}
 
 	//we could make this more generic and call it AddBaseAttributeModifier and store it all one list
-	public void AddRacialModifier(OSRICCharacterModifier modifier){
-		SomaticModifiers.Add (modifier);
+	public void AddRacialModifier(OSRICCharacterModifier modifier)
+	{
+		if(!SomaticModifiers.Contains(modifier))
+			SomaticModifiers.Add (modifier);
+
 		BroadcastRacialAttributeDidChange ();
 		BroadcastAttributeModelDidChange ();
 	}
