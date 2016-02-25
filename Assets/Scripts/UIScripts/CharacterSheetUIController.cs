@@ -11,6 +11,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 	public AttributeUIGroup attributeGroup;
 	public RPGCharacterModel charModel;
 	public OSRICEngine engine;
+	public ClassDropUIController classDropController;
 	public Dropdown raceDrop;
 	public Dropdown genderDrop;
 	public Dropdown classDrop;
@@ -87,6 +88,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 		classDrop = GameObject.Find ("classDropdown").GetComponent<Dropdown>();
 		alignmentDrop = GameObject.Find ("alignmentDropdown").GetComponent<Dropdown>();
 		engine = GameObject.FindObjectOfType<OSRICEngine>();
+		classDropController = gameObject.GetComponentInChildren<ClassDropUIController>();
 	}
 
 
@@ -218,12 +220,13 @@ public class CharacterSheetUIController : MonoBehaviour {
 		HashSet<OSRIC_CLASS> race = engine.AvailableClassesByRace(charModel.attributes);
 		
 		race.IntersectWith(atts);
-		foreach(OSRIC_CLASS oc in race)
-		{
-			Dropdown.OptionData tempOpt = new Dropdown.OptionData(oc.GetDesc()); 
-			if(!classDrop.options.Contains(tempOpt))
-				classDrop.options.Add(tempOpt);
-		}
+//		foreach(OSRIC_CLASS oc in race)
+//		{
+//			Dropdown.OptionData tempOpt = new Dropdown.OptionData(oc.GetDesc()); 
+//			if(!classDrop.options.Contains(tempOpt))
+//				classDrop.options.Add(tempOpt);
+//		}
+		classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
 
 		if(!race.Contains(charModel.attributes.characterClass))
 			charModel.attributes.characterClass = OSRIC_CLASS.None;
