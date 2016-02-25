@@ -43,6 +43,19 @@ public class ClassDropUIController : MonoBehaviour {
 			drop.value = selected;
 	}
 
+	void SetOptions(HashSet<OSRIC_CLASS> inSet)
+	{
+		drop.options.Clear();
+		foreach(OSRIC_CLASS oc in inSet)
+		{
+			drop.options.Add(new Dropdown.OptionData(oc.GetDesc()));
+		}
+	}
 
+	public void SetOptionsAndSelected(HashSet<OSRIC_CLASS> inSet, OSRIC_CLASS selected)
+	{
+		this.SetOptions(inSet);
+		this.SetSelectedValue(selected);
+	}
 
 }
