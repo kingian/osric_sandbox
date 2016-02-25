@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\UIScripts\AttributeUIController.cs" />
      <Compile Include="Assets\Scripts\UIScripts\AttributeUIGroup.cs" />
      <Compile Include="Assets\Scripts\UIScripts\CharacterSheetUIController.cs" />
+     <Compile Include="Assets\Scripts\UIScripts\ClassDropUIController.cs" />
      <Compile Include="Assets\Scripts\generalTests.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -124,6 +124,8 @@ public class CharacterSheetUIController : MonoBehaviour {
 		}
 	}
 
+
+
 	string GetAttributeAdjustments(OSRIC_ATTRIBUTES oa, int val)
 	{
 		string retStr="";
