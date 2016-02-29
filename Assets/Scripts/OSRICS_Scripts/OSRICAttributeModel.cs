@@ -41,8 +41,8 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public OSRIC_ALIGNMENT characterAlignment = OSRIC_ALIGNMENT.Neutral;
 	public OSRIC_CHARACTER_STATE characterState;
 
-	public List<OSRICCharacterModifier> SomaticModifiers;  //Body related modifiers, e.g. race modifiers, spell effects
-	public List<OSRICCharacterModifier> EquipedModifiers;
+	public OSRICModifierCollection SomaticModifiers;  //Body related modifiers, e.g. race modifiers, spell effects
+	public OSRICModifierCollection EquipedModifiers;
 
 	void BroadcastBaseAttributeDidChange()
 	{
@@ -63,7 +63,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	
 	void Awake ()
 	{
-		SomaticModifiers = new List<OSRICCharacterModifier> ();
+		SomaticModifiers = new OSRICModifierCollection();
 		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
 	}
 	
@@ -82,7 +82,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int StrTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Strength)
 				racial_bonus += mod.value;
 		}
@@ -93,7 +93,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int DexTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Dexterity)
 				racial_bonus += mod.value;
 		}
@@ -104,7 +104,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int ConTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Constitution)
 				racial_bonus += mod.value;
 		}
@@ -115,7 +115,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int IntTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Intellegence)
 				racial_bonus += mod.value;
 		}
@@ -125,7 +125,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int WisTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Wisdom)
 				racial_bonus += mod.value;
 		}
@@ -136,7 +136,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int ChaTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers) {
+		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Charisma)
 				racial_bonus += mod.value;
 		}
@@ -156,7 +156,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 		characterClass = coc.charClass;
 
 		string strout = "Current Modifiers: ";
-		foreach(OSRICCharacterModifier ocm in SomaticModifiers)
+		foreach(OSRICCharacterModifier ocm in SomaticModifiers.ModifierList)
 		{
 			strout += ocm.attribute.GetDesc() + " | ";
 		}
@@ -253,8 +253,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	//we could make this more generic and call it AddBaseAttributeModifier and store it all one list
 	public void AddRacialModifier(OSRICCharacterModifier modifier)
 	{
-		if(!SomaticModifiers.Contains(modifier))
-			SomaticModifiers.Add (modifier);
+		SomaticModifiers.Add (modifier);
 
 		BroadcastRacialAttributeDidChange ();
 		BroadcastAttributeModelDidChange ();
@@ -262,7 +261,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	//in this particular use case the only time we need to remove a racial modifier we can just remove all of them cause someone changed their race
 	//we dont want direct access to anything in the model, even its redundant, because enevitably we'll want to broadast events, or do cleanup, etc.
 	public void ClearRacialModifiers(){
-		SomaticModifiers.Clear ();
+		SomaticModifiers.RemoveAllRacialModifiers();
 		BroadcastRacialAttributeDidChange();
 		BroadcastAttributeModelDidChange ();
 	}

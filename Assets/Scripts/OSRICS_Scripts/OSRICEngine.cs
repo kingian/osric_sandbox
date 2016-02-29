@@ -297,7 +297,9 @@ public class OSRICEngine : MonoBehaviour {
 	{
 //		if(!init)
 //			ResetChracterOptions(charmod.attributes);
-		
+
+		charmod.attributes.characterRace = OSRIC_RACE.Human;
+
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
 			charmod.attributes.SetBaseAttribute(oa,randomizeAttribute());

@@ -226,7 +226,7 @@ public class CharacterSheetUIController : MonoBehaviour {
 //			if(!classDrop.options.Contains(tempOpt))
 //				classDrop.options.Add(tempOpt);
 //		}
-		classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
+	classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
 
 		if(!race.Contains(charModel.attributes.characterClass))
 			charModel.attributes.characterClass = OSRIC_CLASS.None;
