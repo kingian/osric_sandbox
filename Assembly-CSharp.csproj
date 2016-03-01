@@ -57,7 +57,7 @@
      <Compile Include="Assets\Scripts\Services\RPGTableReader.cs" />
      <Compile Include="Assets\Scripts\UIScripts\AttributeUIController.cs" />
      <Compile Include="Assets\Scripts\UIScripts\AttributeUIGroup.cs" />
-     <Compile Include="Assets\Scripts\UIScripts\CharacterSheetUIController.cs" />
+     <Compile Include="Assets\Scripts\UIScripts\CharacterCreatorUIController.cs" />
      <Compile Include="Assets\Scripts\UIScripts\ClassDropUIController.cs" />
      <Compile Include="Assets\Scripts\generalTests.cs" />
  <Reference Include="UnityEngine.UI">

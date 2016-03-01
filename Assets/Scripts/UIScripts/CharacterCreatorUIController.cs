@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class CharacterSheetUIController : MonoBehaviour {
+public class CharacterCreatorUIController : MonoBehaviour {
 	
 
 	public AttributeUIGroup attributeGroup;
