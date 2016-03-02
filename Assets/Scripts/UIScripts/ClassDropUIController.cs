@@ -7,6 +7,7 @@ public class ClassDropUIController : MonoBehaviour {
 
 	public Dropdown drop;
 	public HashSet<OSRIC_CLASS> classSet;
+	public OSRIC_CLASS currentSelection;
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +39,7 @@ public class ClassDropUIController : MonoBehaviour {
 
 	public void SetSelectedValue(OSRIC_CLASS oc)
 	{
+		currentSelection = oc;
 		int selected = GetOptionPosition(oc.GetDesc());
 		if(selected>-1)
 			drop.value = selected;
@@ -56,6 +58,11 @@ public class ClassDropUIController : MonoBehaviour {
 	{
 		this.SetOptions(inSet);
 		this.SetSelectedValue(selected);
+	}
+
+	public OSRIC_CLASS GetSelected()
+	{
+		return currentSelection;
 	}
 
 }

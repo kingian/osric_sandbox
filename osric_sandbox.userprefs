@@ -1,12 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Services/RPGTableReader.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UIScripts/ClassDropUIController.cs">
     <Files>
-      <File FileName="Assets/Scripts/UIScripts/CharacterSheetUIController.cs" Line="184" Column="1" />
+      <File FileName="Assets/Scripts/Services/MainController.cs" Line="45" Column="58" />
       <File FileName="Assets/Scripts/OSRICS_Scripts/OSRICEngine.cs" Line="326" Column="1" />
-      <File FileName="Assets/Scripts/Services/RPGBaseTable.cs" Line="177" Column="3" />
-      <File FileName="Assets/Scripts/generalTests.cs" Line="32" Column="1" />
+      <File FileName="Assets/Scripts/Services/RPGBaseTable.cs" Line="179" Column="21" />
+      <File FileName="Assets/Scripts/generalTests.cs" Line="32" Column="3" />
       <File FileName="Assets/Scripts/Services/RPGTableReader.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/RPGCharacterModel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UIScripts/CharacterCreatorUIController.cs" Line="44" Column="1" />
+      <File FileName="Assets/Scripts/UIScripts/ClassDropUIController.cs" Line="65" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -15,6 +18,7 @@
       <Breakpoint file="/Users/iking/Documents/Unity/osric_sandbox/Assets/Scripts/UIScripts/CharacterSheetUIController.cs" line="44" column="1" />
       <Breakpoint file="/Users/iking/Documents/Unity/osric_sandbox/Assets/Scripts/OSRICS_Scripts/OSRICEngine.cs" line="298" column="1" />
       <Breakpoint file="/Users/iking/Documents/Unity/osric_sandbox/Assets/Scripts/OSRICS_Scripts/OSRICEngine.cs" line="301" column="1" />
+      <Breakpoint file="/Users/iking/personal/osric_sandbox/Assets/Scripts/UIScripts/CharacterCreatorUIController.cs" line="117" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
