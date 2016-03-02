@@ -175,8 +175,8 @@ public class ColumnWithLabel<T>
 		}
 		catch
 		{
-			Debug.Log ("COLUMN FAIL : " + this.label + ":" + this.tabtyp);
-			return column[index];
+			Debug.Log ("COLUMN FAIL : " + this.label + ":" + this.tabtyp + ": index: " + index);
+			return column[0];
 		}
 	}
 

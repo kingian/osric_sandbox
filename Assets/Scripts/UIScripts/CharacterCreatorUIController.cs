@@ -87,7 +87,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		genderDrop = GameObject.Find("genderDropdown").GetComponent<Dropdown>();
 		classDrop = GameObject.Find ("classDropdown").GetComponent<Dropdown>();
 		alignmentDrop = GameObject.Find ("alignmentDropdown").GetComponent<Dropdown>();
-		engine = GameObject.FindObjectOfType<OSRICEngine>();
+//		engine = GameObject.FindObjectOfType<OSRICEngine>();
 		classDropController = gameObject.GetComponentInChildren<ClassDropUIController>();
 	}
 
@@ -96,7 +96,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		UpdateCharacterViewInformation();
+//		UpdateCharacterViewInformation();
 	}
 	
 	// Update is called once per frame
@@ -132,6 +132,8 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		string retStr="";
 		AttributeAdjustment[] attCollector;
+		if(val<1)
+			return retStr;
 		switch(oa)
 		{
 		case OSRIC_ATTRIBUTES.Strength:
