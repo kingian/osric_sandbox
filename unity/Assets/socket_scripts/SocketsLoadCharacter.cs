@@ -13,6 +13,9 @@ public class SocketsLoadCharacter : MonoBehaviour {
 	private InputField username_text;
 	private InputField password_text;
 
+	private Button CharacterSyncButton;
+	private Button StatusSyncButton;
+
 	// Use this for initialization
 	void Start () {
 
@@ -30,6 +33,9 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		socket.On("close", OnSocketClose);
 		socket.On("login_success", LoginSuccess);
 
+		socket.On("character_sheet_sync", SyncCharacterSheet);
+		socket.On("status_sync", SyncStatus);
+
 	}
 
 	private void InitUI(){
@@ -42,6 +48,13 @@ public class SocketsLoadCharacter : MonoBehaviour {
 
 		username_text = GameObject.Find ("UsernameField").GetComponent<InputField> ();
 		password_text = GameObject.Find ("PasswordField").GetComponent<InputField> ();
+
+		CharacterSyncButton = GameObject.Find ("CharacterSyncButton").GetComponent<Button> ();
+		CharacterSyncButton.onClick.AddListener(RequestCharacterFromServer);
+		CharacterSyncButton.gameObject.SetActive (false);
+		StatusSyncButton = GameObject.Find ("StatusSyncButton").GetComponent<Button> ();
+		StatusSyncButton.onClick.AddListener(RequestStatusUpdateFromServer);
+		StatusSyncButton.gameObject.SetActive (false);
 	}
 
 	private void SetUsernameAndPassFromPreferencesIfPossible(){
@@ -67,7 +80,35 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		Debug.Log("LOGIN SUCCESS: " + e.name + " " + e.data);
 		PlayerPrefs.SetString ("username", username_text.text);
 		PlayerPrefs.SetString ("password", password_text.text);
+
+
+		StatusSyncButton.gameObject.SetActive (true);
+		CharacterSyncButton.gameObject.SetActive (true);
+		login_button.gameObject.SetActive (false);
 	}
+
+
+
+	private void RequestCharacterFromServer(){
+		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
+		json.AddField("character_id", "GFDGFDS");
+		socket.Emit ("character_sheet_request", json);
+	}
+	private void RequestStatusUpdateFromServer(){
+		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
+		json.AddField("character_id", "GFDGFDS");
+		socket.Emit ("status_update_request", json);
+	}
+
+	//we can sync entire sheets
+	public void SyncCharacterSheet(SocketIOEvent e){
+		Debug.Log("Recieved Character Sheet: " + e.name + " " + e.data);
+	}
+	//or we can sync fragments
+	public void SyncStatus(SocketIOEvent e){
+		Debug.Log("Received Status Update: " + e.name + " " + e.data);
+	}
+
 
 	//called by our socket event - mapped to a specific event in this case
 	public void OnSocketConnect(SocketIOEvent e)
