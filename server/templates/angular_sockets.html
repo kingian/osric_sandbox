@@ -1,0 +1,26 @@
+<!doctype html>
+<html ng-app="MyApp">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+	<script src="{{ url_for('static', filename='angular_app.js') }}"></script>
+	<title>Hello from Flask</title>
+	<body ng-controller="MyController">
+		<h1>Hello Angular!</h1>
+		<form role="form" ng-submit="getResults()">
+			<input type="submit"/ ng-click="SubmitButtonClicked()">
+		</form>
+
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			//this socket is globally accessible.
+			//it should be converted to an angular "service"
+		    var socket = io.connect('http://' + document.domain + ':' + location.port);
+		    //we're only doing this as an example to rbidge the gap between the angular way, and the old way.
+		    //this is the old way
+		    // socket.on('connect', function() {
+		    //     socket.emit('my event', {data: 'I\'m connected!'});
+		    // });
+		</script>
+	</body>
+
+
+</html>
