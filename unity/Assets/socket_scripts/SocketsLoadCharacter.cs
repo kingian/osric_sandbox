@@ -10,8 +10,8 @@ public class SocketsLoadCharacter : MonoBehaviour {
 	private Text status_text;
 	private Button login_button;
 
-	private Text username_text;
-	private Text password_text;
+	private InputField username_text;
+	private InputField password_text;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +25,10 @@ public class SocketsLoadCharacter : MonoBehaviour {
 
 		//register for events via coordinated string keys
 		//there are some defaults, like connect, open, close
-		socket.On("connect", ConnectedToServer);
+		socket.On("connect", OnSocketConnect);
+		socket.On("error", OnSocketError);
+		socket.On("close", OnSocketClose);
+		socket.On("login_success", LoginSuccess);
 
 	}
 
@@ -37,24 +40,37 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		login_button.onClick.AddListener(LoginToServer);
 
 
-		username_text = GameObject.Find ("UsernameField").GetComponent<Text> ();
-		password_text = GameObject.Find ("PasswordField").GetComponent<Text> ();
+		username_text = GameObject.Find ("UsernameField").GetComponent<InputField> ();
+		password_text = GameObject.Find ("PasswordField").GetComponent<InputField> ();
 	}
 
 	private void SetUsernameAndPassFromPreferencesIfPossible(){
 		//http://docs.unity3d.com/ScriptReference/PlayerPrefs.html
+		if(PlayerPrefs.HasKey("username")){
+			username_text.text = PlayerPrefs.GetString("username");
+		};
+		//storing a password like this is a terrible idea
+		if(PlayerPrefs.HasKey("password")){
+			password_text.text = PlayerPrefs.GetString("password");
+		};
 	}
 
 	private void LoginToServer(){
 		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
-		json.AddField("data", "Hey, someone touched my button!!!!");
-		json.AddField("username", "username");
-		json.AddField("password", "Hey, someone touched my button!!!!");
-		socket.Emit ("update_from_client", json);
+		json.AddField("username", username_text.text);
+		json.AddField("password", password_text.text);
+		socket.Emit ("client_login", json);
+	}
+
+	public void LoginSuccess(SocketIOEvent e){
+
+		Debug.Log("LOGIN SUCCESS: " + e.name + " " + e.data);
+		PlayerPrefs.SetString ("username", username_text.text);
+		PlayerPrefs.SetString ("password", password_text.text);
 	}
 
 	//called by our socket event - mapped to a specific event in this case
-	public void ConnectedToServer(SocketIOEvent e)
+	public void OnSocketConnect(SocketIOEvent e)
 	{
 		//cool. we connected to the server and got the event data
 		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
@@ -64,6 +80,18 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
 		json.AddField("data", "I'm unity, bitch");
 		socket.Emit ("update_from_client", json);
+	}
+	//called by our socket event - mapped to a specific event in this case
+	public void OnSocketError(SocketIOEvent e)
+	{
+		Debug.Log("[SocketIO] socket error: " + e.name + " " + e.data);
+		status_text.text = "status : socket error";
+	}
+	//called by our socket event - mapped to a specific event in this case
+	public void OnSocketClose(SocketIOEvent e)
+	{
+		Debug.Log("[SocketIO] socket closed: " + e.name + " " + e.data);
+		status_text.text = "status : closed";
 	}
 
 }

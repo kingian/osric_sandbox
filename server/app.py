@@ -1,5 +1,7 @@
 from flask import Flask, render_template
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send, emit
+
+import json as JSON
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -46,6 +48,14 @@ def hello_angular():
 @socketio.on('update_from_client')
 def handle_update_from_client(json):
     print('client says: ' + str(json))
+
+# this will come from client
+@socketio.on('client_login')
+def handle_client_login(json):
+    print('client login: ' + str(json))
+    response = {"uuid":"f3dew"}
+    print response
+    emit('login_success', response)
 
 if __name__ == '__main__':
 	socketio.debug = True
