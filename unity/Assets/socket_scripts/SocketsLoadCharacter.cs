@@ -3,18 +3,21 @@ using System.Collections;
 using SocketIO;
 using UnityEngine.UI;
 
-public class HelloSockets : MonoBehaviour {
+public class SocketsLoadCharacter : MonoBehaviour {
 
 	private SocketIOComponent socket;
 
-	private Text socket_text;
-	private Button socket_button;
+	private Text status_text;
+	private Button login_button;
 
+	private Text username_text;
+	private Text password_text;
 
 	// Use this for initialization
 	void Start () {
 
 		InitUI ();
+		SetUsernameAndPassFromPreferencesIfPossible ();
 
 		//same old, same old
 		GameObject go = GameObject.Find("SocketIO");
@@ -27,18 +30,26 @@ public class HelloSockets : MonoBehaviour {
 	}
 
 	private void InitUI(){
-		socket_text = GameObject.Find ("SocketText").GetComponent<Text> ();
-		socket_text.text = "status : SEARCHING";
+		status_text = GameObject.Find ("SocketText").GetComponent<Text> ();
+		status_text.text = "status : SEARCHING";
 
-		socket_button = GameObject.Find ("SocketButton").GetComponent<Button> ();
-		socket_button.onClick.AddListener(SocketButtonWasClicked);
+		login_button = GameObject.Find ("SocketButton").GetComponent<Button> ();
+		login_button.onClick.AddListener(LoginToServer);
+
+
+		username_text = GameObject.Find ("UsernameField").GetComponent<Text> ();
+		password_text = GameObject.Find ("PasswordField").GetComponent<Text> ();
 	}
 
-	private void SocketButtonWasClicked(){
-		Debug.Log ("i clicked the button!");
+	private void SetUsernameAndPassFromPreferencesIfPossible(){
+		//http://docs.unity3d.com/ScriptReference/PlayerPrefs.html
+	}
 
+	private void LoginToServer(){
 		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
 		json.AddField("data", "Hey, someone touched my button!!!!");
+		json.AddField("username", "username");
+		json.AddField("password", "Hey, someone touched my button!!!!");
 		socket.Emit ("update_from_client", json);
 	}
 
@@ -48,7 +59,7 @@ public class HelloSockets : MonoBehaviour {
 		//cool. we connected to the server and got the event data
 		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
 		//update the UI
-		socket_text.text = "status : CONNECTED!!!!";
+		status_text.text = "status : CONNECTED!!!!";
 		//lets send a message to the server and let know who's boss
 		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
 		json.AddField("data", "I'm unity, bitch");
