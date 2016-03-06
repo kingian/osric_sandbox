@@ -42,10 +42,10 @@ namespace SocketIO
 	{
 		#region Public Properties
 
-		public string url = "ws://127.0.0.1:4567/socket.io/?EIO=4&transport=websocket";
-		public bool autoConnect = true;
+		public string url = "ws://127.0.0.1:4567/socket.io/?EIO=3&transport=websocket";
+		public bool autoConnect = false;
 		public int reconnectDelay = 5;
-		public float ackExpirationTime = 1800f;
+		public float ackExpirationTime = 30f;
 		public float pingInterval = 25f;
 		public float pingTimeout = 60f;
 
@@ -167,6 +167,10 @@ namespace SocketIO
 		#endregion
 
 		#region Public Interface
+
+        public void SetHeader(string header, string value) {
+            ws.SetHeader(header, value);
+        }
 		
 		public void Connect()
 		{
@@ -379,7 +383,7 @@ namespace SocketIO
 
 		private void OnError(object sender, ErrorEventArgs e)
 		{
-			EmitEvent("error");
+			EmitEvent(new SocketIOEvent("error", JSONObject.CreateStringObject(e.Message)));
 		}
 
 		private void OnClose(object sender, CloseEventArgs e)

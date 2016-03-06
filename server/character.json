@@ -1,0 +1,42 @@
+{
+	"id":"nv3c3408cn",
+	"created":"some timestamp",
+	"last_save":"some timestamp",
+	"last_update":"some_timestamp",
+	"author":"some person",
+	"bio":{
+			"name":"charcter name",
+			"age":27,
+			"gender":"female",
+			"weight":23.3,
+			"height":104,
+			"hair_color":"brunette"
+		},
+	"stats":{
+			"str":16,
+			"dex":17,
+			"con":20,
+			"wis":13,
+			"int":15,
+			"cha":15
+		},
+	"modifiers":[
+	],
+	"items":[
+	],
+	"status":{
+		"location":{
+			"lat":2323.23,
+			"lon":24323.1,
+			"direction":80.2,
+			"speed":2.3
+		},
+		"health":{
+
+		}
+	},
+
+	"custom_properties":[
+	]
+
+}

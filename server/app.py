@@ -1,5 +1,7 @@
 from flask import Flask, render_template
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send, emit
+
+import json as JSON
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -37,6 +39,10 @@ def hello_world():
 #################### OUR APP #########################
 ######################################################
 
+character_sheet = None
+with open('character.json') as json_file:
+	character_sheet = JSON.load(json_file)
+
 #hacking together a barebones angular example from this : https://realpython.com/blog/python/flask-by-example-integrating-flask-and-angularjs/
 @app.route('/hello_angular')
 def hello_angular():
@@ -45,7 +51,31 @@ def hello_angular():
 # this will come from client
 @socketio.on('update_from_client')
 def handle_update_from_client(json):
-    print('client says: ' + str(json))
+		print('client says: ' + str(json))
+
+# this will come from client
+@socketio.on('client_login')
+def handle_client_login(json):
+		print('client login: ' + str(json))
+		response = {"uuid":"f3dew"}
+		print response
+		emit('login_success', response)
+
+# this will come from client
+@socketio.on('character_sheet_request')
+def character_sheet_request(json):
+		emit('character_sheet_sync', character_sheet)
+
+# this will come from client
+@socketio.on('status_update_request')
+def status_update_request(json):
+	status_json = {
+		"id":character_sheet['id'],
+		"status":character_sheet['status']
+	}
+	emit('status_sync', status_json)
+
+
 
 if __name__ == '__main__':
 	socketio.debug = True

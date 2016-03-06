@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-                          SocketIO for Unity - v1.0.1                          
+                          SocketIO for Unity - v1.0.0                          
 --------------------------------------------------------------------------------
 
 # Overview #
@@ -106,29 +106,23 @@
   
   1. Navigate to the server directory
      cd PATH/TO/PROJECT/Assets/SocketIO/Server
-
-  2. Unzip the server code outside Unity folder 
-       unzip beep.js.zip -d /tmp/socketio
-
-  3. Go to the destination folder where the server code was extracted
-       cd /tmp/socketio
      
-  4. Install Socket.IO server package
+  2. Install Socket.IO server package
        npm install socket.io
   
-  5. (Optional) Enable debug mode
+  3. (Optional) Enable debug mode
        Windows: set DEBUG=*
        Mac: export DEBUG=*
   
-  6. Run test server
+  4. Run test server
        node ./beep.js
   
-  7. Open the test scene
+  5. Open the test scene
        SocketIO/Scenes/SocketIOTest
   
-  8. Run the scene. Some debug message will be printed to Unity console.
+  6. Run the scene. Some debug message will be printed to Unity console.
   
-  9. Open SocketIO/Scripts/Test/TestSocketIO.cs to check what's going on. 
+  7. Open SocketIO/Scripts/Test/TestSocketIO.cs to check what's going on. 
 
 
 # Troubleshooting #
@@ -151,8 +145,3 @@
 # License #
 
   SocketIO for Unity is provided under The MIT License
-
-# Changelog #
-
-  1.0.1 - Improved socket stability (multithreading, ack garbage collection, ping)
-  1.0.0 - Initial release

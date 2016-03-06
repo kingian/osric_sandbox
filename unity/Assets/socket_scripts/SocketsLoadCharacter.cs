@@ -10,8 +10,11 @@ public class SocketsLoadCharacter : MonoBehaviour {
 	private Text status_text;
 	private Button login_button;
 
-	private Text username_text;
-	private Text password_text;
+	private InputField username_text;
+	private InputField password_text;
+
+	private Button CharacterSyncButton;
+	private Button StatusSyncButton;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +28,13 @@ public class SocketsLoadCharacter : MonoBehaviour {
 
 		//register for events via coordinated string keys
 		//there are some defaults, like connect, open, close
-		socket.On("connect", ConnectedToServer);
+		socket.On("connect", OnSocketConnect);
+		socket.On("error", OnSocketError);
+		socket.On("close", OnSocketClose);
+		socket.On("login_success", LoginSuccess);
+
+		socket.On("character_sheet_sync", SyncCharacterSheet);
+		socket.On("status_sync", SyncStatus);
 
 	}
 
@@ -37,24 +46,72 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		login_button.onClick.AddListener(LoginToServer);
 
 
-		username_text = GameObject.Find ("UsernameField").GetComponent<Text> ();
-		password_text = GameObject.Find ("PasswordField").GetComponent<Text> ();
+		username_text = GameObject.Find ("UsernameField").GetComponent<InputField> ();
+		password_text = GameObject.Find ("PasswordField").GetComponent<InputField> ();
+
+		CharacterSyncButton = GameObject.Find ("CharacterSyncButton").GetComponent<Button> ();
+		CharacterSyncButton.onClick.AddListener(RequestCharacterFromServer);
+		CharacterSyncButton.gameObject.SetActive (false);
+		StatusSyncButton = GameObject.Find ("StatusSyncButton").GetComponent<Button> ();
+		StatusSyncButton.onClick.AddListener(RequestStatusUpdateFromServer);
+		StatusSyncButton.gameObject.SetActive (false);
 	}
 
 	private void SetUsernameAndPassFromPreferencesIfPossible(){
 		//http://docs.unity3d.com/ScriptReference/PlayerPrefs.html
+		if(PlayerPrefs.HasKey("username")){
+			username_text.text = PlayerPrefs.GetString("username");
+		};
+		//storing a password like this is a terrible idea
+		if(PlayerPrefs.HasKey("password")){
+			password_text.text = PlayerPrefs.GetString("password");
+		};
 	}
 
 	private void LoginToServer(){
 		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
-		json.AddField("data", "Hey, someone touched my button!!!!");
-		json.AddField("username", "username");
-		json.AddField("password", "Hey, someone touched my button!!!!");
-		socket.Emit ("update_from_client", json);
+		json.AddField("username", username_text.text);
+		json.AddField("password", password_text.text);
+		socket.Emit ("client_login", json);
 	}
 
+	public void LoginSuccess(SocketIOEvent e){
+
+		Debug.Log("LOGIN SUCCESS: " + e.name + " " + e.data);
+		PlayerPrefs.SetString ("username", username_text.text);
+		PlayerPrefs.SetString ("password", password_text.text);
+
+
+		StatusSyncButton.gameObject.SetActive (true);
+		CharacterSyncButton.gameObject.SetActive (true);
+		login_button.gameObject.SetActive (false);
+	}
+
+
+
+	private void RequestCharacterFromServer(){
+		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
+		json.AddField("character_id", "GFDGFDS");
+		socket.Emit ("character_sheet_request", json);
+	}
+	private void RequestStatusUpdateFromServer(){
+		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
+		json.AddField("character_id", "GFDGFDS");
+		socket.Emit ("status_update_request", json);
+	}
+
+	//we can sync entire sheets
+	public void SyncCharacterSheet(SocketIOEvent e){
+		Debug.Log("Recieved Character Sheet: " + e.name + " " + e.data);
+	}
+	//or we can sync fragments
+	public void SyncStatus(SocketIOEvent e){
+		Debug.Log("Received Status Update: " + e.name + " " + e.data);
+	}
+
+
 	//called by our socket event - mapped to a specific event in this case
-	public void ConnectedToServer(SocketIOEvent e)
+	public void OnSocketConnect(SocketIOEvent e)
 	{
 		//cool. we connected to the server and got the event data
 		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
@@ -64,6 +121,18 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
 		json.AddField("data", "I'm unity, bitch");
 		socket.Emit ("update_from_client", json);
+	}
+	//called by our socket event - mapped to a specific event in this case
+	public void OnSocketError(SocketIOEvent e)
+	{
+		Debug.Log("[SocketIO] socket error: " + e.name + " " + e.data);
+		status_text.text = "status : socket error";
+	}
+	//called by our socket event - mapped to a specific event in this case
+	public void OnSocketClose(SocketIOEvent e)
+	{
+		Debug.Log("[SocketIO] socket closed: " + e.name + " " + e.data);
+		status_text.text = "status : closed";
 	}
 
 }
