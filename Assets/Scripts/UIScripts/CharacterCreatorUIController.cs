@@ -168,6 +168,12 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		return retStr;
 	}
 
+
+	public void Reroll()
+	{
+		engine.RandomizeCharactersAttributes(charModel);
+	}
+
 	// DROP DOWN SECTION
 
 	void ClearAllDropdowns()
@@ -228,7 +234,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 //			if(!classDrop.options.Contains(tempOpt))
 //				classDrop.options.Add(tempOpt);
 //		}
-	classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
+		classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
 
 		if(!race.Contains(charModel.attributes.characterClass))
 			charModel.attributes.characterClass = OSRIC_CLASS.None;
