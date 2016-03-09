@@ -75,6 +75,21 @@ def status_update_request(json):
 	}
 	emit('status_sync', status_json)
 
+# this will come from client
+@socketio.on('sync_section_by_key')
+def sync_section_by_key(json):
+	if 'section_key' in json:
+		#if they sent data, save it to server
+		if 'data' in json:
+			#save data to server
+			pass
+		#always respond with data fragment
+		json = {
+			"id":character_sheet['id'],
+			"section_key":json['section_key'],
+			"data":character_sheet[json['section_key']]
+		}
+		emit('sync_section_by_key', json)
 
 
 if __name__ == '__main__':

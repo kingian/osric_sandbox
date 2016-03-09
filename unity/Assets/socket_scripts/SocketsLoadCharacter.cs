@@ -35,6 +35,7 @@ public class SocketsLoadCharacter : MonoBehaviour {
 
 		socket.On("character_sheet_sync", SyncCharacterSheet);
 		socket.On("status_sync", SyncStatus);
+		socket.On("sync_section_by_key", SyncSectionByKey);
 
 	}
 
@@ -53,7 +54,7 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		CharacterSyncButton.onClick.AddListener(RequestCharacterFromServer);
 		CharacterSyncButton.gameObject.SetActive (false);
 		StatusSyncButton = GameObject.Find ("StatusSyncButton").GetComponent<Button> ();
-		StatusSyncButton.onClick.AddListener(RequestStatusUpdateFromServer);
+		StatusSyncButton.onClick.AddListener(RequestSectionFromServerByKey);
 		StatusSyncButton.gameObject.SetActive (false);
 	}
 
@@ -99,6 +100,15 @@ public class SocketsLoadCharacter : MonoBehaviour {
 		json.AddField("character_id", "GFDGFDS");
 		socket.Emit ("status_update_request", json);
 	}
+	private void RequestSectionFromServerByKey(){
+		JSONObject json = new JSONObject(JSONObject.Type.OBJECT);
+		json.AddField("character_id", "GFDGFDS");
+		json.AddField("section_key", "status");
+		//if you send a character fragment on the "data" key, it will be saved to server
+		socket.Emit ("sync_section_by_key", json);
+	}
+
+
 
 	//we can sync entire sheets
 	public void SyncCharacterSheet(SocketIOEvent e){
@@ -106,6 +116,9 @@ public class SocketsLoadCharacter : MonoBehaviour {
 	}
 	//or we can sync fragments
 	public void SyncStatus(SocketIOEvent e){
+		Debug.Log("Received Status Update: " + e.name + " " + e.data);
+	}
+	private void SyncSectionByKey(SocketIOEvent e){
 		Debug.Log("Received Status Update: " + e.name + " " + e.data);
 	}
 
