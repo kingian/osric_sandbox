@@ -71,10 +71,10 @@ public class OSRICEngine : MonoBehaviour {
 		raceClassMatrix.init ();
 		raceMinMax.init ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 
@@ -142,9 +142,9 @@ public class OSRICEngine : MonoBehaviour {
 		AttributeAdjustment[] retArr = new AttributeAdjustment[1];
 
 		_int = attributeTable.GetYIndexOf(_int);
-		
+
 		retArr[0] = new AttributeAdjustment("Max Additional Languages",attributeTable.GetValue("int_max_additional_languages",_int));
-		
+
 		return retArr;
 	}
 
@@ -155,7 +155,7 @@ public class OSRICEngine : MonoBehaviour {
 		_wis = attributeTable.GetYIndexOf(_wis);
 
 		retArr[0] = new AttributeAdjustment("Mental Saving Throw Bonus",attributeTable.GetValue("wis_mental_saving_throw_bonus",_wis));
-		
+
 		return retArr;
 	}
 
@@ -164,11 +164,11 @@ public class OSRICEngine : MonoBehaviour {
 		AttributeAdjustment[] retArr = new AttributeAdjustment[3];
 
 		_con = attributeTable.GetYIndexOf(_con);
-		
+
 		retArr[0] = new AttributeAdjustment("HP per die",attributeTable.GetValue("con_HP_per_die",_con));
 		retArr[1] = new AttributeAdjustment("Survive Resurrection & Raise Dead",attributeTable.GetValue("con_survive_resurrection_raise_dead",_con));
 		retArr[2] = new AttributeAdjustment("Survive System Shock",attributeTable.GetValue("con_survive_system_shock",_con));
-		
+
 		return retArr;
 	}
 
@@ -181,20 +181,20 @@ public class OSRICEngine : MonoBehaviour {
 		retArr[0] = new AttributeAdjustment("Max Henchman",attributeTable.GetValue("cha_max_henchmen",_cha));
 		retArr[1] = new AttributeAdjustment("Loyalty Bonus",attributeTable.GetValue("cha_loyalty_bonus",_cha));
 		retArr[2] = new AttributeAdjustment("Reaction Bonus",attributeTable.GetValue("cha_reaction_bonus",_cha));
-		
+
 		return retArr;
 	}
 
 	public HashSet<OSRIC_RACE> AvailableRaces(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_RACE> retSet = new HashSet<OSRIC_RACE>();
-//		retSet.Add (OSRIC_RACE.Human);
-//		retSet.Add (OSRIC_RACE.HalfElf);
-//		retSet.Add (OSRIC_RACE.Dwarf);
-//		retSet.Add (OSRIC_RACE.Elf);
-//		retSet.Add (OSRIC_RACE.Gnome);
-//		retSet.Add (OSRIC_RACE.Halfling);
-//		retSet.Add (OSRIC_RACE.HalfOrc);
+		//		retSet.Add (OSRIC_RACE.Human);
+		//		retSet.Add (OSRIC_RACE.HalfElf);
+		//		retSet.Add (OSRIC_RACE.Dwarf);
+		//		retSet.Add (OSRIC_RACE.Elf);
+		//		retSet.Add (OSRIC_RACE.Gnome);
+		//		retSet.Add (OSRIC_RACE.Halfling);
+		//		retSet.Add (OSRIC_RACE.HalfOrc);
 
 		int val;
 
@@ -226,16 +226,16 @@ public class OSRICEngine : MonoBehaviour {
 	public  HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
-//		retSet.Add (OSRIC_CLASS.Paladin);
-//		retSet.Add (OSRIC_CLASS.Ranger);
-//		retSet.Add (OSRIC_CLASS.Assassin);
-//		retSet.Add (OSRIC_CLASS.Cleric);
-//		retSet.Add (OSRIC_CLASS.Druid);
-//		retSet.Add (OSRIC_CLASS.Fighter);
-//		retSet.Add (OSRIC_CLASS.Illusionist);
-//		retSet.Add (OSRIC_CLASS.MagicUser);
-//		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
-//		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
+		//		retSet.Add (OSRIC_CLASS.Paladin);
+		//		retSet.Add (OSRIC_CLASS.Ranger);
+		//		retSet.Add (OSRIC_CLASS.Assassin);
+		//		retSet.Add (OSRIC_CLASS.Cleric);
+		//		retSet.Add (OSRIC_CLASS.Druid);
+		//		retSet.Add (OSRIC_CLASS.Fighter);
+		//		retSet.Add (OSRIC_CLASS.Illusionist);
+		//		retSet.Add (OSRIC_CLASS.MagicUser);
+		//		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
+		//		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
 		bool addClass;
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
@@ -262,19 +262,19 @@ public class OSRICEngine : MonoBehaviour {
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
 		bool available;
-//		string outstr = "";
+		//		string outstr = "";
 
 
-//		retSet.Add (OSRIC_CLASS.Paladin);
-//		retSet.Add (OSRIC_CLASS.Ranger);
-//		retSet.Add (OSRIC_CLASS.Assassin);
-//		retSet.Add (OSRIC_CLASS.Cleric);
-//		retSet.Add (OSRIC_CLASS.Druid);
-//		retSet.Add (OSRIC_CLASS.Fighter);
-//		retSet.Add (OSRIC_CLASS.Illusionist);
-//		retSet.Add (OSRIC_CLASS.MagicUser);
-//		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
-//		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
+		//		retSet.Add (OSRIC_CLASS.Paladin);
+		//		retSet.Add (OSRIC_CLASS.Ranger);
+		//		retSet.Add (OSRIC_CLASS.Assassin);
+		//		retSet.Add (OSRIC_CLASS.Cleric);
+		//		retSet.Add (OSRIC_CLASS.Druid);
+		//		retSet.Add (OSRIC_CLASS.Fighter);
+		//		retSet.Add (OSRIC_CLASS.Illusionist);
+		//		retSet.Add (OSRIC_CLASS.MagicUser);
+		//		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
+		//		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
 		{
@@ -287,16 +287,16 @@ public class OSRICEngine : MonoBehaviour {
 			if(available)
 				retSet.Add(oc);
 		}
-//
-//		Debug.Log(outstr);
+		//
+		//		Debug.Log(outstr);
 
 		return retSet;
 	}
 
 	public void RandomizeCharactersAttributes(RPGCharacterModel charmod)
 	{
-//		if(!init)
-//			ResetChracterOptions(charmod.attributes);
+		//		if(!init)
+		//			ResetChracterOptions(charmod.attributes);
 
 		charmod.attributes.characterRace = OSRIC_RACE.Human;
 

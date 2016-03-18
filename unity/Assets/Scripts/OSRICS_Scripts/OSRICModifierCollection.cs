@@ -44,7 +44,7 @@ public class OSRICModifierCollection
 		foreach(OSRICCharacterModifier ocm in ModifierList)
 			if(ocm.Equals(candidate))
 				return;
-		
+
 		ModifierList.Add(candidate);
 	}
 

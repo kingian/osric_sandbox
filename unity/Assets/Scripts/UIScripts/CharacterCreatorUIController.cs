@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 
 public class CharacterCreatorUIController : MonoBehaviour {
-	
+
 
 	public AttributeUIGroup attributeGroup;
 	public RPGCharacterModel charModel;
@@ -17,12 +17,12 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	public Dropdown classDrop;
 	public Dropdown alignmentDrop;
 
-	
-	
+
+
 
 	public void UpdateAttributeModelOptions()
 	{
-//		Debug.Log("UPDATE ATTRIBUTE MODEL OPTIONS CALLED");
+		//		Debug.Log("UPDATE ATTRIBUTE MODEL OPTIONS CALLED");
 		CharacterOptionCollection attCol = GetCharacterOptionsFromDrops();
 		if(!engine.VerifyOptionCollection(attCol))
 			attCol.charClass = OSRIC_CLASS.None;
@@ -34,7 +34,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		CharacterOptionCollection retCol = new CharacterOptionCollection();
 		retCol.charGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
-//		Debug.Log("options from drop: " + raceDrop.value);
+		//		Debug.Log("options from drop: " + raceDrop.value);
 		try
 		{
 			retCol.charRace = OSRICConstants.GetEnum<OSRIC_RACE>(raceDrop.options[raceDrop.value].text);
@@ -46,10 +46,10 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		Debug.Log("option from class drop: " + classDrop.value);
 		try
 		{
-		if(classDrop.options.Contains(classDrop.options[classDrop.value])) // THIS CALL IS THROWING AN EXCEPTION
-			retCol.charClass = OSRICConstants.GetEnum<OSRIC_CLASS>(classDrop.options[classDrop.value].text);
-		else
-			retCol.charClass = OSRIC_CLASS.None;
+			if(classDrop.options.Contains(classDrop.options[classDrop.value])) // THIS CALL IS THROWING AN EXCEPTION
+				retCol.charClass = OSRICConstants.GetEnum<OSRIC_CLASS>(classDrop.options[classDrop.value].text);
+			else
+				retCol.charClass = OSRIC_CLASS.None;
 		}
 		catch(Exception e)
 		{
@@ -87,7 +87,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		genderDrop = GameObject.Find("genderDropdown").GetComponent<Dropdown>();
 		classDrop = GameObject.Find ("classDropdown").GetComponent<Dropdown>();
 		alignmentDrop = GameObject.Find ("alignmentDropdown").GetComponent<Dropdown>();
-		engine = GameObject.FindObjectOfType<OSRICEngine>();
+		//		engine = GameObject.FindObjectOfType<OSRICEngine>();
 		classDropController = gameObject.GetComponentInChildren<ClassDropUIController>();
 	}
 
@@ -96,9 +96,9 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		UpdateCharacterViewInformation();
+		//		UpdateCharacterViewInformation();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	}
@@ -119,7 +119,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		OSRICAttributeModel oam = charModel.attributes;
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
-//			Debug.Log( oa.GetDesc() + oam.GetAttribute(oa));
+			//			Debug.Log( oa.GetDesc() + oam.GetAttribute(oa));
 			int currentAtt = oam.GetAttributeTotal(oa);
 			string subtext = GetAttributeAdjustments(oa,currentAtt);
 			attributeGroup.SetAttribute(oa,currentAtt,subtext);
@@ -132,6 +132,8 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		string retStr="";
 		AttributeAdjustment[] attCollector;
+		if(val<1)
+			return retStr;
 		switch(oa)
 		{
 		case OSRIC_ATTRIBUTES.Strength:
@@ -164,6 +166,12 @@ public class CharacterCreatorUIController : MonoBehaviour {
 
 		}
 		return retStr;
+	}
+
+
+	public void Reroll()
+	{
+		engine.RandomizeCharactersAttributes(charModel);
 	}
 
 	// DROP DOWN SECTION
@@ -215,18 +223,18 @@ public class CharacterCreatorUIController : MonoBehaviour {
 
 	void SetClassOptions()
 	{
-//			Debug.Log("SET CLASS OPTION CALLED");
+		//			Debug.Log("SET CLASS OPTION CALLED");
 		HashSet<OSRIC_CLASS> atts = engine.AvailableClassesByAttributes(charModel.attributes);
 		HashSet<OSRIC_CLASS> race = engine.AvailableClassesByRace(charModel.attributes);
-		
+
 		race.IntersectWith(atts);
-//		foreach(OSRIC_CLASS oc in race)
-//		{
-//			Dropdown.OptionData tempOpt = new Dropdown.OptionData(oc.GetDesc()); 
-//			if(!classDrop.options.Contains(tempOpt))
-//				classDrop.options.Add(tempOpt);
-//		}
-	classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
+		//		foreach(OSRIC_CLASS oc in race)
+		//		{
+		//			Dropdown.OptionData tempOpt = new Dropdown.OptionData(oc.GetDesc()); 
+		//			if(!classDrop.options.Contains(tempOpt))
+		//				classDrop.options.Add(tempOpt);
+		//		}
+		classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
 
 		if(!race.Contains(charModel.attributes.characterClass))
 			charModel.attributes.characterClass = OSRIC_CLASS.None;
