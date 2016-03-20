@@ -8,6 +8,8 @@ public class MainController : MonoBehaviour {
 	public RPGCharacterModel CurrentCharacter;
 	public OSRICEngine engine;
 	public CharacterCreatorUIController CreatorUI;
+	public CharacterViewerUIController ViewerUI;
+	public HomeDashboardUIController DashboardUI;
 
 
 
@@ -18,6 +20,8 @@ public class MainController : MonoBehaviour {
 		engine = gameObject.AddComponent<OSRICEngine>();
 		CreatorUI.engine = engine;
 		CreateCharacter();
+		ViewerUI.engine = engine;
+		ViewerUI.LoadCharacterAttributes(CurrentCharacter);
 	}
 
 	// Update is called once per frame

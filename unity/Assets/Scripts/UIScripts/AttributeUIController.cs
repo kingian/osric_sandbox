@@ -9,9 +9,6 @@ public class AttributeUIController : MonoBehaviour {
 	public Text attributeLabel;
 	public Text attributeValue;
 	public Text attributeSubtext;
-	public string labelString;
-	public string valueString;
-	public string subtextString;
 	public OSRIC_ATTRIBUTES attributeEnum;
 
 	// Use this for initialization

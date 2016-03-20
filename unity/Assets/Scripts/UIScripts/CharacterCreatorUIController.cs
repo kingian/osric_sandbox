@@ -16,6 +16,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	public Dropdown genderDrop;
 	public Dropdown classDrop;
 	public Dropdown alignmentDrop;
+	public InputField characterNameText;
 
 
 
@@ -89,6 +90,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		alignmentDrop = GameObject.Find ("alignmentDropdown").GetComponent<Dropdown>();
 		//		engine = GameObject.FindObjectOfType<OSRICEngine>();
 		classDropController = gameObject.GetComponentInChildren<ClassDropUIController>();
+		characterNameText = GameObject.Find("characterName").GetComponent<InputField>();
 	}
 
 
@@ -111,6 +113,12 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		SetAlignmentOptions();
 		SetRaceOptions();
 		SetClassOptions();
+	}
+
+
+	public void UpdateCharacterName()
+	{
+		charModel.attributes.characterName = characterNameText.text;
 	}
 
 

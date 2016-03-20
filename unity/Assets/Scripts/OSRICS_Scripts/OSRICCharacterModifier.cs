@@ -2,14 +2,6 @@
 using System.Collections;
 using System.ComponentModel;
 
-//using OSRICAttributeModel;
-//using OSRICEngine;
-//using OSRICConstants;
-
-
-
-
-
 public class OSRICCharacterModifier : System.Object
 {
 
