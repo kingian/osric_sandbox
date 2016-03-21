@@ -7,29 +7,38 @@ using System.Collections.Generic;
 public class AttributeUIGroup : MonoBehaviour {
 	
 	public AttributeUIController[] attributeContollerArray;
+	public bool layoutTriggered;
+
+	IEnumerator pauseAfterLoad()
+	{
+		yield return new WaitForSeconds(.5f);
+		OrderAttributeElements();
+	}
 
 	void Awake()
 	{
 		attributeContollerArray = gameObject.GetComponentsInChildren<AttributeUIController>();
-// 		OrderAttributeElements();
-
+		StartCoroutine(pauseAfterLoad());
 	}
 
+
+
 	// Use this for initialization
-	void Start () {
-//		attributeContollerArray = gameObject.GetComponentsInChildren<AttributeUIController>();
-		OrderAttributeElements();
+	void Start () 
+	{
+
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+	{
+
 	}
 
-	void OrderAttributeElements()
+	public void OrderAttributeElements()
 	{
-		Vector3 groupPos = new Vector3(-250f,145f);
-		gameObject.transform.localPosition = groupPos;
+		if(layoutTriggered)
+			return;
 		float yOffset = 0f;
 		Vector3 currentPos;
 		GameObject currentGO;
@@ -41,6 +50,7 @@ public class AttributeUIGroup : MonoBehaviour {
 			currentGO.transform.position = currentPos;
 			yOffset -= 50f;
 		}
+		layoutTriggered = true;
 	}
 
 	GameObject GetController(OSRIC_ATTRIBUTES oa)

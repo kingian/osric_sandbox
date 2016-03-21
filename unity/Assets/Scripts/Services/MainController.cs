@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MainController : MonoBehaviour {
 
-	public static List<RPGCharacterModel> CharacterList;
+	public List<RPGCharacterModel> CharacterList;
 	public RPGCharacterModel CurrentCharacter;
 	public OSRICEngine engine;
 	public CharacterCreatorUIController CreatorUI;
@@ -19,10 +19,39 @@ public class MainController : MonoBehaviour {
 		CharacterList = new List<RPGCharacterModel>();
 		engine = gameObject.AddComponent<OSRICEngine>();
 		CreatorUI.engine = engine;
-		CreateCharacter();
 		ViewerUI.engine = engine;
+		ViewerUI.gameObject.SetActive(false);
+		CreatorUI.gameObject.SetActive(false);
+		DashboardUI.gameObject.SetActive(true);
+	}
+
+
+	public void SetToCharacterCreationMode()
+	{
+		DashboardUI.gameObject.SetActive(false);
+		ViewerUI.gameObject.SetActive(false);
+		CreatorUI.gameObject.SetActive(true);
+		CreatorUI.attributeGroup.OrderAttributeElements();
+		CreateCharacter();
+	}
+
+	public void SetToCharacterViewMode()
+	{
+		DashboardUI.gameObject.SetActive(false);
+		CreatorUI.gameObject.SetActive(false);
+		ViewerUI.gameObject.SetActive(true);
 		ViewerUI.LoadCharacterAttributes(CurrentCharacter);
 	}
+
+
+	public void SetToHomeMode()
+	{
+
+		CreatorUI.gameObject.SetActive(false);
+		ViewerUI.gameObject.SetActive(false);
+		DashboardUI.gameObject.SetActive(true);
+	}
+
 
 	// Update is called once per frame
 	void Update () 
@@ -32,12 +61,13 @@ public class MainController : MonoBehaviour {
 	}
 
 
-	public static void SaveCharacter(RPGCharacterModel rcm)
+	public void SaveCharacter()
 	{
-		CharacterList.Add(rcm);
+		if(!CharacterList.Contains(CurrentCharacter))
+			CharacterList.Add(CurrentCharacter);
 	}
 
-	public static void DeleteCharacter(RPGCharacterModel rcm)
+	public void DeleteCharacter(RPGCharacterModel rcm)
 	{
 		CharacterList.Remove(rcm);
 	}
