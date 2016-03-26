@@ -44,7 +44,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		{
 			Debug.Log(e.ToString());
 		}
-		Debug.Log("option from class drop: " + classDrop.value);
+//		Debug.Log("option from class drop: " + classDrop.value);
 		try
 		{
 			if(classDrop.options.Contains(classDrop.options[classDrop.value])) // THIS CALL IS THROWING AN EXCEPTION
@@ -108,6 +108,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	void UpdateCharacterViewInformation()
 	{
 		UpdateAttributeViewInformation();
+		UpdateCharacterName();
 		ClearAllDropdowns();
 		SetGenderOptions();
 		SetAlignmentOptions();
@@ -186,6 +187,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 
 	void ClearAllDropdowns()
 	{
+		characterNameText.text = "";
 		raceDrop.options.Clear();
 		genderDrop.options.Clear();
 		classDrop.options.Clear();
@@ -236,12 +238,6 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		HashSet<OSRIC_CLASS> race = engine.AvailableClassesByRace(charModel.attributes);
 
 		race.IntersectWith(atts);
-		//		foreach(OSRIC_CLASS oc in race)
-		//		{
-		//			Dropdown.OptionData tempOpt = new Dropdown.OptionData(oc.GetDesc()); 
-		//			if(!classDrop.options.Contains(tempOpt))
-		//				classDrop.options.Add(tempOpt);
-		//		}
 		classDropController.SetOptionsAndSelected(race,charModel.attributes.characterClass);
 
 		if(!race.Contains(charModel.attributes.characterClass))

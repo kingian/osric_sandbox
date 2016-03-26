@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
+
 public class RPGCharacterModel : MonoBehaviour {
 
 
@@ -24,6 +24,10 @@ public class RPGCharacterModel : MonoBehaviour {
 	void Update () {
 	
 	}
-
+		
+	void OnDestroy()
+	{
+		Destroy(attributes);
+	}
 
 }

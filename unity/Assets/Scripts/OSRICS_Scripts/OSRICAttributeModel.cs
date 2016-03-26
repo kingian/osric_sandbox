@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using OSRICAttributeModifier;
 
-[ExecuteInEditMode]//you only need execute in edit mod if you need to continously call the update/lateupdate type events. it'll run if called regardless
+
 public class OSRICAttributeModel : RPGAttributeModel 
 {	
 	//for when a reroll, or manual attribute change happens
@@ -160,7 +160,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 		{
 			strout += ocm.attribute.GetDesc() + " | ";
 		}
-		Debug.Log(strout);
+//		Debug.Log(strout);
 
 		BroadcastRacialAttributeDidChange();
 		BroadcastAttributeModelDidChange ();
