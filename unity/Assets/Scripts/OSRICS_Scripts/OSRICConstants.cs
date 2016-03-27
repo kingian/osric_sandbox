@@ -178,6 +178,8 @@ public enum OSRIC_SAVING_THROWS
 	saveRoSaWa,
 	[Description("Save vs. Breath Weapon")]
 	saveBreath,
+	[Description("Save vs. Death,Paralysis and Poison")]
+	saveDeath,
 	[Description("Save vs. Petrification and Polymorph")]
 	savePetPoly,
 	[Description("Save vs. Spell")]

@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public class RPGCharacterModel : MonoBehaviour {
+public class RPGCharacterModel {
 
 
 	public OSRICAttributeModel attributes;
 
 
+	public RPGCharacterModel()
+	{
+		attributes = new OSRICAttributeModel(this);
+	}
+
+
 	void Awake (){
 //			Debug.Log("Blah");
-		attributes = gameObject.GetComponent<OSRICAttributeModel> ();
-		if(attributes == null)
-			attributes = gameObject.AddComponent<OSRICAttributeModel>();
+//		attributes = gameObject.GetComponent<OSRICAttributeModel> ();
+//		if(attributes == null)
+//			attributes = gameObject.AddComponent<OSRICAttributeModel>();
 	}
 
 	// Use this for initialization
@@ -25,9 +30,9 @@ public class RPGCharacterModel : MonoBehaviour {
 	
 	}
 		
-	void OnDestroy()
-	{
-		Destroy(attributes);
-	}
+//	void OnDestroy()
+//	{
+//		Destroy(attributes);
+//	}
 
 }

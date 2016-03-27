@@ -296,9 +296,9 @@ public class OSRICEngine : MonoBehaviour {
 	public void RandomizeCharactersAttributes(RPGCharacterModel charmod)
 	{
 		//		if(!init)
-		//			ResetChracterOptions(charmod.attributes);
+		ResetChracterOptions(charmod.attributes);
 
-		charmod.attributes.characterRace = OSRIC_RACE.Human;
+//		charmod.attributes.characterRace = OSRIC_RACE.Human;
 
 		foreach(OSRIC_ATTRIBUTES oa in Enum.GetValues(typeof(OSRIC_ATTRIBUTES)))
 		{
@@ -312,6 +312,7 @@ public class OSRICEngine : MonoBehaviour {
 
 	public void ResetChracterOptions(OSRICAttributeModel oam)
 	{
+
 		oam.characterClass = OSRIC_CLASS.None;
 		oam.characterRace = OSRIC_RACE.Human;
 		oam.characterAlignment = OSRIC_ALIGNMENT.Neutral;

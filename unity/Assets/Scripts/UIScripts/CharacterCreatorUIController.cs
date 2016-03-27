@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class CharacterCreatorUIController : MonoBehaviour {
 
 
+	public MainController mainCon;
 	public AttributeUIGroup attributeGroup;
 	public RPGCharacterModel charModel;
 	public OSRICEngine engine;
@@ -17,13 +18,37 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	public Dropdown classDrop;
 	public Dropdown alignmentDrop;
 	public InputField characterNameText;
+	public Text warningText;
 
 
 
 
-	public void UpdateAttributeModelOptions()
+	public void SaveCharacter()
+	{
+		if(!IsCharacterReadyToSave())
+		{
+			warningText.text = "Your character must have a class and a name.";
+			return;
+		}
+		warningText.text = "";
+		characterNameText.text = "";
+		mainCon.SaveAndReturn();
+	}
+
+	bool IsCharacterReadyToSave()
+	{
+		if(charModel.attributes.characterName == "")
+			return false;
+		if(charModel.attributes.characterClass == OSRIC_CLASS.None)
+			return false;
+		return true;
+	}
+
+
+	public void SetAttributeModelOptions()
 	{
 		//		Debug.Log("UPDATE ATTRIBUTE MODEL OPTIONS CALLED");
+		SetChacterNameFromUI();
 		CharacterOptionCollection attCol = GetCharacterOptionsFromDrops();
 		if(!engine.VerifyOptionCollection(attCol))
 			attCol.charClass = OSRIC_CLASS.None;
@@ -31,11 +56,16 @@ public class CharacterCreatorUIController : MonoBehaviour {
 
 	}
 
-	public void UpdateGenderAndAlignment()
+	public void SetGenderAndAlignment()
 	{
 		charModel.attributes.characterAlignment = 
 			OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);
 		charModel.attributes.characterGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
+	}
+
+	public void SetChacterNameFromUI()
+	{
+		charModel.attributes.characterName = characterNameText.text;
 	}
 
 	public CharacterOptionCollection GetCharacterOptionsFromDrops()
@@ -87,10 +117,10 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		OSRICAttributeModel.BaseAttributeDidChange += UpdateCharacterViewInformation;
 		OSRICAttributeModel.RacialModifierDidChange += UpdateCharacterViewInformation;
-		genderDrop.onValueChanged.AddListener(delegate {UpdateGenderAndAlignment();});
-		raceDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
-		classDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
-		alignmentDrop.onValueChanged.AddListener(delegate {UpdateGenderAndAlignment();});
+		genderDrop.onValueChanged.AddListener(delegate {SetGenderAndAlignment();});
+		raceDrop.onValueChanged.AddListener(delegate {SetAttributeModelOptions();});
+		classDrop.onValueChanged.AddListener(delegate {SetAttributeModelOptions();});
+		alignmentDrop.onValueChanged.AddListener(delegate {SetGenderAndAlignment();});
 	}
 
 	void OnDisable()
@@ -130,8 +160,8 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	void UpdateCharacterViewInformation()
 	{
 		UpdateAttributeViewInformation();
-		SetCharacterNameFromModel();
 		ClearAllDropdowns();
+		SetCharacterNameFromModel();
 		SetGenderOptions();
 		SetAlignmentOptions();
 		SetRaceOptions();
@@ -203,13 +233,13 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	public void Reroll()
 	{
 		engine.RandomizeCharactersAttributes(charModel);
+		characterNameText.text = "";
 	}
 
 	// DROP DOWN SECTION
 
 	void ClearAllDropdowns()
 	{
-		characterNameText.text = "";
 		raceDrop.options.Clear();
 		genderDrop.options.Clear();
 		classDrop.options.Clear();

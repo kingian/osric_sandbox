@@ -31,13 +31,11 @@ public class HomeDashboardUIController : MonoBehaviour {
 		Vector3 currentPos;
 		GameObject newGO;
 		CharButController newCon;
-		int rank;
 		foreach(RPGCharacterModel cm in mainCon.CharacterList)
 		{
 			curButName = cm.GetHashCode() + "_button";
 			if(InButtonList(curButName))
 				continue;
-			rank = mainCon.CharacterList.IndexOf(cm);
 
 			newGO = Instantiate(Resources.Load("CharacterButton")) as GameObject;
 			newGO.transform.SetParent(characterListOrigin.transform);

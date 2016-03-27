@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 public class MainController : MonoBehaviour {
 
-	[SerializeField]
-	public List<RPGCharacterModel> CharacterList;
-	public RPGCharacterModel CurrentCharacter;
-	public OSRICAttributeModel CurrentAM;
+	[SerializeField] public List<RPGCharacterModel> CharacterList;
+	[SerializeField] public RPGCharacterModel CurrentCharacter;
 	public OSRICEngine engine;
 	public CharacterCreatorUIController CreatorUI;
 	public CharacterViewerUIController ViewerUI;
@@ -21,6 +19,7 @@ public class MainController : MonoBehaviour {
 		CharacterList = new List<RPGCharacterModel>();
 		engine = gameObject.AddComponent<OSRICEngine>();
 		CreatorUI.engine = engine;
+		CreatorUI.mainCon = this;
 		ViewerUI.engine = engine;
 		SetToHomeMode();
 	}
@@ -31,6 +30,7 @@ public class MainController : MonoBehaviour {
 		DashboardUI.gameObject.SetActive(false);
 		ViewerUI.gameObject.SetActive(false);
 		CreatorUI.gameObject.SetActive(true);
+//		CreatorUI.characterNameText.text = "";
 		CreateCharacter();
 		CreatorUI.attributeGroup.OrderAttributeElements();
 	}
@@ -46,7 +46,8 @@ public class MainController : MonoBehaviour {
 
 	public void SetToHomeMode()
 	{
-		Destroy(CurrentCharacter);
+		CurrentCharacter = null;
+//		Destroy(CurrentCharacter);
 		CreatorUI.gameObject.SetActive(false);
 		ViewerUI.gameObject.SetActive(false);
 		DashboardUI.gameObject.SetActive(true);
@@ -64,7 +65,8 @@ public class MainController : MonoBehaviour {
 	public void SaveAndReturn()
 	{
 		SaveCharacter();
-		Destroy(CurrentCharacter);
+		CurrentCharacter = null;
+//		Destroy(CurrentCharacter);
 		SetToHomeMode();
 	}
 
@@ -81,7 +83,7 @@ public class MainController : MonoBehaviour {
 
 	public void CreateCharacter()
 	{
-		CurrentCharacter = gameObject.AddComponent<RPGCharacterModel>();
+		CurrentCharacter = new RPGCharacterModel();
 		CreatorUI.charModel = CurrentCharacter;
 		engine.RandomizeCharactersAttributes(CurrentCharacter);
 	}

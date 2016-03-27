@@ -88,5 +88,8 @@ public class OSRICCharacterModifier : System.Object
 		return false;
 	}
 	
-
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
 }

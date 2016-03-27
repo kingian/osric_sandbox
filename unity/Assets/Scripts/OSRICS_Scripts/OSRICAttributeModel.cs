@@ -41,8 +41,8 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public OSRIC_ALIGNMENT characterAlignment = OSRIC_ALIGNMENT.Neutral;
 	public OSRIC_CHARACTER_STATE characterState;
 
-	public OSRICModifierCollection SomaticModifiers;  //Body related modifiers, e.g. race modifiers, spell effects
-	public OSRICModifierCollection EquipedModifiers;
+	public OSRICModifierCollection CharacterModifiers;  //Body related modifiers, e.g. race modifiers, spell effects
+//	public OSRICModifierCollection EquipedModifiers;
 
 	void BroadcastBaseAttributeDidChange()
 	{
@@ -60,29 +60,36 @@ public class OSRICAttributeModel : RPGAttributeModel
 		if(AttributeModelDidChange!=null)
 			AttributeModelDidChange();
 	}
-	
-	void Awake ()
+
+	public OSRICAttributeModel(RPGCharacterModel _cm)
 	{
-		SomaticModifiers = new OSRICModifierCollection();
-		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
+		cm = _cm;
+		CharacterModifiers = new OSRICModifierCollection();
 	}
+
+
+//	void Awake ()
+//	{
+//		SomaticModifiers = new OSRICModifierCollection();
+//		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
+//	}
 	
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
+//	// Use this for initialization
+//	void Start () {
+//	}
+//	
+//	// Update is called once per frame
+//	void Update () {
+//
+//	}
 
 
 	//we should be able to take this boilerplate and slim it down,but it's whatevs
 	public int StrTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
+		foreach (OSRICCharacterModifier mod in CharacterModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Strength)
 				racial_bonus += mod.value;
 		}
@@ -93,7 +100,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int DexTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
+		foreach (OSRICCharacterModifier mod in CharacterModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Dexterity)
 				racial_bonus += mod.value;
 		}
@@ -104,7 +111,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int ConTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
+		foreach (OSRICCharacterModifier mod in CharacterModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Constitution)
 				racial_bonus += mod.value;
 		}
@@ -115,7 +122,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int IntTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
+		foreach (OSRICCharacterModifier mod in CharacterModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Intellegence)
 				racial_bonus += mod.value;
 		}
@@ -125,7 +132,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int WisTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
+		foreach (OSRICCharacterModifier mod in CharacterModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Wisdom)
 				racial_bonus += mod.value;
 		}
@@ -136,7 +143,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public int ChaTotal(){
 		//racial bonuses
 		int racial_bonus = 0;
-		foreach (OSRICCharacterModifier mod in SomaticModifiers.ModifierList) {
+		foreach (OSRICCharacterModifier mod in CharacterModifiers.ModifierList) {
 			if (mod.attribute == OSRIC_ATTRIBUTES.Charisma)
 				racial_bonus += mod.value;
 		}
@@ -149,6 +156,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	{
 		//OSRICEngine.RemoveRaceAdjustments(this);//if we really need to call function on the engine from here we're probably in trouble and need to rethink a few things
 		this.ClearRacialModifiers();//this works now without engine call like above
+		characterName = coc.charName;
 		characterRace = coc.charRace;
 		OSRICEngine.AddRaceAdjustments(this,characterRace);
 		characterAlignment = coc.charAlignment;
@@ -156,7 +164,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 		characterClass = coc.charClass;
 
 		string strout = "Current Modifiers: ";
-		foreach(OSRICCharacterModifier ocm in SomaticModifiers.ModifierList)
+		foreach(OSRICCharacterModifier ocm in CharacterModifiers.ModifierList)
 		{
 			strout += ocm.attribute.GetDesc() + " | ";
 		}
@@ -253,7 +261,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	//we could make this more generic and call it AddBaseAttributeModifier and store it all one list
 	public void AddRacialModifier(OSRICCharacterModifier modifier)
 	{
-		SomaticModifiers.Add (modifier);
+		CharacterModifiers.Add (modifier);
 
 		BroadcastRacialAttributeDidChange ();
 		BroadcastAttributeModelDidChange ();
@@ -261,7 +269,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	//in this particular use case the only time we need to remove a racial modifier we can just remove all of them cause someone changed their race
 	//we dont want direct access to anything in the model, even its redundant, because enevitably we'll want to broadast events, or do cleanup, etc.
 	public void ClearRacialModifiers(){
-		SomaticModifiers.RemoveAllRacialModifiers();
+		CharacterModifiers.RemoveAllRacialModifiers();
 		BroadcastRacialAttributeDidChange();
 		BroadcastAttributeModelDidChange ();
 	}
