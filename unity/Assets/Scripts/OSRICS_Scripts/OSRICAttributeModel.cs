@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using OSRICAttributeModifier;
 
-
+[System.Serializable]
 public class OSRICAttributeModel : RPGAttributeModel 
 {	
 	//for when a reroll, or manual attribute change happens

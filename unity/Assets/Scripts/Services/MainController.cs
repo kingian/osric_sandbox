@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class MainController : MonoBehaviour {
 
+	[SerializeField]
 	public List<RPGCharacterModel> CharacterList;
 	public RPGCharacterModel CurrentCharacter;
 	public OSRICAttributeModel CurrentAM;
