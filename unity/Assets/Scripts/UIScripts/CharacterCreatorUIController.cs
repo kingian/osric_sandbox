@@ -31,10 +31,25 @@ public class CharacterCreatorUIController : MonoBehaviour {
 
 	}
 
+	public void UpdateGenderAndAlignment()
+	{
+		charModel.attributes.characterAlignment = 
+			OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);
+		charModel.attributes.characterGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
+	}
+
 	public CharacterOptionCollection GetCharacterOptionsFromDrops()
 	{
 		CharacterOptionCollection retCol = new CharacterOptionCollection();
-		retCol.charGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
+		retCol.charName = characterNameText.text;
+		try
+		{
+			retCol.charGender = OSRICConstants.GetEnum<OSRIC_GENDER>(genderDrop.options[genderDrop.value].text);
+		}
+		catch(Exception e)
+		{
+			Debug.Log(e.ToString());
+		}
 		//		Debug.Log("options from drop: " + raceDrop.value);
 		try
 		{
@@ -56,7 +71,14 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		{
 			Debug.Log(e.ToString());
 		}
-		retCol.charAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);
+		try
+		{
+			retCol.charAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(alignmentDrop.options[alignmentDrop.value].text);
+		}
+		catch(Exception e)
+		{
+			Debug.Log(e.ToString());
+		}
 		return retCol;
 	}
 
@@ -65,10 +87,10 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		OSRICAttributeModel.BaseAttributeDidChange += UpdateCharacterViewInformation;
 		OSRICAttributeModel.RacialModifierDidChange += UpdateCharacterViewInformation;
-		genderDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
+		genderDrop.onValueChanged.AddListener(delegate {UpdateGenderAndAlignment();});
 		raceDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
 		classDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
-		alignmentDrop.onValueChanged.AddListener(delegate {UpdateAttributeModelOptions();});
+		alignmentDrop.onValueChanged.AddListener(delegate {UpdateGenderAndAlignment();});
 	}
 
 	void OnDisable()
@@ -108,7 +130,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	void UpdateCharacterViewInformation()
 	{
 		UpdateAttributeViewInformation();
-		UpdateCharacterName();
+		SetCharacterNameFromModel();
 		ClearAllDropdowns();
 		SetGenderOptions();
 		SetAlignmentOptions();
@@ -117,7 +139,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	}
 
 
-	public void UpdateCharacterName()
+	public void SetCharacterNameFromModel()
 	{
 		charModel.attributes.characterName = characterNameText.text;
 	}
