@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 
@@ -189,6 +190,7 @@ public enum OSRIC_SAVING_THROWS
 
 
 
+
 public struct CharacterOptionCollection
 {
 	public OSRIC_GENDER charGender;
@@ -225,6 +227,21 @@ public struct EnumAttributePair
 
 public static class OSRICConstants
 {
+	public static Dictionary<string,int> ClassHitDie =
+		new Dictionary<string, int>()
+	{
+		{"Thief",6},
+		{"Assassin",6},
+		{"Cleric",8},
+		{"Druid",8},
+		{"Fighter",10},
+		{"Paladin",10},
+		{"Ranger",8},
+		{"Magic-User",4},
+		{"Illusionist",4}
+	};
+
+
 	
 	public static T GetAttributeOfType<T>(this Enum enumVal) where T:System.Attribute
 	{

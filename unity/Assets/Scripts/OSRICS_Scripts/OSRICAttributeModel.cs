@@ -66,23 +66,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 		cm = _cm;
 		CharacterModifiers = new OSRICModifierCollection();
 	}
-
-
-//	void Awake ()
-//	{
-//		SomaticModifiers = new OSRICModifierCollection();
-//		cm = gameObject.GetComponentInParent<RPGCharacterModel>();
-//	}
-	
-
-//	// Use this for initialization
-//	void Start () {
-//	}
-//	
-//	// Update is called once per frame
-//	void Update () {
-//
-//	}
+		
 
 
 	//we should be able to take this boilerplate and slim it down,but it's whatevs

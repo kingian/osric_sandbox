@@ -226,16 +226,6 @@ public class OSRICEngine : MonoBehaviour {
 	public  HashSet<OSRIC_CLASS> AvailableClassesByAttributes(OSRICAttributeModel _atm)
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
-		//		retSet.Add (OSRIC_CLASS.Paladin);
-		//		retSet.Add (OSRIC_CLASS.Ranger);
-		//		retSet.Add (OSRIC_CLASS.Assassin);
-		//		retSet.Add (OSRIC_CLASS.Cleric);
-		//		retSet.Add (OSRIC_CLASS.Druid);
-		//		retSet.Add (OSRIC_CLASS.Fighter);
-		//		retSet.Add (OSRIC_CLASS.Illusionist);
-		//		retSet.Add (OSRIC_CLASS.MagicUser);
-		//		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
-		//		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
 		bool addClass;
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
@@ -262,19 +252,6 @@ public class OSRICEngine : MonoBehaviour {
 	{
 		HashSet<OSRIC_CLASS> retSet = new HashSet<OSRIC_CLASS>();
 		bool available;
-		//		string outstr = "";
-
-
-		//		retSet.Add (OSRIC_CLASS.Paladin);
-		//		retSet.Add (OSRIC_CLASS.Ranger);
-		//		retSet.Add (OSRIC_CLASS.Assassin);
-		//		retSet.Add (OSRIC_CLASS.Cleric);
-		//		retSet.Add (OSRIC_CLASS.Druid);
-		//		retSet.Add (OSRIC_CLASS.Fighter);
-		//		retSet.Add (OSRIC_CLASS.Illusionist);
-		//		retSet.Add (OSRIC_CLASS.MagicUser);
-		//		retSet.Add (OSRIC_CLASS.Fighter_MagicUser);
-		//		retSet.Add (OSRIC_CLASS.MagicUser_Thief);
 
 		foreach(OSRIC_CLASS oc in Enum.GetValues(typeof(OSRIC_CLASS)))
 		{
@@ -287,8 +264,6 @@ public class OSRICEngine : MonoBehaviour {
 			if(available)
 				retSet.Add(oc);
 		}
-		//
-		//		Debug.Log(outstr);
 
 		return retSet;
 	}
@@ -312,7 +287,7 @@ public class OSRICEngine : MonoBehaviour {
 
 	public void ResetChracterOptions(OSRICAttributeModel oam)
 	{
-
+ 
 		oam.characterClass = OSRIC_CLASS.None;
 		oam.characterRace = OSRIC_RACE.Human;
 		oam.characterAlignment = OSRIC_ALIGNMENT.Neutral;
@@ -408,5 +383,28 @@ public class OSRICEngine : MonoBehaviour {
 		if (retSet.Contains (coc.charClass))
 			return true;
 		return false;
+	}
+
+	public void CompleteCharacterCreation(RPGCharacterModel cm)
+	{
+		int hp, con, bonus;
+		con = cm.attributes.GetAttributeTotal(OSRIC_ATTRIBUTES.Constitution);
+		con = attributeTable.GetYIndexOf(con);
+		bonus = attributeTable.GetValue("con_HP_per_die",con);
+		cm.attributes.hitPoints = hp = RollHitPoints(cm.attributes.characterClass, bonus);
+	}
+
+	public int RollHitPoints(OSRIC_CLASS oc,int bonus)
+	{
+		int accumulator,die,temp;
+		accumulator = die = temp = 0;
+		string[] classString = oc.GetDesc().Split('/');
+		for(int i = 0;i<classString.Length;i++)
+		{
+			die = OSRICConstants.ClassHitDie[classString[i]];
+			temp = UnityEngine.Random.Range(1,die) + bonus;
+			accumulator += (int)(temp/classString.Length);
+		}
+		return accumulator;
 	}
 }

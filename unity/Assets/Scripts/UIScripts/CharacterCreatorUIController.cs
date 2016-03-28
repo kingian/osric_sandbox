@@ -32,6 +32,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		}
 		warningText.text = "";
 		characterNameText.text = "";
+		engine.CompleteCharacterCreation(charModel);
 		mainCon.SaveAndReturn();
 	}
 
