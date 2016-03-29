@@ -407,4 +407,13 @@ public class OSRICEngine : MonoBehaviour {
 		}
 		return accumulator;
 	}
+
+	public int ComputeArmorClass(RPGCharacterModel cm)
+	{
+		int ac = 10;
+		int dex = cm.attributes.GetAttributeTotal(OSRIC_ATTRIBUTES.Dexterity);
+		dex = attributeTable.GetYIndexOf(dex);
+		ac += attributeTable.GetValue("dex_AC_adjustment",dex);
+		return ac;
+	}
 }

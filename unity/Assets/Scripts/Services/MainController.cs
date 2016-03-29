@@ -30,7 +30,6 @@ public class MainController : MonoBehaviour {
 		DashboardUI.gameObject.SetActive(false);
 		ViewerUI.gameObject.SetActive(false);
 		CreatorUI.gameObject.SetActive(true);
-//		CreatorUI.characterNameText.text = "";
 		CreateCharacter();
 		CreatorUI.attributeGroup.OrderAttributeElements();
 	}
@@ -41,6 +40,7 @@ public class MainController : MonoBehaviour {
 		CreatorUI.gameObject.SetActive(false);
 		ViewerUI.gameObject.SetActive(true);
 		ViewerUI.LoadCharacterAttributes(CurrentCharacter);
+		ViewerUI.attributeGroup.OrderAttributeElements();
 	}
 
 

@@ -162,6 +162,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		UpdateAttributeViewInformation();
 		ClearAllDropdowns();
+		warningText.text = "";
 		SetCharacterNameFromModel();
 		SetGenderOptions();
 		SetAlignmentOptions();
