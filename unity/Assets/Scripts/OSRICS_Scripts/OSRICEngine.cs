@@ -60,16 +60,20 @@ public class OSRICEngine : MonoBehaviour {
 		}
 	}
 
+	OSRICSaveTables SaveTables;
+
 	public void init() {}
 
 	// Use this for initialization
 	void Start () 
 	{
+		SaveTables = new OSRICSaveTables();
 		attributeTable.init();
 		thacoTable.init();
 		classMinimums.init ();
 		raceClassMatrix.init ();
 		raceMinMax.init ();
+		SaveTables.DebugTables();
 	}
 
 	// Update is called once per frame
@@ -107,6 +111,11 @@ public class OSRICEngine : MonoBehaviour {
 	{
 		string[] lines = RPGTableReader.LoadResourceFile("OSRIC_race_mins_maxs");
 		_raceMinMax = RPGTableReader.CreateIntBaseTable("OSRIC Race Min Max",lines, YINDEX_TYPE.StringIndex);
+	}
+
+	private void buildSaveTables()
+	{
+
 	}
 
 	public AttributeAdjustment[] GetStrengthAdjustments(int _str)

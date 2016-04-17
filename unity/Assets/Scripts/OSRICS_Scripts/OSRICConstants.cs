@@ -188,7 +188,25 @@ public enum OSRIC_SAVING_THROWS
 }
 
 
+public struct EnumSavePair
+{
+	public OSRIC_SAVING_THROWS save;
+	public int val;
+	public EnumSavePair(OSRIC_SAVING_THROWS _save, int _val)
+	{
+		save = _save;
+		val = _val;
+	}
+}
 
+public class SaveCollection
+{
+	public EnumSavePair[] saveArr;
+	public SaveCollection()
+	{
+		saveArr = new EnumSavePair[5];
+	}
+}
 
 
 public struct CharacterOptionCollection
