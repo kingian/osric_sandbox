@@ -39,7 +39,12 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	bool IsCharacterReadyToSave()
 	{
 		if(charModel.attributes.characterName == "")
-			return false;
+		{
+			if(!(characterNameText.text == ""))
+				SetChacterNameFromUI();
+			else
+				return false;
+		}
 		if(charModel.attributes.characterClass == OSRIC_CLASS.None)
 			return false;
 		return true;

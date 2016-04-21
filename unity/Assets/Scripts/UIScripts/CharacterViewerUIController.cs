@@ -54,6 +54,13 @@ public class CharacterViewerUIController : MonoBehaviour {
 				lvuc.SetValueString(cm.attributes.characterClass.GetDesc());
 			else if(lvuc.labelText.text.ToLower().Contains("alignment"))
 				lvuc.SetValueString(cm.attributes.characterAlignment.GetDesc());
+			else if(lvuc.labelText.text.ToLower().Contains("level"))
+			{
+				string levelString = cm.attributes.level[0].ToString();
+				for(int i=1;i<cm.attributes.level.Length;i++)
+					levelString += " / " + cm.attributes.level[i].ToString();
+				lvuc.SetValueString(levelString);
+			}
 			else if(lvuc.labelText.text.ToLower().Contains("hp"))
 				lvuc.SetValueString(cm.attributes.hitPoints.ToString());
 			else if(lvuc.labelText.text.ToLower().Contains("ac"))

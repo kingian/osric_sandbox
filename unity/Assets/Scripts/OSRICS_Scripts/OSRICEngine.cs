@@ -396,14 +396,19 @@ public class OSRICEngine : MonoBehaviour {
 
 	public void CompleteCharacterCreation(RPGCharacterModel cm)
 	{
-		int hp, con, bonus;
+		int hp, con, bonus, numClass;
 		con = cm.attributes.GetAttributeTotal(OSRIC_ATTRIBUTES.Constitution);
 		con = attributeTable.GetYIndexOf(con);
 		bonus = attributeTable.GetValue("con_HP_per_die",con);
-		cm.attributes.hitPoints = hp = RollHitPoints(cm.attributes.characterClass, bonus);
+		cm.attributes.hitPoints = hp = RollHitPoints(cm.attributes.characterClass, bonus,2);
+		numClass = cm.attributes.characterClass.GetDesc().Split('/').Length;
+		cm.attributes.level = new int[numClass];
+		for(int i=0;i<numClass;i++)
+			cm.attributes.level[i]=1;
+		
 	}
 
-	public int RollHitPoints(OSRIC_CLASS oc,int bonus)
+	public int RollHitPoints(OSRIC_CLASS oc,int bonus,int _minHPthreshhold)
 	{
 		int accumulator,die,temp;
 		accumulator = die = temp = 0;
@@ -414,7 +419,10 @@ public class OSRICEngine : MonoBehaviour {
 			temp = UnityEngine.Random.Range(1,die) + bonus;
 			accumulator += (int)(temp/classString.Length);
 		}
-		return accumulator;
+		if(accumulator >= _minHPthreshhold)
+			return accumulator;
+		else
+			return RollHitPoints(oc,bonus,_minHPthreshhold);
 	}
 
 	public int ComputeArmorClass(RPGCharacterModel cm)

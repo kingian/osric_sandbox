@@ -49,6 +49,39 @@ public class OSRICSaveTables
 	}
 
 
+
+	public int GetSaveValue(OSRIC_CLASS oc, OSRIC_SAVING_THROWS ost, int level)
+	{
+		RPGBaseTable<int> curSaveTable = SaveDict[oc];
+
+		int levelIndex=0;
+
+		for(int i = 0; i<curSaveTable.IntYIndex.Length();i++)
+			if(curSaveTable.IntYIndex.ValueAtIndex(i)<=level)
+				levelIndex = i;
+
+		switch(ost)
+		{
+		case OSRIC_SAVING_THROWS.saveRoSaWa:
+			return curSaveTable.GetValue("aimed_magic_items",levelIndex);
+			break;
+		case OSRIC_SAVING_THROWS.saveBreath:
+			return curSaveTable.GetValue("breath_weapons",levelIndex);
+			break;
+		case OSRIC_SAVING_THROWS.saveDeath: 
+			return curSaveTable.GetValue("death_paralysis_poison",levelIndex);
+			break;
+		case OSRIC_SAVING_THROWS.savePetPoly: 
+			return curSaveTable.GetValue("petrifaction_polymorph",levelIndex);
+			break;
+		case OSRIC_SAVING_THROWS.saveSpell: 
+			return curSaveTable.GetValue("spells",levelIndex);
+			break;
+		default:
+			return 0;
+		}
+	}
+
 	public SaveCollection GetClassSaves(RPGCharacterModel rcm)
 	{
 		SaveCollection retCol = new SaveCollection();
