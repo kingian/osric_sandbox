@@ -202,9 +202,34 @@ public struct EnumSavePair
 public class SaveCollection
 {
 	public EnumSavePair[] saveArr;
+
 	public SaveCollection()
 	{
 		saveArr = new EnumSavePair[5];
+		int ip = 0;
+		foreach(OSRIC_SAVING_THROWS ost in Enum.GetValues(typeof(OSRIC_SAVING_THROWS)))
+		{
+			saveArr[ip] = new EnumSavePair(ost,20);
+			ip++;
+		}
+	}
+
+	public void UpdateBestSave(EnumSavePair esp)
+	{
+		for(int i=0;i<saveArr.Length;i++)
+			if((esp.save==saveArr[i].save) && (esp.val < saveArr[i].val))
+			{
+				saveArr[i] = esp;
+				return;
+			}
+	}
+
+	public void DebugSaveCollection()
+	{
+		foreach(EnumSavePair esp in saveArr)
+		{
+			Debug.Log(esp.save.GetDesc() + ": " + esp.val.ToString());
+		}
 	}
 }
 

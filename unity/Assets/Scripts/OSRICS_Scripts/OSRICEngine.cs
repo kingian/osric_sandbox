@@ -433,4 +433,12 @@ public class OSRICEngine : MonoBehaviour {
 		ac += attributeTable.GetValue("dex_AC_adjustment",dex);
 		return ac;
 	}
+
+
+	//HERE!!!
+	public SaveCollection GetSaveCollection(RPGCharacterModel cm)
+	{
+		return SaveTables.GetClassSaves(cm);
+	}
+
 }

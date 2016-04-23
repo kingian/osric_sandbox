@@ -15,7 +15,8 @@ public class OSRICSaveTables
 		"OSRIC_illusionist_save",
 		"OSRIC_magic-user_save",
 		"OSRIC_paladin_save",
-		"OSRIC_ranger_save"};
+		"OSRIC_ranger_save",
+		"OSRIC_thief_save"};
 	
 	Dictionary<OSRIC_CLASS,RPGBaseTable<int>> SaveDict;
 
@@ -57,8 +58,12 @@ public class OSRICSaveTables
 		int levelIndex=0;
 
 		for(int i = 0; i<curSaveTable.IntYIndex.Length();i++)
-			if(curSaveTable.IntYIndex.ValueAtIndex(i)<=level)
+			if(level<=curSaveTable.IntYIndex.ValueAtIndex(i))
+			{
 				levelIndex = i;
+				break;
+			}
+			
 
 		switch(ost)
 		{
@@ -78,7 +83,7 @@ public class OSRICSaveTables
 			return curSaveTable.GetValue("spells",levelIndex);
 			break;
 		default:
-			return 0;
+			return 10;
 		}
 	}
 
@@ -86,7 +91,17 @@ public class OSRICSaveTables
 	{
 		SaveCollection retCol = new SaveCollection();
 
+		string[] characterClasses = rcm.attributes.characterClass.GetDesc().Split('/');
 
+		for(int i=0; i<characterClasses.Length;i++)
+		{
+			OSRIC_CLASS curClass = OSRICConstants.GetEnum<OSRIC_CLASS>(characterClasses[i]);
+			foreach(OSRIC_SAVING_THROWS ost in Enum.GetValues(typeof(OSRIC_SAVING_THROWS)))
+			{
+				EnumSavePair sav = new EnumSavePair(ost, GetSaveValue(curClass,ost,rcm.attributes.level[i]));
+				retCol.UpdateBestSave(sav);
+			}
+		}
 		return retCol;
 	}
 

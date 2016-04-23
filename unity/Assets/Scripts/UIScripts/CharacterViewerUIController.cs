@@ -39,6 +39,7 @@ public class CharacterViewerUIController : MonoBehaviour {
 			charModel = cm;
 			UpdateAttributeViewInformation();
 			SetCharacterDetails(cm);
+			engine.GetSaveCollection(cm).DebugSaveCollection();
 		}
 	}
 
