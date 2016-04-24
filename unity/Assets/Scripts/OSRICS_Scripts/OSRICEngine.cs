@@ -73,7 +73,6 @@ public class OSRICEngine : MonoBehaviour {
 		classMinimums.init ();
 		raceClassMatrix.init ();
 		raceMinMax.init ();
-		SaveTables.DebugTables();
 	}
 
 	// Update is called once per frame

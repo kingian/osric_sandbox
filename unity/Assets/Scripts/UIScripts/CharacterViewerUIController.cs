@@ -10,6 +10,7 @@ public class CharacterViewerUIController : MonoBehaviour {
 	public AttributeUIGroup attributeGroup;
 	public RPGCharacterModel charModel;
 	public OSRICEngine engine;
+	public GameObject SaveUIOrigin;
 	public LabelValueUIController[] characterDetailsArr;
 
 
@@ -39,7 +40,7 @@ public class CharacterViewerUIController : MonoBehaviour {
 			charModel = cm;
 			UpdateAttributeViewInformation();
 			SetCharacterDetails(cm);
-			engine.GetSaveCollection(cm).DebugSaveCollection();
+			SetCharacterSavingThrows(cm);
 		}
 	}
 
@@ -71,6 +72,30 @@ public class CharacterViewerUIController : MonoBehaviour {
 		}
 	}
 
+
+	void SetCharacterSavingThrows(RPGCharacterModel cm)
+	{
+		List<LabelValueUIController> saveUIList = new List<LabelValueUIController>();
+
+		foreach(LabelValueUIController lvuc in characterDetailsArr)
+		{
+			if(lvuc.gameObject.name.ToLower().Contains("save"))
+			{
+				int insertAt = Int32.Parse(lvuc.name.Split('_')[1]);
+				saveUIList.Insert((insertAt-1),lvuc);
+				//saveList.Add(lvuc);
+			}
+		}
+		SaveCollection saves = engine.GetSaveCollection(cm);
+		int i = 0;
+		foreach(EnumSavePair esp in saves.saveArr)
+		{
+			LabelValueUIController cur = saveUIList[i];
+			cur.SetLableString(esp.save.GetDesc());
+			cur.SetValueString(esp.val.ToString());
+			i++;
+		}
+	}
 
 
 	void UpdateAttributeViewInformation()
