@@ -33,7 +33,7 @@ public class OSRICModifierCollection
 
 		foreach(OSRICCharacterModifier ocm in ModifierList)
 		{
-			if(ocm.characterVariable == OSRIC_CHARACTER_VARIABLES.attribute)
+			if(ocm.characterVariable == ocv)
 				retList.Add(ocm);	
 		}
 		return retList;

@@ -224,6 +224,11 @@ public class SaveCollection
 			}
 	}
 
+	public EnumSavePair GetEnumSavePair(OSRIC_SAVING_THROWS ost)
+	{
+		return saveArr[(int)ost];
+	}
+
 	public void DebugSaveCollection()
 	{
 		foreach(EnumSavePair esp in saveArr)

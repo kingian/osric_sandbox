@@ -63,7 +63,6 @@ public class OSRICSaveTables
 				levelIndex = i;
 				break;
 			}
-			
 
 		switch(ost)
 		{
@@ -102,6 +101,18 @@ public class OSRICSaveTables
 				retCol.UpdateBestSave(sav);
 			}
 		}
+
+		List<OSRICCharacterModifier> racialBonuses = 
+			rcm.attributes.CharacterModifiers.GetModifierByCharacterVariable(OSRIC_CHARACTER_VARIABLES.savingthrow);
+
+		Debug.Log("Racial Bonuses: " + racialBonuses.Count.ToString());
+
+		foreach(OSRICCharacterModifier ocm in racialBonuses)
+		{
+			Debug.Log(ocm.savingThrow.GetDesc() + " " + ocm.value.ToString());
+			retCol.saveArr[(int)ocm.savingThrow].val += ocm.value;
+		}
+			
 		return retCol;
 	}
 

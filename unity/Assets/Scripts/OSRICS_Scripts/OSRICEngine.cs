@@ -348,9 +348,29 @@ public class OSRICEngine : MonoBehaviour {
 			tempMod = new OSRICCharacterModifier(OSRIC_CHARACTER_VARIABLES.attribute,
 				OSRIC_ATTRIBUTES.Dexterity, OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, 1);
 			accumulator.Add(tempMod);
+
 			tempMod = new OSRICCharacterModifier(OSRIC_CHARACTER_VARIABLES.attribute,
 				OSRIC_ATTRIBUTES.Strength, OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, -1);
 			accumulator.Add(tempMod);
+
+			// Broken here
+			int conAdjust = -1*(int)((float)oam.Con/3.5);
+
+			tempMod = new OSRICCharacterModifier(OSRIC_CHARACTER_VARIABLES.savingthrow,
+				OSRIC_SAVING_THROWS.saveRoSaWa, OSRIC_ATTRIBUTES.Constitution,
+				OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, conAdjust);
+			accumulator.Add(tempMod);
+
+			tempMod = new OSRICCharacterModifier(OSRIC_CHARACTER_VARIABLES.savingthrow,
+				OSRIC_SAVING_THROWS.saveSpell, OSRIC_ATTRIBUTES.Constitution,
+				OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, conAdjust);
+			accumulator.Add(tempMod);
+
+			tempMod = new OSRICCharacterModifier(OSRIC_CHARACTER_VARIABLES.savingthrow,
+				OSRIC_SAVING_THROWS.saveDeath, OSRIC_ATTRIBUTES.Constitution,
+				OSRIC_ATTRIBUTE_MODIFIER_TYPE.Racial, conAdjust);
+			accumulator.Add(tempMod);
+
 			break;
 		case OSRIC_RACE.HalfOrc:
 			tempMod = new OSRICCharacterModifier(OSRIC_CHARACTER_VARIABLES.attribute,
@@ -371,6 +391,7 @@ public class OSRICEngine : MonoBehaviour {
 		{
 			oam.AddRacialModifier(ocm);
 		}
+		Debug.Log("Modifier List: " + oam.CharacterModifiers.ModifierList.Count.ToString());
 	}
 
 	public bool VerifyOptionCollection (CharacterOptionCollection coc)
@@ -434,7 +455,7 @@ public class OSRICEngine : MonoBehaviour {
 	}
 
 
-	//HERE!!!
+
 	public SaveCollection GetSaveCollection(RPGCharacterModel cm)
 	{
 		return SaveTables.GetClassSaves(cm);
