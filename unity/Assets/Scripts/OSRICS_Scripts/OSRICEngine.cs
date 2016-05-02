@@ -61,6 +61,7 @@ public class OSRICEngine : MonoBehaviour {
 	}
 
 	OSRICSaveTables SaveTables;
+	OSRICLevels LevelTables;
 
 	public void init() {}
 
@@ -68,6 +69,7 @@ public class OSRICEngine : MonoBehaviour {
 	void Start () 
 	{
 		SaveTables = new OSRICSaveTables();
+		LevelTables = new OSRICLevels(this);
 		attributeTable.init();
 		thacoTable.init();
 		classMinimums.init ();
@@ -416,15 +418,30 @@ public class OSRICEngine : MonoBehaviour {
 
 	public void CompleteCharacterCreation(RPGCharacterModel cm)
 	{
-		int hp, con, bonus, numClass;
+		cm.attributes.level = LevelTables.GetAllClassLevels(cm);
+		Debug.Log("From CM:" + cm.attributes.level);
+		Debug.Log(cm.attributes.experiencePoints);
+		// HP computation
+		int hpAccumulator, con, bonus, summedLevels;
 		con = cm.attributes.GetAttributeTotal(OSRIC_ATTRIBUTES.Constitution);
 		con = attributeTable.GetYIndexOf(con);
 		bonus = attributeTable.GetValue("con_HP_per_die",con);
-		cm.attributes.hitPoints = hp = RollHitPoints(cm.attributes.characterClass, bonus,2);
-		numClass = cm.attributes.characterClass.GetDesc().Split('/').Length;
-		cm.attributes.level = new int[numClass];
-		for(int i=0;i<numClass;i++)
-			cm.attributes.level[i]=1;
+		// Get all levels and roll for each
+		summedLevels = 0;
+		foreach(int lev in cm.attributes.level)
+			summedLevels += lev;
+
+		hpAccumulator = 0;
+		for(int i=0;i<summedLevels;i++)
+			hpAccumulator += RollHitPoints(cm.attributes.characterClass, bonus,2);
+		
+		cm.attributes.hitPoints = hpAccumulator; 
+
+
+//		numClass = cm.attributes.characterClass.GetDesc().Split('/').Length;
+//		cm.attributes.level = new int[numClass];
+//		for(int i=0;i<numClass;i++)
+//			cm.attributes.level[i]=1;
 		
 	}
 
@@ -459,6 +476,22 @@ public class OSRICEngine : MonoBehaviour {
 	public SaveCollection GetSaveCollection(RPGCharacterModel cm)
 	{
 		return SaveTables.GetClassSaves(cm);
+	}
+
+	public int GetClassMaxByRace(OSRIC_RACE _or, OSRIC_CLASS _oc)
+	{
+		int yindex = raceMinMax.GetYIndexOf(_or.GetDesc());
+
+		if(yindex<0)
+			return 0;
+		try
+		{
+			return raceMinMax.GetValue(_oc.GetDesc(),yindex);
+		}
+		catch
+		{
+			return 0;
+		}
 	}
 
 }

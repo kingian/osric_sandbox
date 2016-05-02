@@ -3,29 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class LevelArray
-{
-	int[] LevelArr;
-
-	public LevelArray(int[] _levelArr)
-	{
-		LevelArr = _levelArr;
-	}
-
-	public int GetLevel(int xp)
-	{
-		for(int i=0; i < LevelArr.Length;i++)
-			if(xp<LevelArr[i])
-				return i+1;
-		return 0;
-	}
-
-	public int GetNextLevelTarget(int _currentLevel)
-	{
-		return LevelArr[_currentLevel];
-	}
-}
-
 public class OSRICLevels  
 {
 	int[] AssassinLevelArr = new int[] {
@@ -209,45 +186,124 @@ public class OSRICLevels
 		440000
 	};
 
+	Dictionary<OSRIC_CLASS,int> UpperLevelTargets;
 
+	Dictionary<OSRIC_CLASS,int[]> ClassLevels;
 
-	public Dictionary<OSRIC_CLASS,LevelArray> ClassLevels;
+	OSRICEngine engine;
 
-	public OSRICLevels()
+	public OSRICLevels(OSRICEngine _oe)
 	{
-		ClassLevels = new Dictionary<OSRIC_CLASS, LevelArray>();
-		ClassLevels.Add(OSRIC_CLASS.Assassin,new LevelArray(AssassinLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Cleric,new LevelArray(ClericLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Druid,new LevelArray(DruidLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Fighter,new LevelArray(FighterLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Illusionist,new LevelArray(IllusionistLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.MagicUser,new LevelArray(MagicUserLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Paladin,new LevelArray(PaladinLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Ranger,new LevelArray(RangerLevelArr));
-		ClassLevels.Add(OSRIC_CLASS.Thief,new LevelArray(ThiefLevelArr));
+		engine = _oe;
+		ClassLevels = new Dictionary<OSRIC_CLASS, int[]>();
+		ClassLevels.Add(OSRIC_CLASS.Assassin,AssassinLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Cleric, ClericLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Druid, DruidLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Fighter, FighterLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Illusionist, IllusionistLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.MagicUser, MagicUserLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Paladin, PaladinLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Ranger, RangerLevelArr);
+		ClassLevels.Add(OSRIC_CLASS.Thief, ThiefLevelArr);
 	}
 
-	public int[] GetClassLevel(RPGCharacterModel cm)
+	void LoadUpperLevelTargets()
+	{
+		UpperLevelTargets = new Dictionary<OSRIC_CLASS, int>();
+		UpperLevelTargets.Add(OSRIC_CLASS.Cleric,225000);
+		UpperLevelTargets.Add(OSRIC_CLASS.Fighter,250000);
+		UpperLevelTargets.Add(OSRIC_CLASS.Illusionist,220000);
+		UpperLevelTargets.Add(OSRIC_CLASS.MagicUser,375000);
+		UpperLevelTargets.Add(OSRIC_CLASS.Paladin,350000);
+		UpperLevelTargets.Add(OSRIC_CLASS.Ranger,325000);
+		UpperLevelTargets.Add(OSRIC_CLASS.Thief,220000);
+	}
+		
+
+
+	private int GetClassLevel(OSRIC_CLASS _oc, OSRIC_RACE _or, int _xp )
+	{
+		if(!ClassLevels.ContainsKey(_oc))
+			return -1;
+		
+		int[] classArr = ClassLevels[_oc];
+		int maxLev = engine.GetClassMaxByRace(_or,_oc);
+
+
+		for(int i=0; i < classArr.Length;i++)
+			if(_xp<classArr[i])
+			{
+				int nextLev = i+1;
+				if(nextLev<maxLev)
+					return nextLev;
+				return maxLev;
+			}
+		
+		if(!UpperLevelTargets.ContainsKey(_oc))
+			return classArr.Length;
+
+		int remainder = _xp - classArr[classArr.Length-1];
+
+		int newLevel = remainder/UpperLevelTargets[_oc] + classArr.Length;
+
+		if(newLevel>maxLev)
+			return maxLev;
+
+		return newLevel;
+	}
+
+
+	public int[] GetAllClassLevels(RPGCharacterModel cm)
 	{
 		int[] retArr;
+		int xp = cm.attributes.experiencePoints;
+		OSRIC_RACE curRace = cm.attributes.characterRace;
 
 		string[] classArr = cm.attributes.characterClass.GetDesc().Split('/');
-
 		if(classArr.Length<2)
 		{
-			return new int[]
-			{ ClassLevels[cm.attributes.characterClass].GetLevel(cm.attributes.experiencePoints) };
+			Debug.Log("Class Arr: " + classArr[0]);
+			return new int[] {GetClassLevel(OSRICConstants.GetEnum<OSRIC_CLASS>(classArr[0]), curRace, xp)};
 		}
 
-		int splitXP = cm.attributes.experiencePoints/classArr.Length;
-
+		int splitXP = xp/classArr.Length;
+		Debug.Log("Split XP: "+splitXP);
 		retArr = new int[classArr.Length];
 
 		for(int i=0; i<retArr.Length;i++)
 		{
-			retArr[i] = ClassLevels[OSRICConstants.GetEnum<OSRIC_CLASS>(classArr[i])].GetLevel(splitXP);
+			retArr[i] = GetClassLevel( OSRICConstants.GetEnum<OSRIC_CLASS>(classArr[i]),curRace,splitXP);
 		}
 
 		return retArr;
 	}
+
+
+	private int GetNextLevelTarget(OSRIC_CLASS _oc, int _level)
+	{
+		int[] clAr = ClassLevels[_oc];
+		if((_level-1)<clAr.Length)
+			return clAr[_level];
+
+		if(_level<clAr.Length && (!UpperLevelTargets.ContainsKey(_oc)))
+			return 0;
+
+		int remainder = _level - clAr.Length;
+
+		return clAr[clAr.Length-1] + (remainder*UpperLevelTargets[_oc]);
+	}
+
+	public int[] GetAllNextLevelTarget(RPGCharacterModel _cm)
+	{
+		int pos = 0;
+		string[] classArr = _cm.attributes.characterClass.GetDesc().Split('/');
+		int[] retArr = new int[classArr.Length];
+
+		foreach(string s in classArr)
+		{
+			retArr[pos] = GetNextLevelTarget(OSRICConstants.GetEnum<OSRIC_CLASS>(s),_cm.attributes.level[pos]);
+		}
+		return retArr;
+	}
+		
 }

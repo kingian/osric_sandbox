@@ -18,6 +18,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	public Dropdown classDrop;
 	public Dropdown alignmentDrop;
 	public InputField characterNameText;
+	public InputField ExperiencePoints;
 	public Text warningText;
 
 
@@ -55,6 +56,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	{
 		//		Debug.Log("UPDATE ATTRIBUTE MODEL OPTIONS CALLED");
 		SetChacterNameFromUI();
+		SetXPFromUI();
 		CharacterOptionCollection attCol = GetCharacterOptionsFromDrops();
 		if(!engine.VerifyOptionCollection(attCol))
 			attCol.charClass = OSRIC_CLASS.None;
@@ -72,6 +74,11 @@ public class CharacterCreatorUIController : MonoBehaviour {
 	public void SetChacterNameFromUI()
 	{
 		charModel.attributes.characterName = characterNameText.text;
+	}
+
+	public void SetXPFromUI()
+	{
+		charModel.attributes.experiencePoints = Int32.Parse(ExperiencePoints.text);
 	}
 
 	public CharacterOptionCollection GetCharacterOptionsFromDrops()
@@ -149,6 +156,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		//		engine = GameObject.FindObjectOfType<OSRICEngine>();
 		classDropController = gameObject.GetComponentInChildren<ClassDropUIController>();
 		characterNameText = GameObject.Find("characterName").GetComponent<InputField>();
+		ExperiencePoints = GameObject.Find("ExperiencePoints").GetComponent<InputField>();
 	}
 
 
@@ -173,6 +181,7 @@ public class CharacterCreatorUIController : MonoBehaviour {
 		SetAlignmentOptions();
 		SetRaceOptions();
 		SetClassOptions();
+		SetExperiencePointInputField();
 	}
 
 
@@ -303,6 +312,11 @@ public class CharacterCreatorUIController : MonoBehaviour {
 			charModel.attributes.characterClass = OSRIC_CLASS.None;
 
 		classDrop.value = GetOptionPosition(classDrop,charModel.attributes.characterClass.GetDesc());
+	}
+
+	void SetExperiencePointInputField()
+	{
+		ExperiencePoints.text = charModel.attributes.experiencePoints.ToString();
 	}
 
 }
