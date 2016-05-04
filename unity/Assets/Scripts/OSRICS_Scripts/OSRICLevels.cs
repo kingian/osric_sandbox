@@ -205,6 +205,7 @@ public class OSRICLevels
 		ClassLevels.Add(OSRIC_CLASS.Paladin, PaladinLevelArr);
 		ClassLevels.Add(OSRIC_CLASS.Ranger, RangerLevelArr);
 		ClassLevels.Add(OSRIC_CLASS.Thief, ThiefLevelArr);
+		LoadUpperLevelTargets();
 	}
 
 	void LoadUpperLevelTargets()
@@ -234,17 +235,21 @@ public class OSRICLevels
 			if(_xp<classArr[i])
 			{
 				int nextLev = i+1;
+				Debug.Log("Next Level: " + nextLev.ToString());
 				if(nextLev<maxLev)
 					return nextLev;
 				return maxLev;
 			}
-		
+
+
+
 		if(!UpperLevelTargets.ContainsKey(_oc))
 			return classArr.Length;
 
 		int remainder = _xp - classArr[classArr.Length-1];
 
 		int newLevel = remainder/UpperLevelTargets[_oc] + classArr.Length;
+
 
 		if(newLevel>maxLev)
 			return maxLev;

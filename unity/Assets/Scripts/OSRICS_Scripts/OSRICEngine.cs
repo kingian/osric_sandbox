@@ -393,7 +393,7 @@ public class OSRICEngine : MonoBehaviour {
 		{
 			oam.AddRacialModifier(ocm);
 		}
-		Debug.Log("Modifier List: " + oam.CharacterModifiers.ModifierList.Count.ToString());
+//		Debug.Log("Modifier List: " + oam.CharacterModifiers.ModifierList.Count.ToString());
 	}
 
 	public bool VerifyOptionCollection (CharacterOptionCollection coc)

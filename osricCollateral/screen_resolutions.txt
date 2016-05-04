@@ -1,0 +1,70 @@
+Smartphone	Screen resolution
+Samsung Galaxy S6 (5.1in)	1440 x 2560 pixels (Quad HD)
+LG G4 (5.5in)	                1440 x 2560 pixels (Quad HD)
+Samsung Galaxy Note 4 (5.7in)	1440 x 2560 pixels (Quad HD)
+Sony Xperia Z3+ (5.2in)	        1080 x 1920 pixels (Full HD)
+HTC One M9 (5in)	        1080 x 1920 pixels (Full HD)
+iPhone 6 Plus (5.5in)	        1080 x 1920 pixels (Full HD)
+
+
+What are the common Android screen resolutions? + the android screen sizes + list of screen resolutions
+
+
+November 13, 2014 5:08 am Tags: android screen res, android screen resolutions, android screen size list, list of screen resolutions, screen sizes, Streaming video hosting companies, video, what are the android screen sizes No Comments 30karma points
+ 
+
+There are a lot of Android devices out there. We try and keep track as many as we can for testing video and sandboxing.
+ 
+Here we’ve just cobbled together the major screen resolutions that we reference when transcoding video or embedding video players. That’s right, you heard me, cobbled them.
+ 
+
+ 
+
+We kept a list of the ones that we’ve tested for reference below, and it seems to represent the vast majority of the android devices on the market. This is meant to be a quick reference split out between phones and tablets. There are plenty of resources out there if you want to dig deep into the way screens work.
+ 
+
+Common Android Phone and Android Tablet Screen Res
+What are the screen resolutions: Android phones
+320 x 480
+
+480 x 800
+
+480 x 854
+
+540 x 960
+
+1280 x 720
+
+1920 x 1080
+
+We recommend 1280 x 720 for video encoding
+
+What are the screen resolutions?: Android tablets
+1024 x 600
+
+1280 x 800
+
+1920 x 1080
+
+2048 x 1536
+
+2560 x 1440
+
+2560 x 1600
+
+We recommend 1920 x 1080 for video encoding
+ 
+
+7-8 Inch Tablets	iPad mini (2nd gen)	Nexus 7	        Galaxy Tab 3 7.0	Galaxy Tab 3 8.0	Kindle Fire HDX	    Galaxy Note 8.0
+Screen size (in)	7.9                     7.02	        7.0	                8.0	                7.0	            8.0
+Screen type	        IPS	                IPS	        TFT	                TFT	                IPS	            TFT
+Resolution	        2048×1536	        1920×1200       1024×600	        1280×800	        1920×1200	    1280×800
+PPI	                326	                323	        170	                189	                323	            189
+Dimensions (in)	        7.87×5.3×0.29	        7.87×4.48×0.34	7.4×4.37×0.39	        8.26×4.87×0.29	        7.3×5.0×0.35	    8.3×5.35×0.31
+
+9-11 Inch Tablets	iPad Air	Galaxy Tab 3 10.1	Surface 2	Surface Pro 2	Nokia Lumia 2520	Nexus 10	Galaxy Note 10.1
+Screen size (in)	9.7	        10.1	                10.6	        10.6	        10.1	                10.0	        10.1
+Screen type	        IPS	        TFT	                IPS	        IPS	        IPS	                IPS	        TFT
+Resolution	        2048×1536	1280×800                1920×1080	1920×1080	1920×1080	        2560×1600	2560×1600
+PPI	                264	        149	                208	        208	        218	                301	        299
+Dimensions (in)	        9.4×6.6×0.29	9.57×6.93×0.313	        10.81×6.81×0.35	10.81×6.81×0.53	10.52×6.61×0.35	        10.38×6.99×0.35	9.57×6.75×0.31

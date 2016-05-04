@@ -105,7 +105,7 @@ public class OSRICSaveTables
 		List<OSRICCharacterModifier> racialBonuses = 
 			rcm.attributes.CharacterModifiers.GetModifierByCharacterVariable(OSRIC_CHARACTER_VARIABLES.savingthrow);
 
-		Debug.Log("Racial Bonuses: " + racialBonuses.Count.ToString());
+//		Debug.Log("Racial Bonuses: " + racialBonuses.Count.ToString());
 
 		foreach(OSRICCharacterModifier ocm in racialBonuses)
 		{
