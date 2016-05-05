@@ -44,6 +44,34 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public OSRICModifierCollection CharacterModifiers;  //Body related modifiers, e.g. race modifiers, spell effects
 //	public OSRICModifierCollection EquipedModifiers;
 
+	public JSONObject Serialize()
+	{
+		JSONObject retObj = new JSONObject(JSONObject.Type.OBJECT);
+		retObj.AddField("Str",Str);
+		retObj.AddField("Dex",Dex);
+		retObj.AddField("Con",Con);
+		retObj.AddField("Int",Int);
+		retObj.AddField("Wis",Wis);
+		retObj.AddField("Cha",Cha);
+		retObj.AddField("hitPoints",hitPoints);
+		retObj.AddField("armorClass",armorClass);
+
+//		retObj.AddField("level",level);
+
+		retObj.AddField("experiencePoints",experiencePoints);
+		retObj.AddField("vision",vision);
+		retObj.AddField("move",move);
+		retObj.AddField("characterGender",characterGender.GetDesc());
+		retObj.AddField("characterRace",characterRace.GetDesc());
+		retObj.AddField("characterClass",characterClass.GetDesc());
+		retObj.AddField("characterAlignment",characterAlignment.GetDesc());
+		retObj.AddField("characterState",characterState.GetDesc());
+
+		return retObj;
+	}
+
+
+
 	void BroadcastBaseAttributeDidChange()
 	{
 		if(BaseAttributeDidChange!=null)

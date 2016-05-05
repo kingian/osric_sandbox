@@ -62,4 +62,15 @@ public class OSRICModifierCollection
 		}
 	}
 
+
+	public JSONObject Serialize()
+	{
+		JSONObject retObj = new JSONObject(JSONObject.Type.ARRAY);
+		foreach(OSRICCharacterModifier ocm in ModifierList)
+		{
+			retObj.Add(ocm.Serialize());
+		}
+		return retObj;
+	}
+
 }

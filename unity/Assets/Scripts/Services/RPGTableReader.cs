@@ -42,7 +42,7 @@ public class RPGTableReader
 		int width = content[0].Split(',').Length;
 		string[,]strArr = new string[height, width];
 
-		Diagnostic.debLog("Array Dims: " + strArr.GetLength(0).ToString() + ", " + strArr.GetLength(1).ToString());
+
 
 		
 		for(int i=0;i<content.Length;i++)
@@ -98,7 +98,7 @@ public class RPGTableReader
 				tempIntArr[j-1] = n;
 			}
 			tab.rows[i-1].AddColumn(tempIntArr);
-			Diagnostic.debLog (tab.rows[i-1].ToString());
+
 		}
 //		tab.DebugLog();
 		return tab;
@@ -111,7 +111,7 @@ public class RPGTableReader
 		int width = content[0].Split(',').Length;
 		string[,]strArr = new string[height, width];
 
-		Diagnostic.debLog("Array Dims:" + strArr.GetLength(0).ToString() + ", " + strArr.GetLength(1).ToString());
+
 		
 		for(int i=0;i<content.Length;i++)
 		{
@@ -124,7 +124,7 @@ public class RPGTableReader
 		
 		tab = new RPGBaseTable<bool>(tableName,width-1);
 		tab.InitCols(width-1);
-		Diagnostic.debLog(tableName +  " Table Length: " + tab.rows.Length);
+
 		for(int i=1; i<width; i++)
 		{
 			
@@ -167,7 +167,7 @@ public class RPGTableReader
 				tempBoolArr[j-1] = m;
 			}
 			tab.rows[i-1].AddColumn(tempBoolArr);
-			Diagnostic.debLog (tab.rows[i-1].ToString());
+
 		}
 		//		tab.DebugLog();
 		return tab;

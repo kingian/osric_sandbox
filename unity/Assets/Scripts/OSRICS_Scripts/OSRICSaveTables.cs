@@ -68,19 +68,14 @@ public class OSRICSaveTables
 		{
 		case OSRIC_SAVING_THROWS.saveRoSaWa:
 			return curSaveTable.GetValue("aimed_magic_items",levelIndex);
-			break;
 		case OSRIC_SAVING_THROWS.saveBreath:
 			return curSaveTable.GetValue("breath_weapons",levelIndex);
-			break;
 		case OSRIC_SAVING_THROWS.saveDeath: 
 			return curSaveTable.GetValue("death_paralysis_poison",levelIndex);
-			break;
 		case OSRIC_SAVING_THROWS.savePetPoly: 
 			return curSaveTable.GetValue("petrifaction_polymorph",levelIndex);
-			break;
 		case OSRIC_SAVING_THROWS.saveSpell: 
 			return curSaveTable.GetValue("spells",levelIndex);
-			break;
 		default:
 			return 10;
 		}

@@ -14,6 +14,8 @@ public class OSRICCharacterModifier : System.Object
 	public int value;//we use ints for everything, right?
 	public int duration;
 
+
+
 	public OSRICCharacterModifier(){
 		this.type = OSRIC_ATTRIBUTE_MODIFIER_TYPE.Unkown;
 		this.name = "unkown";
@@ -91,5 +93,18 @@ public class OSRICCharacterModifier : System.Object
 	public override int GetHashCode()
 	{
 		return base.GetHashCode();
+	}
+
+	public JSONObject Serialize()
+	{
+		JSONObject retObj = new JSONObject(JSONObject.Type.OBJECT);
+		retObj.AddField("attribute",attribute.GetDesc());
+		retObj.AddField("type", type.GetDesc());
+		retObj.AddField("characterVariable", characterVariable.GetDesc());
+		retObj.AddField("savingThrow", savingThrow.GetDesc());
+		retObj.AddField("name", name);
+		retObj.AddField("description", description);
+		retObj.AddField("value", value);
+		return retObj;
 	}
 }
