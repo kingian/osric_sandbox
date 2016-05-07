@@ -436,6 +436,7 @@ public class OSRICEngine : MonoBehaviour {
 			hpAccumulator += RollHitPoints(cm.attributes.characterClass, bonus,2);
 		
 		cm.attributes.hitPoints = hpAccumulator; 
+		Debug.Log(cm.attributes.Serialize().Print());
 
 
 //		numClass = cm.attributes.characterClass.GetDesc().Split('/').Length;

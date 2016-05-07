@@ -55,8 +55,10 @@ public class OSRICAttributeModel : RPGAttributeModel
 		retObj.AddField("Cha",Cha);
 		retObj.AddField("hitPoints",hitPoints);
 		retObj.AddField("armorClass",armorClass);
-
-//		retObj.AddField("level",level);
+		string levelStr = level[0].ToString();
+		for(int i=1;i<level.Length;i++)
+			levelStr +=  "/" + level[i].ToString();
+		retObj.AddField("level",levelStr);
 
 		retObj.AddField("experiencePoints",experiencePoints);
 		retObj.AddField("vision",vision);
@@ -66,6 +68,8 @@ public class OSRICAttributeModel : RPGAttributeModel
 		retObj.AddField("characterClass",characterClass.GetDesc());
 		retObj.AddField("characterAlignment",characterAlignment.GetDesc());
 		retObj.AddField("characterState",characterState.GetDesc());
+		Debug.Log("# of mods: " + CharacterModifiers.ModifierList.Count.ToString());
+		retObj.AddField("CharacterModifiers",CharacterModifiers.Serialize());
 
 		return retObj;
 	}
@@ -95,7 +99,12 @@ public class OSRICAttributeModel : RPGAttributeModel
 		CharacterModifiers = new OSRICModifierCollection();
 	}
 		
+	public OSRICAttributeModel(RPGCharacterModel _cm, JSONObject _jo)
+	{
+		cm = _cm;
+		CharacterModifiers = new OSRICModifierCollection();
 
+	}
 
 	//we should be able to take this boilerplate and slim it down,but it's whatevs
 	public int StrTotal(){

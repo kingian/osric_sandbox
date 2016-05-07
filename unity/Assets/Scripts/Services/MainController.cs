@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ public class MainController : MonoBehaviour {
 	public CharacterCreatorUIController CreatorUI;
 	public CharacterViewerUIController ViewerUI;
 	public HomeDashboardUIController DashboardUI;
+	public OSRICSaveLoadData DataIO;
 
 
 
@@ -22,6 +24,7 @@ public class MainController : MonoBehaviour {
 		CreatorUI.mainCon = this;
 		ViewerUI.engine = engine;
 		SetToHomeMode();
+		DataIO = new OSRICSaveLoadData(engine,this);
 	}
 
 
@@ -66,7 +69,6 @@ public class MainController : MonoBehaviour {
 	{
 		SaveCharacter();
 		CurrentCharacter = null;
-//		Destroy(CurrentCharacter);
 		SetToHomeMode();
 	}
 
@@ -93,6 +95,8 @@ public class MainController : MonoBehaviour {
 		CurrentCharacter = cm;
 		SetToCharacterViewMode();
 	}
+
+
 
 }
 
