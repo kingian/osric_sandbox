@@ -15,6 +15,8 @@ public class OSRICSaveLoadData
 		engine = _engine;
 		mainCon = _mainCon;
 		VerifySaveFile();
+//		JSONCharacterList = new JSONObject(JSONObject.Type.ARRAY);
+		LoadCharactersFromSaveFile();
 	}
 
 
@@ -25,18 +27,32 @@ public class OSRICSaveLoadData
 		StreamWriter sw = new StreamWriter(SavedCharactersFile);
 		sw.Close();
 	}
-
+		
 
 	public void SaveCharacter(RPGCharacterModel cm)
 	{
+		Debug.Log("Char Saver flag 1");
+		JSONObject addition = cm.attributes.Serialize();
+		foreach(JSONObject jo in JSONCharacterList.list)
+			if(CompareJSONCharacterAttributes(jo,addition))
+				return;
+		Debug.Log("Char Saver flag 2");
+		JSONCharacterList.Add(addition);
 
+		StreamWriter sw = new StreamWriter(SavedCharactersFile,false);
+		sw.Write(JSONCharacterList.ToString());
+		sw.Close();
 	}
 
-	public bool CompareJSONCharacterAttributes(JSONObject _member, JSONObject _addition)
+	private bool CompareJSONCharacterAttributes(JSONObject _member, JSONObject _addition)
 	{
-
+		Debug.Log("MEMBER: " + _member.ToString());
+		Debug.Log("ADD: " + _addition.ToString());
 		if(!_member.HasField("characterName") || !_addition.HasField("characterName"))
+		{
+			Debug.Log("One of these items isn't a JSON character representation.");
 			return false;
+		}
 
 		if(_member["characterName"].str == _addition["characterName"].str &&
 			_member["characterRace"].str == _addition["characterRace"].str &&
@@ -44,6 +60,21 @@ public class OSRICSaveLoadData
 			return true;
 
 		return false;
+	}
+
+	public void LoadCharactersFromSaveFile()
+	{
+		StreamReader sr = new StreamReader(SavedCharactersFile);
+		JSONCharacterList = new JSONObject(sr.ReadToEnd());
+		foreach(JSONObject jo in JSONCharacterList.list)
+		{
+			RPGCharacterModel cm = new RPGCharacterModel();
+			cm.attributes = new OSRICAttributeModel(cm,jo);
+			Debug.Log(cm.attributes.characterName);
+			if(!mainCon.CharacterList.Contains(cm))
+				mainCon.CharacterList.Add(cm);
+		}
+		Debug.Log(mainCon.CharacterList.Count);
 	}
 
 

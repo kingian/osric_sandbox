@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 //using OSRICAttributeModifier;
@@ -47,6 +48,7 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public JSONObject Serialize()
 	{
 		JSONObject retObj = new JSONObject(JSONObject.Type.OBJECT);
+		retObj.AddField("characterName",characterName);
 		retObj.AddField("Str",Str);
 		retObj.AddField("Dex",Dex);
 		retObj.AddField("Con",Con);
@@ -54,7 +56,6 @@ public class OSRICAttributeModel : RPGAttributeModel
 		retObj.AddField("Wis",Wis);
 		retObj.AddField("Cha",Cha);
 		retObj.AddField("hitPoints",hitPoints);
-		retObj.AddField("armorClass",armorClass);
 		string levelStr = level[0].ToString();
 		for(int i=1;i<level.Length;i++)
 			levelStr +=  "/" + level[i].ToString();
@@ -103,6 +104,29 @@ public class OSRICAttributeModel : RPGAttributeModel
 	{
 		cm = _cm;
 		CharacterModifiers = new OSRICModifierCollection();
+		characterName = _jo["characterName"].str;
+		Str = (int)_jo["Str"].n;
+		Dex = (int)_jo["Dex"].n;
+		Con = (int)_jo["Con"].n;
+		Int = (int)_jo["Int"].n;
+		Wis = (int)_jo["Wis"].n;
+		Cha = (int)_jo["Cha"].n;
+		hitPoints = (int)_jo["hitPoints"].n;
+
+		string[] levelStr = _jo["level"].str.Split('/');
+		level = new int[levelStr.Length];
+
+		for(int i=0; i<levelStr.Length; i++)
+			level[i] = Int32.Parse(levelStr[i]);
+		
+		experiencePoints = (int)_jo["experiencePoints"].n;
+		vision = (int)_jo["vision"].n;
+		move = (int)_jo["move"].n;
+		characterGender = OSRICConstants.GetEnum<OSRIC_GENDER>(_jo["characterGender"].str);
+		characterRace = OSRICConstants.GetEnum<OSRIC_RACE>(_jo["characterRace"].str);
+		characterClass = OSRICConstants.GetEnum<OSRIC_CLASS>(_jo["characterClass"].str);
+		characterAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(_jo["characterAlignment"].str);
+		characterState = OSRICConstants.GetEnum<OSRIC_CHARACTER_STATE>(_jo["characterState"].str);
 
 	}
 

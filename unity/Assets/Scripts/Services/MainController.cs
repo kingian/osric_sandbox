@@ -20,11 +20,12 @@ public class MainController : MonoBehaviour {
 	{
 		CharacterList = new List<RPGCharacterModel>();
 		engine = gameObject.AddComponent<OSRICEngine>();
+		DataIO = new OSRICSaveLoadData(engine,this);
 		CreatorUI.engine = engine;
 		CreatorUI.mainCon = this;
 		ViewerUI.engine = engine;
 		SetToHomeMode();
-		DataIO = new OSRICSaveLoadData(engine,this);
+
 	}
 
 
@@ -76,6 +77,7 @@ public class MainController : MonoBehaviour {
 	{
 		if(!CharacterList.Contains(CurrentCharacter))
 			CharacterList.Add(CurrentCharacter);
+		DataIO.SaveCharacter(CurrentCharacter);
 	}
 
 	public void DeleteCharacter(RPGCharacterModel rcm)

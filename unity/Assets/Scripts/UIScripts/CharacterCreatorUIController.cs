@@ -46,6 +46,8 @@ public class CharacterCreatorUIController : MonoBehaviour {
 			else
 				return false;
 		}
+		SetXPFromUI();
+
 		if(charModel.attributes.characterClass == OSRIC_CLASS.None)
 			return false;
 		return true;
