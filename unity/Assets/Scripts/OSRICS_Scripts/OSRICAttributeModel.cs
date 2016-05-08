@@ -18,8 +18,10 @@ public class OSRICAttributeModel : RPGAttributeModel
 	public static event attributeModelDidChange AttributeModelDidChange;
 	public RPGCharacterModel cm;
 
-
+	private string uniqueId;
 	public string characterName;
+	public DateTime creationDate;
+	public DateTime lastEditDate;
 
 	//Attributes
 	public int Str;
@@ -69,6 +71,9 @@ public class OSRICAttributeModel : RPGAttributeModel
 		retObj.AddField("characterClass",characterClass.GetDesc());
 		retObj.AddField("characterAlignment",characterAlignment.GetDesc());
 		retObj.AddField("characterState",characterState.GetDesc());
+		retObj.AddField("creationDate",creationDate.ToString());
+		retObj.AddField("lastEditDate",lastEditDate.ToString());
+
 		Debug.Log("# of mods: " + CharacterModifiers.ModifierList.Count.ToString());
 		retObj.AddField("CharacterModifiers",CharacterModifiers.Serialize());
 

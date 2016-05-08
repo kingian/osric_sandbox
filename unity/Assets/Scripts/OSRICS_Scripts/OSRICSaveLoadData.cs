@@ -31,12 +31,10 @@ public class OSRICSaveLoadData
 
 	public void SaveCharacter(RPGCharacterModel cm)
 	{
-		Debug.Log("Char Saver flag 1");
 		JSONObject addition = cm.attributes.Serialize();
 		foreach(JSONObject jo in JSONCharacterList.list)
 			if(CompareJSONCharacterAttributes(jo,addition))
 				return;
-		Debug.Log("Char Saver flag 2");
 		JSONCharacterList.Add(addition);
 
 		StreamWriter sw = new StreamWriter(SavedCharactersFile,false);
@@ -66,6 +64,11 @@ public class OSRICSaveLoadData
 	{
 		StreamReader sr = new StreamReader(SavedCharactersFile);
 		JSONCharacterList = new JSONObject(sr.ReadToEnd());
+		if(JSONCharacterList.IsNull)
+		{
+			JSONCharacterList = new JSONObject(JSONObject.Type.ARRAY);
+			return;
+		}
 		foreach(JSONObject jo in JSONCharacterList.list)
 		{
 			RPGCharacterModel cm = new RPGCharacterModel();

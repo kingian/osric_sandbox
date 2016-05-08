@@ -419,8 +419,6 @@ public class OSRICEngine : MonoBehaviour {
 	public void CompleteCharacterCreation(RPGCharacterModel cm)
 	{
 		cm.attributes.level = LevelTables.GetAllClassLevels(cm);
-		Debug.Log("From CM:" + cm.attributes.level);
-		Debug.Log(cm.attributes.experiencePoints);
 		// HP computation
 		int hpAccumulator, con, bonus, summedLevels;
 		con = cm.attributes.GetAttributeTotal(OSRIC_ATTRIBUTES.Constitution);
@@ -435,7 +433,9 @@ public class OSRICEngine : MonoBehaviour {
 		for(int i=0;i<summedLevels;i++)
 			hpAccumulator += RollHitPoints(cm.attributes.characterClass, bonus,2);
 		
-		cm.attributes.hitPoints = hpAccumulator; 
+		cm.attributes.hitPoints = hpAccumulator;
+		cm.attributes.creationDate = DateTime.Now;
+		cm.attributes.lastEditDate = DateTime.Now;
 		Debug.Log(cm.attributes.Serialize().Print());
 
 
