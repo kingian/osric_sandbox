@@ -16,6 +16,7 @@ public enum OSRIC_CHARACTER_STATE
 }
 ;
 
+
 public enum OSRIC_ATTRIBUTES
 {
 	[Description("str")]
@@ -184,9 +185,43 @@ public enum OSRIC_SAVING_THROWS
 	[Description("Save vs. Petrification and Polymorph")]
 	savePetPoly,
 	[Description("Save vs. Spell")]
-	saveSpell
+	saveSpell,
 }
 
+
+public enum OSRIC_ITEM_TYPE
+{
+	[Description("Melee Weapon")]
+	meleeWeapon,
+	[Description("Missile Weapon")]
+	missileWeapon,
+	[Description("Armor, Shield")]
+	meleeWeapon,
+	[Description("Rod, Staff, Wand")]
+	rodStaffWand,
+	[Description("Amulet, Necklace")]
+	amuletNecklace,
+	[Description("Ring")]
+	ring,
+	[Description("Potion")]
+	potion,
+	[Description("Scroll")]
+	scroll,
+	[Description("miscMagical")]
+	miscMagical,
+	[Description("miscMundane")]
+	miscMundane
+}
+
+public enum OSRIC_TIME_UNIT
+{
+	[Description("Turn")]
+	turn,
+	[Description("Round")]
+	round,
+	[Description("Segment")]
+	segment
+}
 
 public struct EnumSavePair
 {
@@ -236,6 +271,19 @@ public class SaveCollection
 			Debug.Log(esp.save.GetDesc() + ": " + esp.val.ToString());
 		}
 	}
+}
+
+
+public struct Range
+{
+	int min;
+	int max;
+	public Range(int _min, int _max)
+	{
+		min = _min;
+		max = _max;
+	}
+	
 }
 
 
