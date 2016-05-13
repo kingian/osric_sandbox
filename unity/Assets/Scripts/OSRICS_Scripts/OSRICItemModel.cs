@@ -12,10 +12,13 @@ public class OSRICItemModel
 	public int Encumberance;
 	public int Cost;
 	public int WeaponRange;
-	public int Charges:
+	public int Charges;
 	public OSRICModifierCollection ModifierList;
 
-	public OSRICItemModel(){}
+	public OSRICItemModel(string _name)
+	{
+		Name = _name;
+	}
 
 	// Melee weapon constructor
 	public OSRICItemModel(string _name, Range _smallDam, Range _largeDam, int _weight, int _cost)
@@ -50,5 +53,21 @@ public class OSRICItemModel
 		ModifierList.Add(_ocm);
 	}
 
+
+	public JSONObject Serialize()
+	{
+		JSONObject retObj = new JSONObject(JSONObject.Type.OBJECT);
+		retObj.AddField("ItemType",ItemType.GetDesc());
+		retObj.AddField("Name",Name);
+		retObj.AddField("Description",Description);
+		retObj.AddField("SmallMediumDamage",SmallMediumDamage.min.ToString()+"-"+SmallMediumDamage.max.ToString());
+		retObj.AddField("LargeDamage",LargeDamage.min.ToString()+"-"+LargeDamage.max.ToString());
+		retObj.AddField("Encumberance",Encumberance);
+		retObj.AddField("Cost",Cost);
+		retObj.AddField("WeaponRange",WeaponRange);
+		retObj.AddField("Charges",Charges);
+		retObj.AddField("ModifierList",ModifierList.Serialize());
+		return retObj;
+	}
 
 }

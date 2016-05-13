@@ -196,7 +196,7 @@ public enum OSRIC_ITEM_TYPE
 	[Description("Missile Weapon")]
 	missileWeapon,
 	[Description("Armor, Shield")]
-	meleeWeapon,
+	armorShield,
 	[Description("Rod, Staff, Wand")]
 	rodStaffWand,
 	[Description("Amulet, Necklace")]
@@ -276,8 +276,8 @@ public class SaveCollection
 
 public struct Range
 {
-	int min;
-	int max;
+	public int min;
+	public int max;
 	public Range(int _min, int _max)
 	{
 		min = _min;

@@ -132,6 +132,8 @@ public class OSRICAttributeModel : RPGAttributeModel
 		characterClass = OSRICConstants.GetEnum<OSRIC_CLASS>(_jo["characterClass"].str);
 		characterAlignment = OSRICConstants.GetEnum<OSRIC_ALIGNMENT>(_jo["characterAlignment"].str);
 		characterState = OSRICConstants.GetEnum<OSRIC_CHARACTER_STATE>(_jo["characterState"].str);
+		foreach(JSONObject obj in _jo["CharacterModifiers"].list)
+			CharacterModifiers.Add(new OSRICCharacterModifier(obj));
 
 	}
 

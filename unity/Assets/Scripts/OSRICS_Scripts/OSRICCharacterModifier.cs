@@ -56,6 +56,19 @@ public class OSRICCharacterModifier : System.Object
 		this.value = _value;
 	}
 
+	public OSRICCharacterModifier(JSONObject obj)
+	{
+		attribute = OSRICConstants.GetEnum<OSRIC_ATTRIBUTES>(obj["attribute"].str);
+		type = OSRICConstants.GetEnum<OSRIC_ATTRIBUTE_MODIFIER_TYPE>(obj["type"].str);
+		characterVariable = OSRICConstants.GetEnum<OSRIC_CHARACTER_VARIABLES>
+			(obj["characterVariable"].str);
+		savingThrow = OSRICConstants.GetEnum<OSRIC_SAVING_THROWS>(obj["savingThrow"].str);
+		name = obj["name"].str;
+		description = obj["description"].str);
+		value = (int)obj["value"].n;
+		duration = (int)obj["duration"].n;
+	}
+
 
 	public override bool Equals(System.Object obj)
 	{
@@ -105,6 +118,7 @@ public class OSRICCharacterModifier : System.Object
 		retObj.AddField("name", name);
 		retObj.AddField("description", description);
 		retObj.AddField("value", value);
+		retObj.AddField("duration", value);
 		return retObj;
 	}
 }
