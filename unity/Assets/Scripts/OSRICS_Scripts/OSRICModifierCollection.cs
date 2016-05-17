@@ -12,6 +12,14 @@ public class OSRICModifierCollection
 		ModifierList = new List<OSRICCharacterModifier>();
 	}
 
+	public OSRICModifierCollection(JSONObject _jo)
+	{
+		foreach(JSONObject obj in _jo.list)
+		{
+			ModifierList.Add(new OSRICCharacterModifier(obj));
+		}
+	}
+
 
 	public List<OSRICCharacterModifier> GetModifierByAttribute(OSRIC_ATTRIBUTES oa)
 	{
@@ -38,6 +46,7 @@ public class OSRICModifierCollection
 		}
 		return retList;
 	}
+		
 
 	public void Add(OSRICCharacterModifier candidate)
 	{

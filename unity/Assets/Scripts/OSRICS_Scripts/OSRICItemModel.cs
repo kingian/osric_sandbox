@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -40,6 +41,33 @@ public class OSRICItemModel
 		Cost = _cost;
 		WeaponRange = _range;
 	}
+
+	public OSRICItemModel(JSONObject _jo)
+	{
+		ItemType = OSRICConstants.GetEnum<OSRIC_ITEM_TYPE>(_jo["ItemType"].str);
+		Name = _jo["Name"].str;
+		Description = _jo["Description"].str;
+		string[] smd = _jo[""].str.Split('-');
+		if(smd.Length==2)
+		{
+			SmallMediumDamage = new Range();
+			SmallMediumDamage.min = Int32.Parse(smd[0]);
+			SmallMediumDamage.max = Int32.Parse(smd[1]);
+		}
+		string[] ld = _jo["LargeDamage"].str.Split('-');
+		if(ld.Length==2)
+		{
+			LargeDamage = new Range();
+			LargeDamage.min = Int32.Parse(ld[0]);
+			LargeDamage.max = Int32.Parse(ld[1]);
+		}
+		Encumberance = (int)_jo["Encumberance"].n;
+		Cost = (int)_jo["Cost"].n;
+		WeaponRange = (int)_jo["WeaponRange"].n;
+		Charges = (int)_jo["Charges"].n;
+		ModifierList =  new OSRICModifierCollection(_jo["ModifierList"]);
+	}
+
 
 	private void initializeModifierList()
 	{
