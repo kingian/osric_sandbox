@@ -11,6 +11,8 @@ public class MainController : MonoBehaviour {
 	public CharacterCreatorUIController CreatorUI;
 	public CharacterViewerUIController ViewerUI;
 	public HomeDashboardUIController DashboardUI;
+	public SettingsEditorUIController settingsUI;
+	public EquipEditorUIController equipUI; 
 	public OSRICSaveLoadData DataIO;
 
 
