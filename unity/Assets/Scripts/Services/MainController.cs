@@ -60,6 +60,11 @@ public class MainController : MonoBehaviour {
 		DashboardUI.UpdateCharacterList();
 	}
 
+	public void SetNavigationState(NAV_STATE _ns)
+	{
+
+	}
+
 
 	// Update is called once per frame
 	void Update () 

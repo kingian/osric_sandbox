@@ -5,6 +5,25 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 
+public enum NAV_STATE
+{
+	[Description("Home")]
+	Home,
+	[Description("Character Viewer")]
+	CharacterViewer,
+	[Description("Settings")]
+	Settings,
+	[Description("Character Creator")]
+	CharacterCreator,
+	[Description("Equip")]
+	Equip,
+	[Description("Spells")]
+	Spells,
+	[Description("Invitations")]
+	Invitations
+};
+
+
 public enum OSRIC_CHARACTER_STATE
 {
 	[Description("Editing")]
