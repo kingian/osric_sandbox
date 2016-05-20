@@ -6,13 +6,14 @@ public class NavButtonController : MonoBehaviour
 {
 
 	public MainController main;
-	NAV_STATE state;
+	public NAV_STATE state;
 	public Button button;
 
 
-	void OnStart()
+	void Awake()
 	{
 		button = gameObject.GetComponent<Button>();
+//		main = gameObject.gameObject.GetComponent<MainController>();
 	}
 
 	void OnEnable()

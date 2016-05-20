@@ -7,8 +7,6 @@ using System.ComponentModel;
 
 public enum NAV_STATE
 {
-	[Description("Home")]
-	Home,
 	[Description("Character Viewer")]
 	CharacterViewer,
 	[Description("Settings")]
