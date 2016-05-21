@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,9 +10,12 @@ public class MainController : MonoBehaviour {
 	public CharacterCreatorUIController CreatorUI;
 	public CharacterViewerUIController ViewerUI;
 	public HomeDashboardUIController DashboardUI;
-	public SettingsEditorUIController settingsUI;
-	public EquipEditorUIController equipUI; 
+	public SettingsEditorUIController SettingsUI;
+	public EquipEditorUIController EquipUI; 
+	public NavigationUIController NavUI;
 	public OSRICSaveLoadData DataIO;
+	public NAV_STATE ApplicationState;
+
 
 
 
@@ -26,15 +28,15 @@ public class MainController : MonoBehaviour {
 		CreatorUI.engine = engine;
 		CreatorUI.mainCon = this;
 		ViewerUI.engine = engine;
-		SetToHomeMode();
+		NavUI.SetNavigationMode(NAV_STATE.Home);
+		SetNavigationMode(NAV_STATE.Home);
+
 
 	}
 
 
 	public void SetToCharacterCreationMode()
 	{
-		DashboardUI.gameObject.SetActive(false);
-		ViewerUI.gameObject.SetActive(false);
 		CreatorUI.gameObject.SetActive(true);
 		CreateCharacter();
 		CreatorUI.attributeGroup.OrderAttributeElements();
@@ -42,8 +44,6 @@ public class MainController : MonoBehaviour {
 
 	public void SetToCharacterViewMode()
 	{
-		DashboardUI.gameObject.SetActive(false);
-		CreatorUI.gameObject.SetActive(false);
 		ViewerUI.gameObject.SetActive(true);
 		ViewerUI.LoadCharacterAttributes(CurrentCharacter);
 		ViewerUI.attributeGroup.OrderAttributeElements();
@@ -52,16 +52,64 @@ public class MainController : MonoBehaviour {
 
 	public void SetToHomeMode()
 	{
-		CurrentCharacter = null;
-//		Destroy(CurrentCharacter);
-		CreatorUI.gameObject.SetActive(false);
-		ViewerUI.gameObject.SetActive(false);
 		DashboardUI.gameObject.SetActive(true);
 		DashboardUI.UpdateCharacterList();
 	}
 
-	public void SetNavigationState(NAV_STATE _ns)
+	public void SetToSettingsMode()
 	{
+		SettingsUI.gameObject.SetActive(true);
+	}
+
+	public void SetToEquipMode()
+	{
+		EquipUI.gameObject.SetActive(true);
+	}
+
+
+	public void CloseAllUI()
+	{
+		CurrentCharacter = null;
+		CreatorUI.gameObject.SetActive(false);
+		ViewerUI.gameObject.SetActive(false);
+		DashboardUI.gameObject.SetActive(false);
+		SettingsUI.gameObject.SetActive(false);
+		EquipUI.gameObject.SetActive(false);
+	}
+
+
+	public void SetNavigationMode(NAV_STATE _ns)
+	{
+		CloseAllUI();
+		ApplicationState = _ns;
+
+		switch(ApplicationState)
+		{
+		case NAV_STATE.Home:
+			SetToHomeMode();
+			break;
+		case NAV_STATE.CharacterCreator:
+			SetToCharacterCreationMode();
+			break;
+		case NAV_STATE.CharacterViewer:
+			SetToCharacterViewMode();
+			break;
+		case NAV_STATE.Equip:
+			SetToEquipMode();
+			break;
+		case NAV_STATE.Settings:
+			SetToSettingsMode();
+			break;
+		case NAV_STATE.Spells:
+			SetToEquipMode();
+			break;
+		case NAV_STATE.Invitations:
+			SetToHomeMode();
+			break;
+		default:
+			SetToHomeMode();
+			break;
+		}
 
 	}
 

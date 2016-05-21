@@ -12,9 +12,17 @@ public class NavigationUIController : MonoBehaviour {
 	public GameObject allButtonsOrigin;
 	public List<GameObject> AllButtons;
 	public List<GameObject> DisplayedButtons;
+	public Button HomeButton;
 
 	// Use this for initialization
 	void Start () 
+	{
+		AllButtons = new List<GameObject>();
+		DisplayedButtons = new List<GameObject>();
+		BuildButtons();
+	}
+
+	void BuildButtons()
 	{
 		GameObject go;
 		NavButtonController butCon;
@@ -22,6 +30,8 @@ public class NavigationUIController : MonoBehaviour {
 		Text text;
 		foreach(NAV_STATE ns in Enum.GetValues(typeof(NAV_STATE)))
 		{
+			if(Contains(ns))
+				continue;
 			butName = ns.ToString() + "_button";
 			go = Instantiate(Resources.Load("NavButton")) as GameObject;
 			go.name = butName;
@@ -29,18 +39,117 @@ public class NavigationUIController : MonoBehaviour {
 			butCon = go.GetComponent<NavButtonController>();
 			butCon.state = ns;
 			butCon.main = main;
+			butCon.navCon = this;
 			text = butCon.gameObject.GetComponentInChildren<Text>();
 			text.text = ns.GetDesc();
 			AllButtons.Add(go);
 			go.SetActive(false);
+//			butCon.button.onClick.AddListener(delegate 
+//				{NavButtonClicked(go);});
 		}
-
-
 	}
-	
+
+	void OnEnable()
+	{
+		HomeButton.onClick.AddListener(delegate 
+			{main.SetNavigationMode(NAV_STATE.Home);});
+		HomeButton.onClick.AddListener(delegate 
+			{ SetNavigationMode(NAV_STATE.Home);});
+	}
+
+	void OnDisable()
+	{
+		HomeButton.onClick.RemoveAllListeners();
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
-	
+
 	}
+
+	private GameObject GetButton(NAV_STATE _ns)
+	{
+		if(!Contains(_ns))
+			BuildButtons();
+		foreach(GameObject go in AllButtons)
+		{
+			NavButtonController temp = go.GetComponentInChildren<NavButtonController>();
+//			Debug.Log("go: " +temp.state.GetDesc() + " comp: " + _ns.GetDesc());
+			if(temp.state == _ns)
+				return go;
+		}
+		return null;
+	}
+
+	private bool Contains(NAV_STATE _ns)
+	{
+		foreach(GameObject go in AllButtons)
+		{
+			NavButtonController temp = go.GetComponentInChildren<NavButtonController>();
+			if(temp.state==_ns)
+				return true;
+		}
+		return false;
+	}
+
+	void ClearDisplayedButtons()
+	{
+		foreach(GameObject go in DisplayedButtons)
+		{
+			go.transform.SetParent(allButtonsOrigin.transform);
+			go.SetActive(false);
+		}
+		DisplayedButtons.Clear();
+	}
+
+
+	public void NavButtonClicked(GameObject _go)
+	{
+		NAV_STATE targetMode = _go.GetComponent<NavButtonController>().state;
+		SetNavigationMode(targetMode);
+	}
+
+	public void SetNavigationMode(NAV_STATE _ns)
+	{
+		ClearDisplayedButtons();
+		switch(_ns)
+		{
+		case NAV_STATE.Home:
+			AddNavigationOption(NAV_STATE.CharacterCreator);
+			AddNavigationOption(NAV_STATE.Settings);
+			break;
+		}
+	}
+
+	void AddNavigationOption(NAV_STATE _ns)
+	{
+		Debug.Log(this.GetButton(_ns));
+		AddButtonToDisplayedList(this.GetButton(_ns));
+	}
+
+	void AddButtonToDisplayedList(GameObject go)
+	{
+		Vector3 curPos;
+		Debug.Log("Adding: " + go);
+		go.transform.SetParent(NavButtonOrigin.transform);
+		curPos = NavButtonOrigin.transform.position;
+		DisplayedButtons.Add(go);
+		int pos = DisplayedButtons.IndexOf(go);
+		if(pos<1)
+		{
+			go.transform.position = curPos;
+			go.SetActive(true);
+			return;
+		}
+		float prevPos = DisplayedButtons[pos-1].transform.position.x;
+		float prevWidth = 
+			DisplayedButtons[pos-1].GetComponent<RectTransform>().rect.width;
+		curPos.x = prevPos + prevWidth + 20;
+		go.transform.position = curPos;
+		go.SetActive(true);
+	}
+
+
+
 }

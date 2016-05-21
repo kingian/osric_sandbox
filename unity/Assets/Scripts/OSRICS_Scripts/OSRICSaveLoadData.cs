@@ -73,11 +73,11 @@ public class OSRICSaveLoadData
 		{
 			RPGCharacterModel cm = new RPGCharacterModel();
 			cm.attributes = new OSRICAttributeModel(cm,jo);
-			Debug.Log(cm.attributes.characterName);
+//			Debug.Log(cm.attributes.characterName);
 			if(!mainCon.CharacterList.Contains(cm))
 				mainCon.CharacterList.Add(cm);
 		}
-		Debug.Log(mainCon.CharacterList.Count);
+//		Debug.Log(mainCon.CharacterList.Count);
 	}
 
 

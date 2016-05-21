@@ -8,6 +8,7 @@ public class NavButtonController : MonoBehaviour
 	public MainController main;
 	public NAV_STATE state;
 	public Button button;
+	public NavigationUIController navCon;
 
 
 	void Awake()
@@ -29,7 +30,8 @@ public class NavButtonController : MonoBehaviour
 
 	void SendNavChange()
 	{
-		main.SetNavigationState(state);
+		main.SetNavigationMode(state);
+		navCon.SetNavigationMode(state);
 	}
 
 }
