@@ -44,8 +44,6 @@ public class NavigationUIController : MonoBehaviour {
 			text.text = ns.GetDesc();
 			AllButtons.Add(go);
 			go.SetActive(false);
-//			butCon.button.onClick.AddListener(delegate 
-//				{NavButtonClicked(go);});
 		}
 	}
 
