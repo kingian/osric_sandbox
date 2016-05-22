@@ -17,9 +17,9 @@ public class NavigationUIController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		AllButtons = new List<GameObject>();
-		DisplayedButtons = new List<GameObject>();
-		BuildButtons();
+//		AllButtons = new List<GameObject>();
+//		DisplayedButtons = new List<GameObject>();
+//		BuildButtons();
 	}
 
 	void BuildButtons()
@@ -119,19 +119,19 @@ public class NavigationUIController : MonoBehaviour {
 			AddNavigationOption(NAV_STATE.CharacterCreator);
 			AddNavigationOption(NAV_STATE.Settings);
 			break;
+		case NAV_STATE.CharacterCreator:
+			break;
 		}
 	}
 
 	void AddNavigationOption(NAV_STATE _ns)
 	{
-		Debug.Log(this.GetButton(_ns));
 		AddButtonToDisplayedList(this.GetButton(_ns));
 	}
 
 	void AddButtonToDisplayedList(GameObject go)
 	{
 		Vector3 curPos;
-		Debug.Log("Adding: " + go);
 		go.transform.SetParent(NavButtonOrigin.transform);
 		curPos = NavButtonOrigin.transform.position;
 		DisplayedButtons.Add(go);
