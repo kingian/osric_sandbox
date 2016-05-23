@@ -44,6 +44,7 @@ public class MainController : MonoBehaviour {
 
 	public void SetToCharacterViewMode()
 	{
+		NavUI.SetNavigationMode(NAV_STATE.CharacterViewer);
 		ViewerUI.gameObject.SetActive(true);
 		ViewerUI.LoadCharacterAttributes(CurrentCharacter);
 		ViewerUI.attributeGroup.OrderAttributeElements();
@@ -52,6 +53,7 @@ public class MainController : MonoBehaviour {
 
 	public void SetToHomeMode()
 	{
+		CurrentCharacter = null;
 		DashboardUI.gameObject.SetActive(true);
 		DashboardUI.UpdateCharacterList();
 	}
@@ -69,7 +71,6 @@ public class MainController : MonoBehaviour {
 
 	public void CloseAllUI()
 	{
-		CurrentCharacter = null;
 		CreatorUI.gameObject.SetActive(false);
 		ViewerUI.gameObject.SetActive(false);
 		DashboardUI.gameObject.SetActive(false);
@@ -150,7 +151,7 @@ public class MainController : MonoBehaviour {
 	public void LoadCharacter(RPGCharacterModel cm)
 	{
 		CurrentCharacter = cm;
-		SetToCharacterViewMode();
+		SetNavigationMode(NAV_STATE.CharacterViewer);
 	}
 
 

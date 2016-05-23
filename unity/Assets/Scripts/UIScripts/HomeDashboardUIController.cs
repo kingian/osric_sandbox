@@ -42,14 +42,18 @@ public class HomeDashboardUIController : MonoBehaviour {
 			newGO.transform.position = characterListOrigin.transform.position;
 			newCon = newGO.GetComponentInChildren<CharButController>();
 			newCon.name = curButName;
-			newCon.thisButtontonText.text = cm.attributes.characterName;
+			newCon.characterNameText.text = cm.attributes.characterName;
+			string accumulator = cm.attributes.characterRace.GetDesc();
+			accumulator += "\n" + cm.attributes.characterClass.GetDesc();
+
+			newCon.characterDetailText.text = accumulator;
 			newCon.cm = cm;
 			newCon.mainCon = mainCon;
 			characterButtonList.Add(newGO);
 			currentPos = newGO.transform.position;
 			currentPos.y += yOffset;
 			newGO.transform.position = currentPos;
-			yOffset -= 40f;
+			yOffset -= 100f;
 		}
 	}
 

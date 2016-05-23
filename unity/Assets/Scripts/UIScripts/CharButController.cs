@@ -4,7 +4,8 @@ using System.Collections;
 
 public class CharButController : MonoBehaviour {
 
-	public Text thisButtontonText;
+	public Text characterNameText;
+	public Text characterDetailText;
 	public Button charButton;
 	public RPGCharacterModel cm;
 	public MainController mainCon;
