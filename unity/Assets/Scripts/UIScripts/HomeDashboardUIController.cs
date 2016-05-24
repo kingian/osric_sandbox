@@ -43,9 +43,17 @@ public class HomeDashboardUIController : MonoBehaviour {
 			newCon = newGO.GetComponentInChildren<CharButController>();
 			newCon.name = curButName;
 			newCon.characterNameText.text = cm.attributes.characterName;
-			string accumulator = cm.attributes.characterRace.GetDesc();
-			accumulator += "\n" + cm.attributes.characterClass.GetDesc();
+			string accumulator = 
+				cm.attributes.characterRace.GetDesc() +
+				" " + cm.attributes.characterGender.GetDesc();
+			string[] classes = cm.attributes.characterClass.GetDesc().Split('/');
 
+			string levels = "\nLevel " + cm.attributes.level[0].ToString() + " " +
+				classes[0];
+			for(int i=1; i<cm.attributes.level.Length;i++)
+				levels += " / Level " + cm.attributes.level[i].ToString() + 
+					" " + classes[i];
+			accumulator += levels;
 			newCon.characterDetailText.text = accumulator;
 			newCon.cm = cm;
 			newCon.mainCon = mainCon;
