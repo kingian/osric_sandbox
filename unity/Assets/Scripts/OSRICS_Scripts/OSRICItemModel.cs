@@ -3,8 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[Serializable]
 public class OSRICItemModel
 {
+	public string Uid;
 	public OSRIC_ITEM_TYPE ItemType;
 	public string Name;
 	public string Description;
@@ -22,8 +24,9 @@ public class OSRICItemModel
 	}
 
 	// Melee weapon constructor
-	public OSRICItemModel(string _name, Range _smallDam, Range _largeDam, int _weight, int _cost)
+	public OSRICItemModel(OSRIC_ITEM_TYPE _type, string _name, Range _smallDam, Range _largeDam, int _weight, int _cost)
 	{
+		ItemType = _type;
 		Name = _name;
 		SmallMediumDamage = _smallDam;
 		LargeDamage = _largeDam;
@@ -32,8 +35,9 @@ public class OSRICItemModel
 	}
 
 	//Ranged weapon constructor
-	public OSRICItemModel(string _name, Range _smallDam, Range _largeDam, int _range, int _weight, int _cost)
+	public OSRICItemModel(OSRIC_ITEM_TYPE _type, string _name, Range _smallDam, Range _largeDam, int _range, int _weight, int _cost)
 	{
+		ItemType = _type;
 		Name = _name;
 		SmallMediumDamage = _smallDam;
 		LargeDamage = _largeDam;
@@ -42,8 +46,16 @@ public class OSRICItemModel
 		WeaponRange = _range;
 	}
 
+	public void GenerateGui()
+	{
+		List<string> inList = new List<string>()
+		{ ItemType.GetDesc(), Name, Description, Encumberance.ToString(), Cost.ToString(), WeaponRange.ToString() };
+		Uid = OSRICConstants.HashVariables(inList);
+	}
+
 	public OSRICItemModel(JSONObject _jo)
 	{
+		Uid = _jo["Uid"].str;
 		ItemType = OSRICConstants.GetEnum<OSRIC_ITEM_TYPE>(_jo["ItemType"].str);
 		Name = _jo["Name"].str;
 		Description = _jo["Description"].str;
@@ -85,6 +97,7 @@ public class OSRICItemModel
 	public JSONObject Serialize()
 	{
 		JSONObject retObj = new JSONObject(JSONObject.Type.OBJECT);
+		retObj.AddField("Uid",Uid);
 		retObj.AddField("ItemType",ItemType.GetDesc());
 		retObj.AddField("Name",Name);
 		retObj.AddField("Description",Description);

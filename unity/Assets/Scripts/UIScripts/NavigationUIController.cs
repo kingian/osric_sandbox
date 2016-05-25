@@ -42,10 +42,6 @@ public class NavigationUIController : MonoBehaviour {
 			butCon.navCon = this;
 			text = butCon.gameObject.GetComponentInChildren<Text>();
 			text.text = ns.GetDesc();
-//			float textWidth = text.rectTransform.rect.width;
-//			RectTransform buttonDimensions = butCon.button.GetComponent<RectTransform>();
-//			Vector2 newSize = new Vector2(textWidth+20f,buttonDimensions.rect.height);
-//			buttonDimensions.sizeDelta = newSize;
 			AllButtons.Add(go);
 			go.SetActive(false);
 		}

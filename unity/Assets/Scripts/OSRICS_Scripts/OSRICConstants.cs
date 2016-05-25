@@ -357,6 +357,24 @@ public static class OSRICConstants
 	};
 
 
+	public static int SumCharacters(string _str)
+	{
+		char[] chArr = _str.ToCharArray();
+		int retInt = 0;
+		foreach(char c in chArr)
+			retInt += (int)c;
+		return retInt*chArr.Length;
+	}
+
+	public static string HashVariables(List<string> _list)
+	{
+		int accumulator = 0;
+		foreach(string s in _list)
+			accumulator += SumCharacters(s);
+		return accumulator.ToString("x8");
+	}
+
+
 	
 	public static T GetAttributeOfType<T>(this Enum enumVal) where T:System.Attribute
 	{
