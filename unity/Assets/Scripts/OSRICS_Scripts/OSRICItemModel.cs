@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [Serializable]
-public class OSRICItemModel
+public class OSRICItemModel : System.Object
 {
 	public string Uid;
 	public OSRIC_ITEM_TYPE ItemType;
@@ -109,6 +109,36 @@ public class OSRICItemModel
 		retObj.AddField("Charges",Charges);
 		retObj.AddField("ModifierList",ModifierList.Serialize());
 		return retObj;
+	}
+
+
+	// Comparison overriddes
+
+	public override bool Equals(System.Object obj)
+	{
+		if (obj == null)
+			return false;
+		
+		OSRICItemModel p = obj as OSRICItemModel;
+
+		if((System.Object)p == null)
+			return false;
+
+		if(this.Uid == p.Uid)
+			return true;
+		return false;
+	}
+
+	public bool Equals(OSRICItemModel oim)
+	{
+		if(this.Uid == oim.Uid)
+			return true;
+		return false;
+	}
+
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
 	}
 
 }
