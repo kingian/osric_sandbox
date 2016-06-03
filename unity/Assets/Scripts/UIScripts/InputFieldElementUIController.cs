@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -15,19 +16,14 @@ public class InputFieldElementUIController : MonoBehaviour {
 		return false;
  	}
 
-	public T GetValue<T>()
+	public string GetStr()
 	{
-		
+		return InputValue.text;
 	}
 
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	public int GetInt()
+	{
+		return Int32.Parse(InputValue.text);
 	}
 }

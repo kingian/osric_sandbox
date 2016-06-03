@@ -6,12 +6,12 @@ using System.Collections.Generic;
 public class ItemEditorUIController : MonoBehaviour 
 {
 	public Dropdown ItemTypeDropdown;
-	public InputField NameField;
+	public InputFieldElementUIController NameField;
 	public RangeElementUIController SmlMedDmgCon;
 	public RangeElementUIController LrgDmgCon;
-	public InputField RangeField;
-	public InputField EncumberanceField;
-	public InputField CostField;
+	public InputFieldElementUIController RangeField;
+	public InputFieldElementUIController EncumberanceField;
+	public InputFieldElementUIController CostField;
 	public Button SaveAddButton;
 
 	// Use this for initialization
@@ -26,7 +26,17 @@ public class ItemEditorUIController : MonoBehaviour
 
 	bool ValidateFormData()
 	{
-		return false;
+		bool retBool = NameField.Validate();
+		retBool = SmlMedDmgCon.Validate();
+		retBool = LrgDmgCon.Validate();
+		retBool = RangeField.Validate();
+		retBool = EncumberanceField.Validate();
+		retBool = CostField.Validate();
+		return retBool;
 	}
+
+
+
+
 
 }
