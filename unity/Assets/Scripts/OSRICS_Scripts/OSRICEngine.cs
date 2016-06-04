@@ -62,6 +62,7 @@ public class OSRICEngine : MonoBehaviour {
 
 	OSRICSaveTables SaveTables;
 	OSRICLevels LevelTables;
+	public OSRICItemCollection AllItems;
 
 	public void init() {}
 
@@ -70,6 +71,7 @@ public class OSRICEngine : MonoBehaviour {
 	{
 		SaveTables = new OSRICSaveTables();
 		LevelTables = new OSRICLevels(this);
+		AllItems = new OSRICItemCollection();
 		attributeTable.init();
 		thacoTable.init();
 		classMinimums.init ();

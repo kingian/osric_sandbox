@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 public class ItemEditorUIController : MonoBehaviour 
 {
-	public Dropdown ItemTypeDropdown;
+	public MainController mainCon;
+	public ItemDropdownUIController ItemTypeDropdown;
 	public InputFieldElementUIController NameField;
 	public RangeElementUIController SmlMedDmgCon;
 	public RangeElementUIController LrgDmgCon;
@@ -14,15 +15,6 @@ public class ItemEditorUIController : MonoBehaviour
 	public InputFieldElementUIController CostField;
 	public Button SaveAddButton;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	bool ValidateFormData()
 	{
@@ -36,6 +28,20 @@ public class ItemEditorUIController : MonoBehaviour
 	}
 
 
+	public void AddItemToAllItems()
+	{
+//		if(!ValidateFormData())
+//			return; // Add method to communicate the invalid to the user
+		string test = ItemTypeDropdown.GetSelectedType().GetDesc() + " " +
+			NameField.GetStr() + " " + SmlMedDmgCon.GetRange().min.ToString() + "-" +
+			LrgDmgCon.GetRange().max.ToString();
+		Debug.Log(test);
+//		mainCon.engine.AllItems.Add(
+//			new OSRICItemModel(
+//			)
+//		);
+
+	}
 
 
 

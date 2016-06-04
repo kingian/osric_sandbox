@@ -13,7 +13,7 @@ public class RangeElementUIController : MonoBehaviour
 
 	public bool Validate()
 	{
-		if(LowField.text != "" && HightField != "")
+		if(LowField.text != "" && HightField.text != "")
 		{
 			if( Int32.Parse(LowField.text) < Int32.Parse(HightField.text))
 				return true;
@@ -24,8 +24,7 @@ public class RangeElementUIController : MonoBehaviour
 
 	public Range GetRange()
 	{
-		if(this.Validate())
-			return new Range(Int32.Parse(LowField.text), Int32.Parse(HightField.text));
+		return new Range(Int32.Parse(LowField.text), Int32.Parse(HightField.text));
 	}
 
 }

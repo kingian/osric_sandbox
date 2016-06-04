@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class OSRICItemModel : System.Object
 {
-	public string Uid;
+	public string UID;
 	public OSRIC_ITEM_TYPE ItemType;
 	public string Name;
 	public string Description;
@@ -46,16 +46,16 @@ public class OSRICItemModel : System.Object
 		WeaponRange = _range;
 	}
 
-	public void GenerateGui()
+	public void GenerateGUID()
 	{
 		List<string> inList = new List<string>()
 		{ ItemType.GetDesc(), Name, Description, Encumberance.ToString(), Cost.ToString(), WeaponRange.ToString() };
-		Uid = OSRICConstants.HashVariables(inList);
+		UID = OSRICConstants.HashVariables(inList);
 	}
 
 	public OSRICItemModel(JSONObject _jo)
 	{
-		Uid = _jo["Uid"].str;
+		UID = _jo["Uid"].str;
 		ItemType = OSRICConstants.GetEnum<OSRIC_ITEM_TYPE>(_jo["ItemType"].str);
 		Name = _jo["Name"].str;
 		Description = _jo["Description"].str;
@@ -97,7 +97,7 @@ public class OSRICItemModel : System.Object
 	public JSONObject Serialize()
 	{
 		JSONObject retObj = new JSONObject(JSONObject.Type.OBJECT);
-		retObj.AddField("Uid",Uid);
+		retObj.AddField("Uid",UID);
 		retObj.AddField("ItemType",ItemType.GetDesc());
 		retObj.AddField("Name",Name);
 		retObj.AddField("Description",Description);
@@ -124,14 +124,14 @@ public class OSRICItemModel : System.Object
 		if((System.Object)p == null)
 			return false;
 
-		if(this.Uid == p.Uid)
+		if(this.UID == p.UID)
 			return true;
 		return false;
 	}
 
 	public bool Equals(OSRICItemModel oim)
 	{
-		if(this.Uid == oim.Uid)
+		if(this.UID == oim.UID)
 			return true;
 		return false;
 	}
