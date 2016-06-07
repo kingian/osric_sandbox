@@ -26,4 +26,14 @@ public class InputFieldElementUIController : MonoBehaviour {
 	{
 		return Int32.Parse(InputValue.text);
 	}
+
+	public void SetValue(string _str)
+	{
+		InputValue.text = _str;
+	}
+
+	public void SetValue(int _int)
+	{
+		InputValue.text = _int.ToString();
+	}
 }

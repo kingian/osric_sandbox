@@ -30,19 +30,34 @@ public class ItemEditorUIController : MonoBehaviour
 
 	public void AddItemToAllItems()
 	{
-//		if(!ValidateFormData())
-//			return; // Add method to communicate the invalid to the user
-		string test = ItemTypeDropdown.GetSelectedType().GetDesc() + " " +
-			NameField.GetStr() + " " + SmlMedDmgCon.GetRange().min.ToString() + "-" +
-			LrgDmgCon.GetRange().max.ToString();
-		Debug.Log(test);
-//		mainCon.engine.AllItems.Add(
-//			new OSRICItemModel(
-//			)
-//		);
+		
+		if(!NameField.Validate())
+		{
+			return;
+		}
+		OSRICItemModel item = new OSRICItemModel(NameField.GetStr());
+		item.ItemType = ItemTypeDropdown.GetSelectedType();
+		if(SmlMedDmgCon.Validate())
+			item.SmallMediumDamage = SmlMedDmgCon.GetRange();
+		if(LrgDmgCon.Validate())
+			item.LargeDamage = LrgDmgCon.GetRange();
+		if(RangeField.Validate())
+			item.WeaponRange = RangeField.GetInt();
+		if(EncumberanceField.Validate())
+			item.Encumberance = EncumberanceField.GetInt();
+		if(CostField.Validate())
+			item.Cost = CostField.GetInt();
 
+		mainCon.engine.AllItems.Add(item);
 	}
 
+
+	public void LoadItemAttributes(OSRICItemModel _oim)
+	{
+		ItemTypeDropdown.SetDropSelection(_oim.ItemType);
+		NameField.SetValue(_oim.Name);
+
+	}
 
 
 }

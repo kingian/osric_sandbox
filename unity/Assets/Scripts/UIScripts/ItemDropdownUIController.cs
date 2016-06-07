@@ -23,5 +23,10 @@ public class ItemDropdownUIController : MonoBehaviour
 	}
 
 
+	public void SetDropSelection(OSRIC_ITEM_TYPE _oim)
+	{
+		int index = drop.options.IndexOf(new Dropdown.OptionData(_oim.GetDesc()));
+		drop.value = index;
+	}
 
 }
