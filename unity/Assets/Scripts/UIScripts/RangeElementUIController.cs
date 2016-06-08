@@ -34,4 +34,10 @@ public class RangeElementUIController : MonoBehaviour
 		HightField.text = _range.max.ToString();
 	}
 
+
+	public override string ToString()
+	{
+		return string.Format(LowField.text + "-" + HightField.text);
+	}
+
 }
