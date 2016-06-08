@@ -55,8 +55,18 @@ public class ItemEditorUIController : MonoBehaviour
 	public void LoadItemAttributes(OSRICItemModel _oim)
 	{
 		ItemTypeDropdown.SetDropSelection(_oim.ItemType);
-		NameField.SetValue(_oim.Name);
-
+		if(_oim.Name != "")
+			NameField.SetValue(_oim.Name);
+		if(!_oim.SmallMediumDamage.Empty())
+			SmlMedDmgCon.SetValue(_oim.SmallMediumDamage);
+		if(!_oim.LargeDamage.Empty())
+			LrgDmgCon.SetValue(_oim.LargeDamage);
+		if(_oim.WeaponRange!=0)
+			RangeField.SetValue(_oim.WeaponRange);
+		if(_oim.Encumberance!=0)
+			EncumberanceField.SetValue(_oim.Encumberance);
+		if(_oim.Cost!=0)
+			CostField.SetValue(_oim.Cost);
 	}
 
 

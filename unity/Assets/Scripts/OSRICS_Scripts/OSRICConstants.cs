@@ -297,12 +297,19 @@ public struct Range
 {
 	public int min;
 	public int max;
+
 	public Range(int _min, int _max)
 	{
 		min = _min;
 		max = _max;
 	}
-	
+
+	public bool Empty()
+	{
+		if(min==0 && max==0)
+			return true;
+		return false;
+	}
 }
 
 

@@ -27,4 +27,11 @@ public class RangeElementUIController : MonoBehaviour
 		return new Range(Int32.Parse(LowField.text), Int32.Parse(HightField.text));
 	}
 
+
+	public void SetValue(Range _range)
+	{
+		LowField.text = _range.min.ToString();
+		HightField.text = _range.max.ToString();
+	}
+
 }

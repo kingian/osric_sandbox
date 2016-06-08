@@ -21,6 +21,8 @@ public class OSRICItemModel : System.Object
 	public OSRICItemModel(string _name)
 	{
 		Name = _name;
+		SmallMediumDamage = new Range(0,0);
+		LargeDamage = new Range(0,0);
 	}
 
 	// Melee weapon constructor
