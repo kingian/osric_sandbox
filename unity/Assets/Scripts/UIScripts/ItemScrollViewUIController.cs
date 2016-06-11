@@ -8,18 +8,24 @@ public class ItemScrollViewUIController : MonoBehaviour
 {
 	public List<GameObject> ItemList;
 	public GameObject ContentGO;
+	public GameObject View;
 	public float spacing = 25;
 
 
 	public void OrderList()
 	{
+		Debug.Log("X: " + View.transform.position.x.ToString() 
+			+ " Y: " + View.transform.position.y.ToString());
 		foreach(GameObject go in ItemList)
-			go.transform.position = ContentGO.transform.position;
-
+		{
+			Vector3 pos = new Vector3(0,0,0);
+			go.transform.position = View.transform.position;
+		}
 		foreach(GameObject go in ItemList)
 		{
 			Vector3 newpos = go.transform.position;
 			newpos.y += (-1f * (float)ItemList.IndexOf(go)*spacing);
+			go.transform.localPosition = newpos;
 		}
 	}
 
