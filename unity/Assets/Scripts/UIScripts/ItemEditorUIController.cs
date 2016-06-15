@@ -18,15 +18,17 @@ public class ItemEditorUIController : MonoBehaviour
 
 	void Start()
 	{
-		GameObject go = Instantiate(Resources.Load("EquipmetItem")) as GameObject;
-		EquipmentItemUIController item = go.GetComponent<EquipmentItemUIController>();
-		item.ItemModel.Name = "Long Sword";
-		item.ItemModel.ItemType = OSRIC_ITEM_TYPE.meleeWeapon;
-		item.ItemModel.SmallMediumDamage = new Range(1,8);
-		item.ItemModel.LargeDamage = new Range(1,12);
-		item.ItemModel.Cost = 80;
-		listView.AddItem(go);
-
+		for(int i=0;i<5;i++)
+		{
+			GameObject go = Instantiate(Resources.Load("EquipmetItem")) as GameObject;
+			EquipmentItemUIController item = go.GetComponent<EquipmentItemUIController>();
+			item.ItemModel.Name = "Long Sword";
+			item.ItemModel.ItemType = OSRIC_ITEM_TYPE.meleeWeapon;
+			item.ItemModel.SmallMediumDamage = new Range(1,8);
+			item.ItemModel.LargeDamage = new Range(1,12);
+			item.ItemModel.Cost = 80;
+			listView.AddItem(go);
+		}
 	}
 
 
